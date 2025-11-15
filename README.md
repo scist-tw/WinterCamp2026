@@ -1,1 +1,1 @@
-# SCIST_WinterCamp2026
+# WinterCamp2026
