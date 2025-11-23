@@ -31,7 +31,10 @@ export default function Navbar() {
             <Button
               className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6 font-medium cursor-pointer"
               onClick={() =>
-                window.open("https://forms.gle/YOUR_FORM_ID", "_blank")
+                window.open(
+                  "https://docs.google.com/forms/d/e/1FAIpQLSeX88997wSKQ0K8wUMT4s4x3lprJeL_Jq2xO_jDmGvnq4mQPg/viewform",
+                  "_blank"
+                )
               }
             >
               立即報名
