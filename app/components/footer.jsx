@@ -29,7 +29,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="SCAICT website"
-              className="h-32 w-62 rounded-2xl flex items-center justify-center border-2 border-background/30 overflow-hidden cursor-pointer"
+              className="h-32 w-62 bg-white rounded-2xl flex items-center justify-center border-2 border-background/30 overflow-hidden cursor-pointer"
             >
               <Image
                 src="/assets/images/scaict.png"
