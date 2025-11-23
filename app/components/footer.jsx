@@ -123,15 +123,15 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-background/20 to-transparent my-8"></div>
+        <div className="w-full h-px bg-linear-to-r from-transparent via-background/20 to-transparent my-8"></div>
 
         {/* Copyright */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-background/40">
           <p>
-            Copyright &copy; 2025-2026 SCIST × SCAICT | All rights reserved.
+            Copyright &copy; 2025-2026 SCIST x SCAICT | All rights reserved.
           </p>
           <p>
-            Crafted by the SCIST × SCAICT 2026 Winter Camp 「閃電四連編」
+            Crafted by the SCIST x SCAICT 2026 Winter Camp 「閃電四連編」
             Organizing Team
           </p>
         </div>
