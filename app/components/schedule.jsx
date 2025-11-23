@@ -5,11 +5,21 @@ import { Card } from "@/components/ui/card";
 
 export default function Schedule() {
   const [scheduleData, setScheduleData] = useState([]);
+  const [leftColWidth, setLeftColWidth] = useState("150px");
 
   useEffect(() => {
     fetch("/data/schedule.json")
       .then((res) => res.json())
       .then((data) => setScheduleData(data.scheduleData));
+  }, []);
+
+  useEffect(() => {
+    const update = () => {
+      setLeftColWidth(window.innerWidth >= 768 ? "150px" : "80px");
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   return (
@@ -24,10 +34,12 @@ export default function Schedule() {
             <div
               className="grid gap-4 mb-4"
               style={{
-                gridTemplateColumns: `150px repeat(${scheduleData.length}, 1fr)`,
+                gridTemplateColumns: `${leftColWidth} repeat(${
+                  scheduleData.length || 1
+                }, 1fr)`,
               }}
             >
-              <div className="font-semibold text-foreground/60 text-sm">
+              <div className="font-semibold text-foreground/60 text-sm py-2 px-2 md:py-4 md:px-0">
                 時間
               </div>
               {scheduleData.map((day, idx) => (
@@ -43,18 +55,18 @@ export default function Schedule() {
                 key={slotIdx}
                 className="grid gap-4 mb-4"
                 style={{
-                  gridTemplateColumns: `150px repeat(${scheduleData.length}, 1fr)`,
+                  gridTemplateColumns: `${leftColWidth} repeat(${scheduleData.length}, 1fr)`,
                 }}
               >
-                <div className="text-sm font-semibold text-foreground/70 py-4">
+                <div className="text-sm font-semibold text-foreground/70 py-2 px-2 md:py-4 md:px-4">
                   {scheduleData[0].slots[slotIdx].time}
                 </div>
                 {scheduleData.map((day, dayIdx) => (
                   <Card
                     key={dayIdx}
-                    className="border border-border rounded-2xl p-4 bg-background min-h-20 flex items-center justify-center text-center hover:shadow-md transition-shadow"
+                    className="border border-border rounded-2xl p-2 md:p-4 bg-background min-h-12 md:min-h-20 flex items-center justify-center text-center hover:shadow-md transition-shadow"
                   >
-                    <p className="text-sm font-semibold text-foreground">
+                    <p className="text-xs md:text-sm font-semibold text-foreground">
                       {day.slots[slotIdx]?.activity || "-"}
                     </p>
                   </Card>

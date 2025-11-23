@@ -54,27 +54,40 @@ export default function Pricing() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+        {/* compact grid on small screens */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6 mb-12">
           {plans.map((plan, idx) => (
             <Card
               key={idx}
               className={`
-                border-2 border-border rounded-3xl p-8 
-                flex flex-col items-center justify-between 
+                border-2 border-border 
+                rounded-xl md:rounded-3xl 
+                p-4 md:p-8 
+                flex items-center justify-between md:flex-col md:items-center 
+                h-20 md:h-auto 
                 hover:shadow-md transition-shadow text-center cursor-pointer
                 ${idx === 0 ? "bg-(--color-chart-2) text-white" : ""}
               `}
             >
-              <div>
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-                <p
-                  className={`text-foreground/60 text-sm mb-6 ${
-                    idx === 0 ? "text-white" : "text-black"
-                  }`}
-                >
-                  {plan.description}
-                </p>
-                <div className="text-4xl font-bold mb-8">{plan.price}</div>
+              <div className="w-full flex items-center justify-between md:flex-col md:items-center">
+                <div className="text-left md:text-center">
+                  <h3 className="text-lg md:text-2xl font-bold mb-0 md:mb-2">
+                    {plan.name}
+                  </h3>
+                  <p
+                    className={`text-foreground/60 text-xs md:text-sm ${
+                      idx === 0 ? "text-white" : "text-black"
+                    }`}
+                  >
+                    {plan.description}
+                  </p>
+                </div>
+
+                <div className="text-right md:text-center md:mt-6">
+                  <div className="text-xl md:text-4xl font-bold">
+                    {plan.price}
+                  </div>
+                </div>
               </div>
             </Card>
           ))}

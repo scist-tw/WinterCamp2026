@@ -36,7 +36,9 @@ export default function Footer() {
                   />
                 </a>
                 <div className="text-xs text-background/60 text-center">
-                  <span className="font-bold block text-background/80 mb-1">SCIST</span>
+                  <span className="font-bold block text-background/80 mb-1">
+                    SCIST
+                  </span>
                   南臺灣學生資訊社群
                 </div>
               </div>
@@ -58,7 +60,9 @@ export default function Footer() {
                   />
                 </a>
                 <div className="text-xs text-background/60 text-center">
-                  <span className="font-bold block text-background/80 mb-1">SCAICT</span>
+                  <span className="font-bold block text-background/80 mb-1">
+                    SCAICT
+                  </span>
                   中部高中電資社團聯合會議
                 </div>
               </div>
@@ -73,28 +77,28 @@ export default function Footer() {
             <div className="flex flex-col gap-4 text-background/60 w-full">
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit"
+                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
               >
                 <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
                 回到頂部
               </button>
               <button
                 onClick={() => scrollToSection("schedule")}
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit"
+                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
               >
                 <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
                 課程活動
               </button>
               <button
                 onClick={() => scrollToSection("pricing")}
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit"
+                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
               >
                 <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
                 報名資訊
               </button>
               <a
                 href="mailto:contact@scist.org"
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit"
+                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
               >
                 <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
                 聯絡我們
@@ -103,14 +107,17 @@ export default function Footer() {
           </div>
 
           {/* 關於活動 */}
-          <div className="flex flex-col items-center md:items-start gap-6">
-            <h3 className="text-lg font-bold tracking-wider text-background/90">
+          <div className="flex flex-col items-start gap-6">
+            <h3 className="text-lg font-bold tracking-wider text-background/90 text-left">
               關於活動
             </h3>
-            <p className="text-background/60 text-sm leading-relaxed text-center md:text-left">
+            <p className="text-background/60 text-sm leading-relaxed text-left">
               今年，SCIST 與 SCAICT 首度攜手合作，聯合策劃寒訓活動。
-              <br/>
-              以「做一個自己的 ChatGPT」為主題，透過程式設計、人工智慧和實作，激發高中生技術熱情，學習 LLM 核心原理，實際打造專屬的智慧助理。強調跨領域協作與問題解決能力的培養，讓參與者能在團隊合作中磨練領導與溝通技巧，為未來技術發展奠定扎實基礎。
+              {/* <br /> */}
+              以「做一個自己的
+              ChatGPT」為主題，透過程式設計、人工智慧和實作，激發高中生技術熱情，學習
+              LLM
+              核心原理，實際打造專屬的智慧助理。強調跨領域協作與問題解決能力的培養，讓參與者能在團隊合作中磨練領導與溝通技巧，為未來技術發展奠定扎實基礎。
             </p>
           </div>
         </div>
@@ -123,7 +130,10 @@ export default function Footer() {
           <p>
             Copyright &copy; 2025-2026 SCIST × SCAICT | All rights reserved.
           </p>
-          <p>Crafted by the SCIST × SCAICT 2026 Winter Camp 「閃電四連編」 Organizing Team</p>
+          <p>
+            Crafted by the SCIST × SCAICT 2026 Winter Camp 「閃電四連編」
+            Organizing Team
+          </p>
         </div>
       </div>
     </footer>
