@@ -31,7 +31,7 @@ export default function Hero() {
 
   return (
     <section className="min-h-screen flex flex-col items-center justify-start bg-background px-6 lg:px-12 pt-18 pb-20">
-      <div className="max-w-3xl text-center space-y-16">
+      <div className="max-w-3xl text-center space-y-12">
         <div className="space-y-6">
           <h1 className="text-3xl lg:text-5xl font-bold tracking-tight">
             SCIST x SCAICT 2026 聯合寒訓
@@ -47,22 +47,22 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 lg:gap-8 py-12 bg-muted rounded-3xl px-20">
+        <div className="grid grid-cols-4 gap-4 lg:gap-6 py-8 bg-muted rounded-3xl px-6">
           <div className="flex flex-col items-center justify-center">
             <div className="text-4xl lg:text-5xl font-bold">{days}</div>
-            <div className="text-sm text-foreground/60 mt-2">天</div>
+            <div className="text-sm text-foreground/60 mt-1">天</div>
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className="text-4xl lg:text-5xl font-bold">{hours}</div>
-            <div className="text-sm text-foreground/60 mt-2">時</div>
+            <div className="text-sm text-foreground/60 mt-1">時</div>
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className="text-4xl lg:text-5xl font-bold">{minutes}</div>
-            <div className="text-sm text-foreground/60 mt-2">分</div>
+            <div className="text-sm text-foreground/60 mt-1">分</div>
           </div>
           <div className="flex flex-col items-center justify-center">
             <div className="text-4xl lg:text-5xl font-bold">{seconds}</div>
-            <div className="text-sm text-foreground/60 mt-2">秒</div>
+            <div className="text-sm text-foreground/60 mt-1">秒</div>
           </div>
         </div>
 
