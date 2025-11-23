@@ -32,7 +32,7 @@ export default function Footer() {
               className="h-32 w-62 rounded-2xl flex items-center justify-center border-2 border-background/30 overflow-hidden cursor-pointer"
             >
               <Image
-                src="/assets/images/scaict.jpg"
+                src="/assets/images/scaict.png"
                 alt="SCAICT"
                 width={192}
                 height={128}
@@ -43,7 +43,7 @@ export default function Footer() {
 
           <div className="flex items-center justify-center">
             <p className="text-sm text-background/60">
-              Copyright &copy; 2025~2026 SCIST. All rights reserved.
+              Copyright &copy; 2025-2026 SCIST × SCAICT. All rights reserved.
             </p>
           </div>
         </div>
