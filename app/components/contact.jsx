@@ -33,10 +33,11 @@ const contactMethods = [
 
 export default function Contact() {
   return (
-    <section className="py-20 lg:py-32 bg-background px-6 lg:px-12">
+    <section className="py-20 lg:py-32 px-6 lg:px-12">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-4">聯絡我們</h2>
+          <div className="mb-3 flex justify-center"><span className="section-eyebrow">CONTACT // 聯絡我們</span></div>
+          <h2 className="section-title text-3xl lg:text-4xl font-bold mb-4">聯絡我們</h2>
           <p className="text-foreground/70 text-lg">
             有任何問題歡迎透過以下方式聯繫我們
           </p>
@@ -48,11 +49,11 @@ export default function Contact() {
             return (
               <Card
                 key={idx}
-                className="border border-border rounded-2xl p-6 bg-muted hover:shadow-md transition-shadow cursor-pointer"
+                className="neon-card rounded-2xl p-6 bg-muted transition-shadow cursor-pointer"
                 onClick={() => window.open(method.link, "_blank")}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center shrink-0">
                     <Icon className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
                   </div>
                   <div className="flex-1">
@@ -70,10 +71,10 @@ export default function Contact() {
         </div>
 
         <div className="text-center">
-          <Card className="border border-border rounded-2xl p-8 bg-muted inline-block">
+          <Card className="neon-card rounded-2xl p-8 bg-muted inline-block min-w-[600px]">
             <div className="space-y-4">
-              <h3 className="text-xl font-bold">主辦單位</h3>
-              <div className="flex flex-col md:flex-row items-center gap-6">
+              <h3 className="text-xl font-bold text-center">主辦單位</h3>
+              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-8">
                 <div className="text-center">
                   <p className="text-lg font-semibold">SCIST</p>
                   <p className="text-sm text-foreground/70">

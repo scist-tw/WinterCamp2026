@@ -1,9 +1,22 @@
 import React from "react";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Noto_Sans_TC, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const notoSansTC = Noto_Sans_TC({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
+  variable: "--font-noto-sans-tc",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
 
 export const metadata = {
   title: "SCIST x SCAICT 2026 聯合寒訓 - 閃電四連編",
@@ -29,8 +42,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="font-sans antialiased overscroll-none">{children}</body>
+    <html lang="zh-TW">
+      <body className={`${inter.variable} ${notoSansTC.variable} ${spaceGrotesk.variable} font-sans antialiased overscroll-none relative`}>
+        {children}
+      </body>
     </html>
   );
 }

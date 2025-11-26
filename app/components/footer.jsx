@@ -10,12 +10,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-foreground text-background pt-16 pb-8 px-6 lg:px-12 border-t border-background/10">
+    <footer className="bg-card/50 backdrop-blur-sm text-foreground pt-16 pb-8 px-6 lg:px-12 border-t border-[oklch(0.75_0.15_85)]/20">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* 主辦單位 */}
           <div className="flex flex-col items-center md:items-start gap-6">
-            <h3 className="text-lg font-bold tracking-wider text-background/90">
+            <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)]">
               主辦單位
             </h3>
             <div className="flex gap-6">
@@ -25,18 +25,18 @@ export default function Footer() {
                   href="https://scist.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative h-24 w-40 rounded-xl bg-background/5 flex items-center justify-center border border-background/10 overflow-hidden transition-all hover:border-background/40 hover:bg-background/10"
+                  className="group relative h-24 w-40 rounded-xl bg-muted/30 flex items-center justify-center border border-foreground/10 overflow-hidden transition-all hover:border-[oklch(0.75_0.15_85)]/40 hover:bg-muted/50"
                 >
                   <Image
-                    src="/assets/images/Scist.png"
+                    src="/assets/images/scist.png"
                     alt="SCIST"
                     width={110}
                     height={80}
-                    className="object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                    className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
                   />
                 </a>
-                <div className="text-xs text-background/60 text-center">
-                  <span className="font-bold block text-background/80 mb-1">
+                <div className="text-xs text-foreground/60 text-center">
+                  <span className="font-bold block text-foreground/90 mb-1">
                     SCIST
                   </span>
                   南臺灣學生資訊社群
@@ -49,18 +49,18 @@ export default function Footer() {
                   href="https://scaict.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative h-24 w-40 rounded-xl bg-background/5 flex items-center justify-center border border-background/10 overflow-hidden transition-all hover:border-background/40 hover:bg-background/10"
+                  className="group relative h-24 w-40 rounded-xl bg-muted/30 flex items-center justify-center border border-foreground/10 overflow-hidden transition-all hover:border-[oklch(0.75_0.15_85)]/40 hover:bg-muted/50"
                 >
                   <Image
                     src="/assets/images/scaict.png"
                     alt="SCAICT"
                     width={110}
                     height={80}
-                    className="object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                    className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
                   />
                 </a>
-                <div className="text-xs text-background/60 text-center">
-                  <span className="font-bold block text-background/80 mb-1">
+                <div className="text-xs text-foreground/60 text-center">
+                  <span className="font-bold block text-foreground/90 mb-1">
                     SCAICT
                   </span>
                   中部高中電資社團聯合會議
@@ -71,36 +71,36 @@ export default function Footer() {
 
           {/* 網站導覽 */}
           <div className="flex flex-col items-start md:items-start gap-6">
-            <h3 className="text-lg font-bold tracking-wider text-background/90">
+            <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)]">
               網站導覽
             </h3>
-            <div className="flex flex-col gap-4 text-background/60 w-full">
+            <div className="flex flex-col gap-4 text-foreground/70 w-full">
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
+                className="flex items-center gap-3 hover:text-[oklch(0.75_0.15_85)] transition-colors group w-fit cursor-pointer"
               >
-                <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
+                <span className="h-px w-6 bg-foreground/20 group-hover:bg-[oklch(0.75_0.15_85)] transition-all"></span>
                 回到頂部
               </button>
               <button
-                onClick={() => scrollToSection("schedule")}
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
+                onClick={() => scrollToSection("course")}
+                className="flex items-center gap-3 hover:text-[oklch(0.75_0.15_85)] transition-colors group w-fit cursor-pointer"
               >
-                <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
-                課程活動
+                <span className="h-px w-6 bg-foreground/20 group-hover:bg-[oklch(0.75_0.15_85)] transition-all"></span>
+                課程內容
               </button>
               <button
                 onClick={() => scrollToSection("pricing")}
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
+                className="flex items-center gap-3 hover:text-[oklch(0.75_0.15_85)] transition-colors group w-fit cursor-pointer"
               >
-                <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
+                <span className="h-px w-6 bg-foreground/20 group-hover:bg-[oklch(0.75_0.15_85)] transition-all"></span>
                 報名資訊
               </button>
               <a
                 href="mailto:contact@scist.org"
-                className="flex items-center gap-3 hover:text-background transition-colors group w-fit cursor-pointer"
+                className="flex items-center gap-3 hover:text-[oklch(0.75_0.15_85)] transition-colors group w-fit cursor-pointer"
               >
-                <span className="h-px w-6 bg-background/20 group-hover:bg-background transition-all"></span>
+                <span className="h-px w-6 bg-foreground/20 group-hover:bg-[oklch(0.75_0.15_85)] transition-all"></span>
                 聯絡我們
               </a>
             </div>
@@ -108,31 +108,27 @@ export default function Footer() {
 
           {/* 關於活動 */}
           <div className="flex flex-col items-start gap-6">
-            <h3 className="text-lg font-bold tracking-wider text-background/90 text-left">
+            <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)] text-left">
               關於活動
             </h3>
-            <p className="text-background/60 text-sm leading-relaxed text-left">
-              今年，SCIST 與 SCAICT 首度攜手合作，聯合策劃寒訓活動。
-              {/* <br /> */}
-              以「做一個自己的
-              ChatGPT」為主題，透過程式設計、人工智慧和實作，激發高中生技術熱情，學習
-              LLM
-              核心原理，實際打造專屬的智慧助理。強調跨領域協作與問題解決能力的培養，讓參與者能在團隊合作中磨練領導與溝通技巧，為未來技術發展奠定扎實基礎。
+            <p className="text-foreground/70 text-sm leading-relaxed text-left">
+              今年，SCIST 與 SCAICT 攜手合作，聯合策劃寒訓活動。
+              以「把事情做好」為核心，聚焦產品規劃、介面設計與部署維運，
+              以實作與協作為主，不強行堆砌流行術語，追求可用、可維護、可持續。
             </p>
           </div>
         </div>
 
         {/* Divider */}
-        <div className="w-full h-px bg-linear-to-r from-transparent via-background/20 to-transparent my-8"></div>
+        <div className="w-full h-px bg-linear-to-r from-transparent via-[oklch(0.75_0.15_85)]/20 to-transparent my-8"></div>
 
         {/* Copyright */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-background/40">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-foreground/50">
           <p>
             Copyright &copy; 2025-2026 SCIST x SCAICT | All rights reserved.
           </p>
           <p>
-            Crafted by the SCIST x SCAICT 2026 Winter Camp 「閃電四連編」
-            Organizing Team
+            Crafted by SCIST x SCAICT 2026 Winter Camp Organizing Team
           </p>
         </div>
       </div>
