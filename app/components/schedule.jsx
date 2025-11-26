@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { Calendar } from "lucide-react";
 
 export default function Schedule() {
   const [scheduleData, setScheduleData] = useState([]);
@@ -23,10 +24,14 @@ export default function Schedule() {
   }, []);
 
   return (
-    <section className="py-20 lg:py-32 bg-muted px-6 lg:px-40">
+    <section id="schedule" className="py-20 lg:py-32 px-6 lg:px-40">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold">課程活動</h2>
+          <div className="mb-3 flex items-center justify-center gap-2">
+            <Calendar className="w-6 h-6 text-[oklch(0.75_0.15_85)]" />
+            <span className="section-eyebrow">SCHEDULE // 課程活動</span>
+          </div>
+          <h2 className="section-title text-3xl lg:text-4xl font-bold">課程活動</h2>
         </div>
 
         <div className="overflow-x-auto">
@@ -64,7 +69,7 @@ export default function Schedule() {
                 {scheduleData.map((day, dayIdx) => (
                   <Card
                     key={dayIdx}
-                    className="border border-border rounded-2xl p-2 md:p-4 bg-background min-h-12 md:min-h-20 flex items-center justify-center text-center hover:shadow-md transition-shadow"
+                    className="neon-card rounded-2xl p-2 md:p-4 bg-background min-h-12 md:min-h-20 flex items-center justify-center text-center transition-shadow"
                   >
                     <p className="text-xs md:text-sm font-semibold text-foreground">
                       {day.slots[slotIdx]?.activity || "-"}
