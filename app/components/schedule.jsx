@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import { Calendar } from "lucide-react";
 
 export default function Schedule() {
   const [scheduleData, setScheduleData] = useState([]);
@@ -26,7 +27,10 @@ export default function Schedule() {
     <section className="py-20 lg:py-32 bg-muted px-6 lg:px-40">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold">課程活動</h2>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Calendar className="w-8 h-8 text-[oklch(0.55_0.15_85)]" />
+            <h2 className="text-3xl lg:text-4xl font-bold">課程活動</h2>
+          </div>
         </div>
 
         <div className="overflow-x-auto">

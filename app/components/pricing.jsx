@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
 
 const plans = [
   {
@@ -40,15 +41,24 @@ export default function Pricing() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12 text-foreground/70 text-center">
             <div>
-              <p className="text-sm font-semibold mb-2">營隊日期</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <CalendarDays className="w-4 h-4" />
+                <p className="text-sm font-semibold">營隊日期</p>
+              </div>
               <p className="text-lg">2026/2/5(四)~2026/2/8(日)</p>
             </div>
             <div>
-              <p className="text-sm font-semibold mb-2">報名日期</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <Clock className="w-4 h-4" />
+                <p className="text-sm font-semibold">報名日期</p>
+              </div>
               <p className="text-lg">即日起~2026/1/4(日)</p>
             </div>
             <div>
-              <p className="text-sm font-semibold mb-2">營隊地點</p>
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <MapPin className="w-4 h-4" />
+                <p className="text-sm font-semibold">營隊地點</p>
+              </div>
               <p className="text-lg">國立成功大學</p>
             </div>
           </div>
@@ -60,13 +70,13 @@ export default function Pricing() {
             <Card
               key={idx}
               className={`
-                border-2 border-border 
-                rounded-xl md:rounded-3xl 
-                p-4 md:p-8 
-                flex items-center justify-between md:flex-col md:items-center 
-                h-20 md:h-auto 
+                border-2
+                rounded-xl md:rounded-3xl
+                p-4 md:p-8
+                flex items-center justify-between md:flex-col md:items-center
+                h-20 md:h-auto
                 hover:shadow-md transition-shadow text-center cursor-pointer
-                ${idx === 0 ? "bg-(--color-chart-2) text-white" : ""}
+                ${idx === 0 ? "bg-[oklch(0.55_0.15_85)] border-[oklch(0.65_0.18_85)] text-black" : "border-border"}
               `}
             >
               <div className="w-full flex items-center justify-between md:flex-col md:items-center">
@@ -75,8 +85,8 @@ export default function Pricing() {
                     {plan.name}
                   </h3>
                   <p
-                    className={`text-foreground/60 text-xs md:text-sm ${
-                      idx === 0 ? "text-white" : "text-black"
+                    className={`text-xs md:text-sm ${
+                      idx === 0 ? "text-black/70" : "text-foreground/60"
                     }`}
                   >
                     {plan.description}
