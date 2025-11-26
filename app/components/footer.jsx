@@ -28,7 +28,7 @@ export default function Footer() {
                   className="group relative h-24 w-40 rounded-xl bg-background/5 flex items-center justify-center border border-background/10 overflow-hidden transition-all hover:border-background/40 hover:bg-background/10"
                 >
                   <Image
-                    src="/assets/images/Scist.png"
+                    src="/assets/images/scist.png"
                     alt="SCIST"
                     width={110}
                     height={80}
