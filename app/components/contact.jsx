@@ -52,8 +52,8 @@ export default function Contact() {
                 onClick={() => window.open(method.link, "_blank")}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
+                  <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-blue-500" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-sm font-semibold text-foreground/60 mb-1">

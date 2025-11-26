@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MapPin, Zap } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 export default function Hero() {
   const [days, setDays] = useState(0);
@@ -36,13 +36,9 @@ export default function Hero() {
           <h1 className="text-3xl lg:text-5xl font-bold tracking-tight">
             SCIST x SCAICT 2026 聯合寒訓
           </h1>
-          <div className="flex items-center justify-center gap-3">
-            <Zap className="w-8 h-8 lg:w-10 lg:h-10 text-[oklch(0.65_0.18_85)] fill-[oklch(0.65_0.18_85)]" />
-            <h2 className="text-3xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-[oklch(0.55_0.15_85)] to-[oklch(0.65_0.18_85)] bg-clip-text text-transparent">
-              閃電四連編
-            </h2>
-            <Zap className="w-8 h-8 lg:w-10 lg:h-10 text-[oklch(0.65_0.18_85)] fill-[oklch(0.65_0.18_85)]" />
-          </div>
+          {/* <h2 className="text-2xl lg:text-4xl font-bold tracking-tight">
+            ⚡️四連編
+          </h2> */}
           <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 bg-muted text-foreground/80 rounded-lg px-3 py-2">
               <MapPin className="w-4 h-4" />
@@ -72,7 +68,7 @@ export default function Hero() {
 
         <Button
           size="lg"
-          className="bg-[oklch(0.55_0.15_85)] hover:bg-[oklch(0.65_0.18_85)] rounded-full px-11 py-7 text-lg font-semibold text-black cursor-pointer transition-all hover:shadow-lg hover:shadow-[oklch(0.55_0.15_85)]/30"
+          className="bg-blue-500 hover:bg-blue-600 rounded-full px-11 py-7 text-lg font-semibold text-background cursor-pointer"
           onClick={() =>
             window.open(
               "https://docs.google.com/forms/d/e/1FAIpQLSeX88997wSKQ0K8wUMT4s4x3lprJeL_Jq2xO_jDmGvnq4mQPg/viewform",
