@@ -112,9 +112,7 @@ export default function Footer() {
               關於活動
             </h3>
             <p className="text-foreground/70 text-sm leading-relaxed text-left">
-              今年，SCIST 與 SCAICT 攜手合作，聯合策劃寒訓活動。
-              以「把事情做好」為核心，聚焦產品規劃、介面設計與部署維運，
-              以實作與協作為主，不強行堆砌流行術語，追求可用、可維護、可持續。
+              今年，SCIST 與 SCAICT 首度攜手合作，聯合策劃寒訓活動。以「做一個自己的 ChatGPT」為主題，透過程式設計、人工智慧和實作，激發高中生技術熱情，學習 LLM 核心原理，實際打造專屬的智慧助理。強調跨領域協作與問題解決能力的培養，讓參與者能在團隊合作中磨練領導與溝通技巧，為未來技術發展奠定扎實基礎。
             </p>
           </div>
         </div>

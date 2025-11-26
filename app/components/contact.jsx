@@ -39,7 +39,7 @@ export default function Contact() {
           <div className="mb-3 flex justify-center"><span className="section-eyebrow">CONTACT // 聯絡我們</span></div>
           <h2 className="section-title text-3xl lg:text-4xl font-bold mb-4">聯絡我們</h2>
           <p className="text-foreground/70 text-lg">
-            有任何問題歡迎透過以下方式聯繫我們
+            有任何問題歡迎透過以下方式聯絡我們
           </p>
         </div>
 
