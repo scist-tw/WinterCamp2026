@@ -1,0 +1,44 @@
+services:
+  # 開發環境設定
+  wintercamp-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: wintercamp2026-dev
+    ports:
+      - "12030:3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    networks:
+      - wintercamp-network
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+  # 正式環境設定（可選）
+  wintercamp-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: wintercamp2026-prod
+    ports:
+      - "12031:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - wintercamp-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+networks:
+  wintercamp-network:
+    driver: bridge

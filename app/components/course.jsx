@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { BookOpen, Globe, Cpu, Users, Calendar } from "lucide-react";
+import { BookOpen, Globe, Cpu, Users, Calendar, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const courses = [
   {
@@ -132,20 +133,79 @@ export default function Course() {
             <p className="text-foreground/70 text-lg max-w-3xl mx-auto mt-4 leading-relaxed">
               四天三夜密集訓練，從理論到實作，完整體驗 AI 應用開發全流程
             </p>
+            <div className="mt-6">
+              <Link
+                href="/course"
+                className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
+              >
+                查看完整課程資訊
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <div className="inline-block min-w-full">
-              <div
-                className="grid gap-4 mb-4"
-                style={{
-                  gridTemplateColumns: `${leftColWidth} repeat(${
-                    scheduleData.length || 1
-                  }, 1fr)`,
-                }}
-              >
-                <div className="font-semibold text-foreground/60 text-sm py-2 px-2 md:py-4 md:px-0">
+          {/* Schedule table with fixed time column (mobile only) */}
+          <div className="relative">
+            {/* Mobile version with scroll */}
+            <div className="lg:hidden flex justify-center">
+              <div className="flex gap-4 max-w-full">
+                {/* Fixed time column */}
+                <div className="flex-shrink-0" style={{ width: leftColWidth }}>
+                  {/* Header space */}
+                  <div className="mb-4">
+                    <div className="h-[48px] flex items-center justify-center"></div>
+                  </div>
+                  {/* Time slots */}
+                  {scheduleData[0]?.slots.map((slot, slotIdx) => (
+                    <div
+                      key={slotIdx}
+                      className="text-xs font-bold text-[oklch(0.75_0.15_85)] px-2 mb-4 bg-[oklch(0.75_0.15_85)]/8 rounded-xl border-2 border-[oklch(0.75_0.15_85)]/20 flex items-center justify-center h-12"
+                    >
+                      {slot.time}
+                    </div>
+                  ))}
                 </div>
+
+                {/* Scrollable content area */}
+                <div className="flex-1 overflow-x-auto">
+                  <div className="min-w-max">
+                    {/* Day headers */}
+                    <div className="flex gap-4 mb-4">
+                      {scheduleData.map((day, idx) => (
+                        <div key={idx} className="text-center" style={{ minWidth: '200px' }}>
+                          <div className="font-bold text-lg">{day.day}</div>
+                          <div className="text-sm text-foreground/60">{day.date}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Schedule grid */}
+                    {scheduleData[0]?.slots.map((_, slotIdx) => (
+                      <div key={slotIdx} className="flex gap-4 mb-4">
+                        {scheduleData.map((day, dayIdx) => (
+                          <Card
+                            key={dayIdx}
+                            className="neon-card rounded-2xl p-3 bg-card/50 backdrop-blur-sm h-12 flex items-center justify-center text-center transition-all hover:bg-card hover:scale-[1.02] border border-[oklch(0.75_0.15_85)]/10"
+                            style={{ minWidth: '200px' }}
+                          >
+                            <p className="text-xs font-bold text-foreground/90 leading-tight">
+                              {day.slots[slotIdx]?.activity || "-"}
+                            </p>
+                          </Card>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop version without scroll */}
+            <div className="hidden lg:block">
+              <div className="grid gap-4 mb-4" style={{ gridTemplateColumns: `150px repeat(${scheduleData.length || 1}, 1fr)` }}>
+                {/* Empty header cell */}
+                <div className="py-4"></div>
+                {/* Day headers */}
                 {scheduleData.map((day, idx) => (
                   <div key={idx} className="text-center">
                     <div className="font-bold text-lg">{day.day}</div>
@@ -154,29 +214,33 @@ export default function Course() {
                 ))}
               </div>
 
+              {/* Schedule rows */}
               {scheduleData[0]?.slots.map((_, slotIdx) => (
-                <div
-                  key={slotIdx}
-                  className="grid gap-4 mb-4"
-                  style={{
-                    gridTemplateColumns: `${leftColWidth} repeat(${scheduleData.length}, 1fr)`,
-                  }}
-                >
-                  <div className="text-sm font-semibold text-foreground/70 py-2 px-2 md:py-4 md:px-4">
+                <div key={slotIdx} className="grid gap-4 mb-4" style={{ gridTemplateColumns: `150px repeat(${scheduleData.length}, 1fr)` }}>
+                  {/* Time column */}
+                  <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] py-4 px-4 bg-[oklch(0.75_0.15_85)]/8 rounded-xl border-2 border-[oklch(0.75_0.15_85)]/20 flex items-center justify-center">
                     {scheduleData[0].slots[slotIdx].time}
                   </div>
+                  {/* Activity cards */}
                   {scheduleData.map((day, dayIdx) => (
                     <Card
                       key={dayIdx}
-                      className="neon-card rounded-2xl p-2 md:p-4 bg-card min-h-12 md:min-h-20 flex items-center justify-center text-center transition-shadow"
+                      className="neon-card rounded-2xl p-4 bg-card/50 backdrop-blur-sm min-h-20 flex items-center justify-center text-center transition-all hover:bg-card hover:scale-[1.02] border border-[oklch(0.75_0.15_85)]/10"
                     >
-                      <p className="text-xs md:text-sm font-semibold text-foreground">
+                      <p className="text-sm font-bold text-foreground/90">
                         {day.slots[slotIdx]?.activity || "-"}
                       </p>
                     </Card>
                   ))}
                 </div>
               ))}
+            </div>
+
+            {/* Scroll hint - mobile only */}
+            <div className="mt-4 text-center text-foreground/50 text-sm lg:hidden">
+              <span className="inline-flex items-center gap-2">
+                ← 左右滑動查看完整課表 →
+              </span>
             </div>
           </div>
         </div>

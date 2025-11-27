@@ -30,7 +30,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 py-20 pt-32 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-[oklch(0.75_0.15_85)] opacity-5 rounded-full blur-3xl"></div>

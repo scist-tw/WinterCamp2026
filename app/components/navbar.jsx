@@ -1,12 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
   // Add state for mobile menu
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const scrollToSection = (id) => {
+    // If not on home page, navigate to home first
+    if (window.location.pathname !== '/') {
+      window.location.href = `/#${id}`;
+      return;
+    }
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
     // close mobile menu after navigating (if open)
@@ -30,12 +37,18 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20 shadow-lg">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20 shadow-lg">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-linear-to-br from-[oklch(0.75_0.15_85)] to-[oklch(0.65_0.13_85)] flex items-center justify-center">
-              <span className="text-black font-black">SC</span>
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+              <Image
+                src="/assets/images/winter.png"
+                alt="閃電四連編 Logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain"
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-sm font-black text-[oklch(0.75_0.15_85)]">
@@ -61,6 +74,20 @@ export default function Navbar() {
               className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
             >
               報名資訊
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
+            </button>
+            <button
+              onClick={() => scrollToSection("gallery")}
+              className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+            >
+              過往紀錄
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
+            </button>
+            <button
+              onClick={() => scrollToSection("team")}
+              className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+            >
+              工作人員
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
             </button>
             <div className="relative group">
@@ -140,6 +167,18 @@ export default function Navbar() {
               className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background"
             >
               報名資訊
+            </button>
+            <button
+              onClick={() => scrollToSection("gallery")}
+              className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background"
+            >
+              過往紀錄
+            </button>
+            <button
+              onClick={() => scrollToSection("team")}
+              className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background"
+            >
+              工作人員
             </button>
             <Button
               className="bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-3 font-bold cursor-pointer w-full transition-all"

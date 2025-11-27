@@ -2,7 +2,8 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Clock, MapPin } from "lucide-react";
+import { CalendarDays, Clock, MapPin, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const plans = [
   {
@@ -42,12 +43,19 @@ export default function Pricing() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <div className="mb-3 flex justify-center"><span className="section-eyebrow">PRICING // 報名資訊</span></div>
           <h2 className="section-title text-4xl lg:text-5xl font-black mb-6">報名資訊</h2>
-          <p className="text-foreground/70 text-xl">
+          <p className="text-foreground/70 text-xl mb-4">
             越早報名越划算！團報更優惠！
           </p>
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
+          >
+            查看完整報名資訊與常見問題
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 mt-8">
             <div className="neon-card rounded-2xl p-6 bg-card">
