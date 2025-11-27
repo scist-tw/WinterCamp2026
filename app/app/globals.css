@@ -52,7 +52,7 @@ body {
 
 :root {
   --radius: 0.65rem;
-  /* Black & Gold Theme - Light Mode */
+  /* Black & Gold Theme - Light Mode (更鮮豔的配色) */
   --background: oklch(0.12 0 0); /* Deep black background */
   --foreground: oklch(0.95 0 0); /* Bright white text */
   --card: oklch(0.17 0 0); /* Dark card */
@@ -128,9 +128,9 @@ body {
   body {
     @apply bg-background text-foreground;
     /* Grid background + subtle vignette */
-    --grid-size: 32px;
-    --grid-line: oklch(0.35 0 0 / 0.25);
-    --grid-dot: oklch(0.4 0 0 / 0.3);
+    --grid-size: 28px;
+    --grid-line: oklch(0.3 0 0 / 0.35);
+    --grid-dot: oklch(0.3 0 0 / 0.6);
     --glow: oklch(0.75 0.15 85 / 0.12);
 
     background-image:
@@ -151,8 +151,8 @@ body {
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: var(--grid-size) var(--grid-size);
-    mask-image: radial-gradient(1400px 900px at 50% 40%, black 50%, transparent 100%);
-    z-index: -1;
+    mask-image: radial-gradient(1200px 800px at 50% 40%, black 60%, transparent 100%);
+    z-index: 0;
   }
   }
 

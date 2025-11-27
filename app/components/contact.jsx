@@ -71,10 +71,10 @@ export default function Contact() {
         </div>
 
         <div className="text-center">
-          <Card className="neon-card rounded-2xl p-6 lg:p-8 bg-muted inline-block w-full md:min-w-[600px] md:w-auto">
+          <Card className="neon-card rounded-2xl p-8 bg-muted inline-block min-w-[600px]">
             <div className="space-y-4">
               <h3 className="text-xl font-bold text-center">主辦單位</h3>
-              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:gap-8">
+              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-8">
                 <div className="text-center">
                   <p className="text-lg font-semibold">SCIST</p>
                   <p className="text-sm text-foreground/70">
