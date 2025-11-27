@@ -85,7 +85,7 @@ export default function Contact() {
                 <div className="text-center">
                   <p className="text-lg font-semibold">SCAICT</p>
                   <p className="text-sm text-foreground/70">
-                    學生計算機與資訊教育協會
+                    中部高中電資聯合會議
                   </p>
                 </div>
               </div>

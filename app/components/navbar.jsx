@@ -1,12 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
   // Add state for mobile menu
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const scrollToSection = (id) => {
+    // If not on home page, navigate to home first
+    if (window.location.pathname !== '/') {
+      window.location.href = `/#${id}`;
+      return;
+    }
     const element = document.getElementById(id);
     element?.scrollIntoView({ behavior: "smooth" });
     // close mobile menu after navigating (if open)
@@ -140,6 +147,18 @@ export default function Navbar() {
               className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background"
             >
               報名資訊
+            </button>
+            <button
+              onClick={() => scrollToSection("gallery")}
+              className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background"
+            >
+              過往紀錄
+            </button>
+            <button
+              onClick={() => scrollToSection("team")}
+              className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background"
+            >
+              工作人員
             </button>
             <Button
               className="bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-3 font-bold cursor-pointer w-full transition-all"

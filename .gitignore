@@ -1,0 +1,45 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Docker Compose 
+docker-compose.yml
+
+# Node modules
+node_modules/
+
+# Next.js
+app/.next/
+app/out/
+
+# Production
+app/build
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+app/.devserver.log
+app/.prodserver.log
+app/.build.log
+app/.devserver.start.log
+
+# Process IDs
+app/.devserver.pid
+app/.prodserver.pid
+
+# Port files
+app/.devserver.port
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

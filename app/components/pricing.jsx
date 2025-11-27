@@ -2,7 +2,8 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Clock, MapPin } from "lucide-react";
+import { CalendarDays, Clock, MapPin, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const plans = [
   {

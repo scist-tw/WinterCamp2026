@@ -1,0 +1,126 @@
+"use client";
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+
+export default function DetailNavbar({ currentPage }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const navLinks = [
+    { name: "課程內容", href: "/course", key: "course" },
+    { name: "報名資訊", href: "/pricing", key: "pricing" },
+    { name: "過往紀錄", href: "/gallery", key: "gallery" },
+  ];
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20 shadow-lg">
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-3 hover:opacity-80 transition-opacity group"
+          >
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+              <Image
+                src="/assets/images/winter.png"
+                alt="閃電四連編 Logo"
+                width={40}
+                height={40}
+                className="w-10 h-10 object-contain"
+              />
+            </div>
+            <div className="hidden sm:flex flex-col">
+              <span className="text-sm font-black text-[oklch(0.75_0.15_85)]">
+                閃電四連編
+              </span>
+              <span className="text-xs text-foreground/70">
+                SCIST x SCAICT 2026
+              </span>
+            </div>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.key}
+                href={link.href}
+                className={`font-semibold transition-all cursor-pointer relative group ${
+                  currentPage === link.key
+                    ? "text-[oklch(0.75_0.15_85)]"
+                    : "text-foreground/80 hover:text-[oklch(0.75_0.15_85)]"
+                }`}
+              >
+                {link.name}
+                <span
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-[oklch(0.75_0.15_85)] transition-all ${
+                    currentPage === link.key ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                ></span>
+              </Link>
+            ))}
+            <div className="relative group">
+              <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
+              <Button
+                className="relative bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-2 font-bold cursor-pointer transition-all transform hover:scale-105"
+                onClick={() =>
+                  window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")
+                }
+              >
+                立即報名
+              </Button>
+            </div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-[oklch(0.75_0.15_85)] hover:bg-card focus:outline-none border border-[oklch(0.75_0.15_85)]/30"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? (
+              <X className="h-6 w-6" strokeWidth="2.5" />
+            ) : (
+              <Menu className="h-6 w-6" strokeWidth="2.5" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl">
+          <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.key}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={`text-left font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background ${
+                  currentPage === link.key
+                    ? "text-[oklch(0.75_0.15_85)] bg-background"
+                    : "text-foreground/80 hover:text-[oklch(0.75_0.15_85)]"
+                }`}
+              >
+                {link.name}
+              </Link>
+            ))}
+            <Button
+              className="bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-3 font-bold cursor-pointer w-full transition-all mt-2"
+              onClick={() => {
+                window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank");
+                setMobileOpen(false);
+              }}
+            >
+              立即報名
+            </Button>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}

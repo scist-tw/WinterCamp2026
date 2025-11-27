@@ -1,0 +1,87 @@
+{
+  "mainOrganizers": [
+    {
+      "name": "測試用戶",
+      "role": "總召",
+      "organization": "SCIST",
+      "email": "example@example.com",
+      "bio": "負責統籌活動整體規劃與執行"
+    },
+    {
+      "name": "測試用戶",
+      "role": "副召",
+      "organization": "SCAICT",
+      "email": "example2@example.com",
+      "bio": "協助活動規劃與執行"
+    }
+  ],
+  "allMembers": [
+    {
+      "name": "測試用戶",
+      "role": "總召",
+      "organization": "SCIST",
+      "email": "example@example.com",
+      "bio": "負責統籌活動整體規劃與執行",
+      "category": "總召"
+    },
+    {
+      "name": "測試用戶",
+      "role": "副召",
+      "organization": "SCAICT",
+      "email": "example2@example.com",
+      "bio": "協助活動規劃與執行",
+      "category": "副召"
+    },
+    {
+      "name": "測試用戶",
+      "role": "課程組長",
+      "organization": "SCIST",
+      "email": "example3@example.com",
+      "bio": "負責課程內容規劃",
+      "category": "課程組"
+    },
+    {
+      "name": "測試用戶",
+      "role": "行政組長",
+      "email": "example4@example.com",
+      "bio": "負責行政庶務",
+      "category": "行政組"
+    },
+    {
+      "name": "測試用戶",
+      "role": "活動組員",
+      "email": "example5@example.com",
+      "bio": "負責活動規劃與執行",
+      "category": "活動組"
+    },
+    {
+      "name": "測試用戶",
+      "role": "資訊組員",
+      "organization": "SCIST",
+      "email": "example6@example.com",
+      "bio": "負責技術支援",
+      "category": "資訊組"
+    },
+    {
+      "name": "測試用戶",
+      "role": "隊輔",
+      "email": "example7@example.com",
+      "bio": "負責學員照顧",
+      "category": "隊輔組"
+    },
+    {
+      "name": "測試用戶",
+      "role": "編輯",
+      "email": "example8@example.com",
+      "bio": "負責文案編輯",
+      "category": "編輯組"
+    },
+    {
+      "name": "測試用戶",
+      "role": "攝影",
+      "email": "example9@example.com",
+      "bio": "負責活動紀錄",
+      "category": "紀錄組"
+    }
+  ]
+}
