@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Logo from "@/components/logo";
+import { safeWindowOpen } from "@/lib/security";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -46,10 +47,12 @@ export default function Navbar() {
           ? "bg-background/40 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20 shadow-lg rounded-b-2xl mx-4 lg:mx-6 mt-2"
           : "bg-background/80 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20"
       }`}
+      role="navigation"
+      aria-label="主導航"
     >
       <div className="w-full px-6 lg:px-12 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="回到首頁">
             <Logo />
           </Link>
 
@@ -57,6 +60,7 @@ export default function Navbar() {
             <button
               onClick={() => scrollToSection("course")}
               className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+              aria-label="前往課程內容區塊"
             >
               課程內容
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
@@ -65,8 +69,26 @@ export default function Navbar() {
             <button
               onClick={() => scrollToSection("pricing")}
               className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+              aria-label="前往報名資訊區塊"
             >
               報名資訊
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("gallery")}
+              className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+              aria-label="前往過往紀錄區塊"
+            >
+              過往紀錄
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("team")}
+              className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+            >
+              工作人員
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
             </button>
 
@@ -74,7 +96,7 @@ export default function Navbar() {
               <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
               <Button
                 className="relative bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-2 font-bold cursor-pointer transition-all transform hover:scale-105"
-                onClick={() => window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")}
+                onClick={() => safeWindowOpen("https://forms.gle/vKVbDr45aDBkoM3i6")}
               >
                 立即報名
               </Button>
@@ -109,7 +131,7 @@ export default function Navbar() {
             <button onClick={() => scrollToSection("pricing")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">報名資訊</button>
             <button onClick={() => scrollToSection("gallery")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">過往紀錄</button>
             <button onClick={() => scrollToSection("team")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">工作人員</button>
-            <Button className="bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-3 font-bold cursor-pointer w-full transition-all" onClick={() => window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")}>立即報名</Button>
+            <Button className="bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-3 font-bold cursor-pointer w-full transition-all" onClick={() => safeWindowOpen("https://forms.gle/vKVbDr45aDBkoM3i6")}>立即報名</Button>
           </div>
         </div>
       )}

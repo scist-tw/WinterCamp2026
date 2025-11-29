@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import Logo from "@/components/logo";
+import { safeWindowOpen } from "@/lib/security";
 
 export default function DetailNavbar({ currentPage }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -14,6 +15,7 @@ export default function DetailNavbar({ currentPage }) {
     { name: "課程內容", href: "/course", key: "course" },
     { name: "報名資訊", href: "/pricing", key: "pricing" },
     { name: "過往紀錄", href: "/gallery", key: "gallery" },
+    { name: "工作人員", href: "/team", key: "team" },
   ];
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function DetailNavbar({ currentPage }) {
               <Button
                 className="relative bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-2 font-bold cursor-pointer transition-all transform hover:scale-105"
                 onClick={() =>
-                  window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")
+                  safeWindowOpen("https://forms.gle/vKVbDr45aDBkoM3i6")
                 }
               >
                 立即報名
@@ -102,7 +104,7 @@ export default function DetailNavbar({ currentPage }) {
             <Button
               className="bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-3 font-bold cursor-pointer w-full transition-all mt-2"
               onClick={() => {
-                window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank");
+                safeWindowOpen("https://forms.gle/vKVbDr45aDBkoM3i6");
                 setMobileOpen(false);
               }}
             >

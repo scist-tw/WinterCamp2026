@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Users, Calendar, MapPin, Clock, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { safeWindowOpen } from "@/lib/security";
 
 export default function PricingPage() {
   const [faqs, setFaqs] = useState([]);
@@ -252,7 +253,7 @@ export default function PricingPage() {
             </p>
             <button
               onClick={() =>
-                window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")
+                safeWindowOpen("https://forms.gle/vKVbDr45aDBkoM3i6")
               }
               className="inline-block bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-10 py-3 font-bold transition-all transform hover:scale-105"
             >

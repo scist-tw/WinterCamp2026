@@ -33,6 +33,7 @@ export default function Footer() {
                     width={110}
                     height={80}
                     className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                    style={{ width: 'auto', height: 'auto', maxWidth: '110px', maxHeight: '80px' }}
                   />
                 </a>
                 <div className="text-xs text-foreground/60 text-center">
@@ -57,6 +58,7 @@ export default function Footer() {
                     width={110}
                     height={80}
                     className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                    style={{ width: 'auto', height: 'auto', maxWidth: '110px', maxHeight: '80px' }}
                   />
                 </a>
                 <div className="text-xs text-foreground/60 text-center">

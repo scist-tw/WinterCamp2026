@@ -36,19 +36,21 @@ const plans = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="py-20 lg:py-32 px-6 lg:px-12 text-center relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[oklch(0.75_0.15_85)] opacity-3 rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <section id="pricing" className="py-20 lg:py-32 px-6 lg:px-12 text-center">
+      <div className="max-w-7xl mx-auto">
         <div className="mb-16">
           <div className="mb-3 flex justify-center"><span className="section-eyebrow">PRICING // 報名資訊</span></div>
           <h2 className="section-title text-4xl lg:text-5xl font-black mb-6">報名資訊</h2>
           <p className="text-foreground/70 text-xl">
             越早報名越划算！團報更優惠！
           </p>
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group mt-4"
+          >
+            查看完整報名資訊
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 mt-8">
             <div className="neon-card rounded-2xl p-6 bg-card">

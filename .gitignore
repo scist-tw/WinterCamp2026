@@ -3,8 +3,10 @@
 .env.local
 .env.*.local
 
-# Docker Compose 
+# Docker Compose (隱私資料)
 docker-compose.yml
+docker-compose.*.yml
+!docker-compose.example.yml
 
 # Node modules
 node_modules/

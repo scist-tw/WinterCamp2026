@@ -5,6 +5,9 @@ import { Card } from "@/components/ui/card";
 import { BookOpen, Globe, Cpu, Clock, Target, Award } from "lucide-react";
 import Link from "next/link";
 
+// Note: metadata export not supported in client components
+// SEO handled by parent layout.js
+
 const courses = [
   {
     icon: Cpu,
@@ -93,7 +96,7 @@ export default function CoursePage() {
               return (
                 <Card
                   key={idx}
-                  className="neon-card rounded-2xl p-8 bg-background transition-all hover:scale-[1.02]"
+                  className="neon-card rounded-2xl p-8 bg-background transition-all hover:scale-[1.02] flex flex-col"
                 >
                   <div className="w-16 h-16 rounded-2xl bg-[oklch(0.75_0.15_85)]/12 flex items-center justify-center mb-6">
                     <Icon className="w-8 h-8 text-[oklch(0.55_0.15_85)]" />
@@ -101,7 +104,7 @@ export default function CoursePage() {
                   <h3 className="text-2xl font-bold mb-3">{course.title}</h3>
                   <p className="text-foreground/70 mb-6">{course.description}</p>
 
-                  <div className="space-y-3 mb-6">
+                  <div className="space-y-3 mb-6 flex-1">
                     {course.details.map((detail, detailIdx) => (
                       <div key={detailIdx} className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-[oklch(0.55_0.15_85)] shrink-0 mt-2"></span>
@@ -110,7 +113,7 @@ export default function CoursePage() {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mt-auto">
                     {course.topics.map((topic, topicIdx) => (
                       <span
                         key={topicIdx}
@@ -185,7 +188,7 @@ export default function CoursePage() {
                     {scheduleData[0]?.slots.map((slot, slotIdx) => (
                       <div
                         key={slotIdx}
-                        className="text-xs font-bold text-[oklch(0.75_0.15_85)] px-2 mb-4 bg-[oklch(0.75_0.15_85)]/8 rounded-xl border-2 border-[oklch(0.75_0.15_85)]/20 flex items-center justify-center h-12"
+                        className="text-xs font-bold text-foreground mb-4 flex items-center justify-center h-12 text-center"
                       >
                         {slot.time}
                       </div>
@@ -238,7 +241,7 @@ export default function CoursePage() {
 
                 {scheduleData[0]?.slots.map((_, slotIdx) => (
                   <div key={slotIdx} className="grid gap-4 mb-4" style={{ gridTemplateColumns: `150px repeat(${scheduleData.length}, 1fr)` }}>
-                    <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] py-4 px-4 bg-[oklch(0.75_0.15_85)]/8 rounded-xl border-2 border-[oklch(0.75_0.15_85)]/20 flex items-center justify-center">
+                    <div className="text-sm font-bold text-foreground py-4 flex items-center justify-center text-center">
                       {scheduleData[0].slots[slotIdx].time}
                     </div>
                     {scheduleData.map((day, dayIdx) => (

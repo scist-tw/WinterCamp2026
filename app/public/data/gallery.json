@@ -1,11 +1,32 @@
 {
   "featuredImages": [
     {
-      "src": "/gallery/2025-1.jpg",
+      "src": "/gallery/2024-1.jpg",
       "alt": "2024 寒訓活動照片",
       "title": "開幕式",
       "description": "2024年寒訓開幕典禮",
       "year": "2024"
+    },
+    {
+      "src": "/gallery/2024-2.jpg",
+      "alt": "2024 寒訓活動照片",
+      "title": "閉幕式",
+      "description": "2024年寒訓閉幕合照",
+      "year": "2024"
+    },
+    {
+      "src": "/gallery/2025-1.jpg",
+      "alt": "2025 寒訓活動照片",
+      "title": "開幕式",
+      "description": "2025年寒訓開幕典禮",
+      "year": "2025"
+    },
+    {
+      "src": "/gallery/2025-2.jpg",
+      "alt": "2025 寒訓活動照片",
+      "title": "閉幕式",
+      "description": "2025年寒訓閉幕合照",
+      "year": "2025"
     }
   ],
   "allImages": [
@@ -17,10 +38,17 @@
       "year": "2024"
     },
     {
+      "src": "/gallery/2025-1.jpg",
+      "alt": "2025 寒訓活動照片 1",
+      "title": "開幕式",
+      "description": "2025年寒訓開幕典禮",
+      "year": "2025"
+    },
+    {
       "src": "/gallery/2024-2.jpg",
       "alt": "2024 寒訓活動照片 2",
-      "title": "課程進行中",
-      "description": "學員們專注學習的模樣",
+      "title": "閉幕式",
+      "description": "2024年寒訓閉幕合照",
       "year": "2024"
     }
   ]

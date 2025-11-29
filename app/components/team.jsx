@@ -15,38 +15,37 @@ function getGravatarUrl(email, size = 200) {
   return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`;
 }
 
-// 職位順序（首頁只顯示總召和副召）
-const DISPLAY_CATEGORIES = ["總召", "副召"];
-
 export default function Team() {
-  const [members, setMembers] = useState([]);
-  const [groupedMembers, setGroupedMembers] = useState({});
+  const [total召Members, setTotal召Members] = useState([]);
 
   useEffect(() => {
     fetch("/data/team.json")
       .then((res) => res.json())
       .then((data) => {
         const allMembers = data.allMembers || [];
-        setMembers(allMembers);
 
-        // 依照職位分組，只保留要在首頁顯示的
-        const grouped = allMembers.reduce((acc, member) => {
-          const category = member.category || "其他";
-          if (DISPLAY_CATEGORIES.includes(category)) {
-            if (!acc[category]) {
-              acc[category] = [];
-            }
-            acc[category].push(member);
-          }
-          return acc;
-        }, {});
-        setGroupedMembers(grouped);
+        // 合併總召和副召，統一為總召組
+        const total召 = allMembers.filter(
+          member => member.category === "總召" || member.category === "副召"
+        );
+
+        // 排序：總召在中間，副召在兩側
+        const sorted = [];
+        const 總召 = total召.filter(m => m.category === "總召");
+        const 副召 = total召.filter(m => m.category === "副召");
+
+        // 排列：副召[0] - 總召 - 副召[1]
+        if (副召[0]) sorted.push(副召[0]);
+        if (總召[0]) sorted.push(總召[0]);
+        if (副召[1]) sorted.push(副召[1]);
+
+        setTotal召Members(sorted);
       })
       .catch((err) => console.error("Failed to load team:", err));
   }, []);
 
   return (
-    <section id="team" className="py-20 lg:py-32 px-6 lg:px-12 bg-secondary/20">
+    <section id="team" className="py-20 lg:py-32 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <div className="mb-3 flex justify-center">
@@ -65,8 +64,8 @@ export default function Team() {
           </Link>
         </div>
 
-        {/* Groups - Centered Layout */}
-        {(groupedMembers["總召"]?.length > 0 || groupedMembers["副召"]?.length > 0) && (
+        {/* 總召組 - Centered Layout */}
+        {total召Members.length > 0 && (
           <div className="w-full text-center">
             <div className="mb-8">
               <h3 className="text-2xl lg:text-3xl font-bold">
@@ -77,80 +76,37 @@ export default function Team() {
             </div>
             <div className="flex justify-center">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
-                {/* 副召左 */}
-                {groupedMembers["副召"]?.[0] && (
-                  <Link href="/team" className="flex justify-center">
-                    <Card className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
-                      {groupedMembers["副召"][0].isLeader && (
+                {total召Members.map((member, idx) => (
+                  <Link key={idx} href="/team" className="flex justify-center">
+                    <Card className={`neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col ${
+                      member.category === "總召" ? "ring-2 ring-[oklch(0.75_0.15_85)]/50" : ""
+                    }`}>
+                      {member.isLeader && (
                         <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
                       )}
                       <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 flex-shrink-0">
-                          {groupedMembers["副召"][0].email ? (
-                            <Image src={getGravatarUrl(groupedMembers["副召"][0].email, 256)} alt={groupedMembers["副召"][0].name} fill className="object-cover" unoptimized />
+                        <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 ${
+                          member.category === "總召"
+                            ? "border-4 border-[oklch(0.75_0.15_85)]/50"
+                            : "border-2 border-[oklch(0.75_0.15_85)]/30"
+                        }`}>
+                          {member.email ? (
+                            <Image src={getGravatarUrl(member.email, 256)} alt={member.name} fill className="object-cover" unoptimized />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center bg-secondary/50 text-foreground/40">
                               <Users className="w-12 h-12" />
                             </div>
                           )}
                         </div>
-                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{groupedMembers["副召"][0].role}</div>
-                        <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["副召"][0].name}</h4>
-                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["副召"][0].organization}</p>
-                      </div>
-                    </Card>
-                  </Link>
-                )}
-
-                {/* 總召中 */}
-                {groupedMembers["總召"]?.[0] && (
-                  <Link href="/team" className="flex justify-center">
-                    <Card className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
-                      {groupedMembers["總召"][0].isLeader && (
-                        <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
-                      )}
-                      <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 flex-shrink-0">
-                          {groupedMembers["總召"][0].email ? (
-                            <Image src={getGravatarUrl(groupedMembers["總召"][0].email, 256)} alt={groupedMembers["總召"][0].name} fill className="object-cover" unoptimized />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-secondary/50 text-foreground/40">
-                              <Users className="w-12 h-12" />
-                            </div>
-                          )}
+                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">
+                          {member.role}
                         </div>
-                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{groupedMembers["總召"][0].role}</div>
-                        <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["總召"][0].name}</h4>
-                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["總召"][0].organization}</p>
+                        <h4 className="text-lg font-bold mb-2 line-clamp-2">{member.name}</h4>
+                        <p className="text-foreground/60 text-sm line-clamp-3">{member.organization}</p>
                       </div>
                     </Card>
                   </Link>
-                )}
-
-                {/* 副召右 */}
-                {groupedMembers["副召"]?.[1] && (
-                  <Link href="/team" className="flex justify-center">
-                    <Card className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
-                      {groupedMembers["副召"][1].isLeader && (
-                        <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
-                      )}
-                      <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 flex-shrink-0">
-                          {groupedMembers["副召"][1].email ? (
-                            <Image src={getGravatarUrl(groupedMembers["副召"][1].email, 256)} alt={groupedMembers["副召"][1].name} fill className="object-cover" unoptimized />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-secondary/50 text-foreground/40">
-                              <Users className="w-12 h-12" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{groupedMembers["副召"][1].role}</div>
-                        <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["副召"][1].name}</h4>
-                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["副召"][1].organization}</p>
-                      </div>
-                    </Card>
-                  </Link>
-                )}
+                ))}
               </div>
             </div>
           </div>

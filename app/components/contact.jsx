@@ -3,6 +3,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageCircle, Facebook, Instagram } from "lucide-react";
+import { safeWindowOpen } from "@/lib/security";
 
 const scistMethods = [
   {
@@ -81,7 +82,7 @@ export default function Contact() {
                   <Card
                     key={`scist-${idx}`}
                     className="neon-card rounded-2xl p-6 bg-muted transition-shadow cursor-pointer"
-                    onClick={() => window.open(method.link, "_blank")}
+                    onClick={() => safeWindowOpen(method.link)}
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center shrink-0">
@@ -112,7 +113,7 @@ export default function Contact() {
                   <Card
                     key={`scaict-${idx}`}
                     className="neon-card rounded-2xl p-6 bg-muted transition-shadow cursor-pointer"
-                    onClick={() => window.open(method.link, "_blank")}
+                    onClick={() => safeWindowOpen(method.link)}
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center shrink-0">

@@ -14,8 +14,8 @@ function getGravatarUrl(email, size = 200) {
   return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`;
 }
 
-// 職位順序
-const CATEGORY_ORDER = ["總召", "副召", "行政組", "課程組", "活動組", "資訊組", "隊輔組", "紀錄組"];
+// 職位順序（合併總召和副召為總召組）
+const CATEGORY_ORDER = ["總召組", "行政組", "課程組", "活動組", "資訊組", "隊輔組", "紀錄組"];
 
 export default function TeamPage() {
   const [allTeamMembers, setAllTeamMembers] = useState([]);
@@ -28,15 +28,39 @@ export default function TeamPage() {
         const members = data.allMembers || [];
         setAllTeamMembers(members);
 
-        // 依照職位分組
-        const grouped = members.reduce((acc, member) => {
-          const category = member.category || "其他";
-          if (!acc[category]) {
-            acc[category] = [];
+        // 依照職位分組，合併總召和副召
+        const grouped = {};
+
+        members.forEach(member => {
+          let category = member.category || "其他";
+
+          // 將總召和副召都歸入「總召組」
+          if (category === "總召" || category === "副召") {
+            if (!grouped["總召組"]) {
+              grouped["總召組"] = [];
+            }
+            grouped["總召組"].push(member);
+          } else {
+            if (!grouped[category]) {
+              grouped[category] = [];
+            }
+            grouped[category].push(member);
           }
-          acc[category].push(member);
-          return acc;
-        }, {});
+        });
+
+        // 總召組內排序：總召在中間，副召在兩側
+        if (grouped["總召組"] && grouped["總召組"].length > 0) {
+          const 總召 = grouped["總召組"].filter(m => m.category === "總召");
+          const 副召 = grouped["總召組"].filter(m => m.category === "副召");
+
+          const sorted = [];
+          if (副召.length > 0 && 副召[0]) sorted.push(副召[0]);
+          if (總召.length > 0 && 總召[0]) sorted.push(總召[0]);
+          if (副召.length > 1 && 副召[1]) sorted.push(副召[1]);
+
+          grouped["總召組"] = sorted;
+        }
+
         setGroupedMembers(grouped);
       })
       .catch((err) => console.error("Failed to load team:", err));
@@ -89,19 +113,26 @@ export default function TeamPage() {
                       <div className={`grid gap-6 w-full ${
                         members.length === 1 ? "grid-cols-1 max-w-sm" :
                         members.length === 2 ? "grid-cols-1 sm:grid-cols-2 max-w-2xl" :
+                        category === "總召組" && members.length === 3 ? "grid-cols-1 sm:grid-cols-3 max-w-4xl" :
                         "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl"
                       }`}>
                         {members.map((member, idx) => (
                           <Card
                             key={idx}
-                            className="neon-card rounded-2xl overflow-hidden group hover:scale-[1.02] transition-transform p-6 relative"
+                            className={`neon-card rounded-2xl overflow-hidden group hover:scale-[1.02] transition-transform p-6 relative ${
+                              category === "總召組" && member.category === "總召" ? "ring-2 ring-[oklch(0.75_0.15_85)]/50" : ""
+                            }`}
                           >
                             {member.isLeader && (
                               <div className="absolute top-2 right-2 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
                             )}
                             <div className="flex flex-col items-center text-center">
                               {/* Avatar */}
-                              <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 group-hover:border-[oklch(0.75_0.15_85)] transition-colors flex items-center justify-center bg-secondary/50">
+                              <div className={`relative w-24 h-24 mb-4 rounded-full overflow-hidden group-hover:border-[oklch(0.75_0.15_85)] transition-colors flex items-center justify-center bg-secondary/50 ${
+                                category === "總召組" && member.category === "總召"
+                                  ? "border-4 border-[oklch(0.75_0.15_85)]/50"
+                                  : "border-2 border-[oklch(0.75_0.15_85)]/30"
+                              }`}>
                                 {member.email ? (
                                   <Image
                                     src={getGravatarUrl(member.email, 192)}
@@ -122,7 +153,7 @@ export default function TeamPage() {
                               </div>
                               <h3 className="text-lg font-bold mb-1">{member.name}</h3>
                               {member.organization && (
-                                <p className="text-[oklch(0.75_0.15_85)] text-xs mb-2 line-clamp-2">
+                                <p className="text-foreground/60 text-xs mb-2 line-clamp-2">
                                   {member.organization}
                                 </p>
                               )}

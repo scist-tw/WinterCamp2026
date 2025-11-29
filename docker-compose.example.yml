@@ -1,0 +1,46 @@
+services:
+  # 開發環境設定
+  wintercamp-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    container_name: wintercamp2026-dev
+    ports:
+      - "3000:3000"  # 請修改為你的 port
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - TURBOPACK_EXPERIMENTAL_MEMORY_LIMIT=4096
+    networks:
+      - wintercamp-network
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    command: npm run dev
+
+  # 正式環境設定（可選）
+  wintercamp-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: wintercamp2026-prod
+    ports:
+      - "3001:3000"  # 請修改為你的 port
+    environment:
+      - NODE_ENV=production
+    networks:
+      - wintercamp-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+networks:
+  wintercamp-network:
+    driver: bridge
