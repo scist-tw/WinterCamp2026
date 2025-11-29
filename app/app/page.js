@@ -12,6 +12,7 @@ import Contact from "@/components/contact";
 import Footer from "@/components/footer";
 import ScrollToTop from "@/components/scroll-to-top";
 import StructuredData from "@/components/structured-data";
+import EasterEggs from "@/components/easter-eggs";
 
 // Helper function to generate random glows
 const generateGlows = () => {
@@ -58,6 +59,9 @@ export default function Home() {
     <div className="relative">
       {/* Structured Data for SEO */}
       <StructuredData />
+
+      {/* Easter Eggs */}
+      <EasterEggs />
 
       {/* Global Background Decoration */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
