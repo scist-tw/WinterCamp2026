@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Globe, Cpu, Clock, Target, Award } from "lucide-react";
 import Link from "next/link";
-import DetailNavbar from "@/components/detail-navbar";
 
 const courses = [
   {
@@ -69,7 +68,6 @@ export default function CoursePage() {
 
   return (
     <div className="min-h-screen">
-      <DetailNavbar currentPage="course" />
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 lg:pb-32 px-6 lg:px-12">

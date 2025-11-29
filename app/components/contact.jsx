@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, MessageCircle, Facebook, Instagram } from "lucide-react";
 
-const contactMethods = [
+const scistMethods = [
   {
     icon: Mail,
     title: "Email",
@@ -27,7 +27,34 @@ const contactMethods = [
     icon: MessageCircle,
     title: "Discord",
     value: "SCIST Community",
-    link: "https://discord.gg/scist",
+    link: "https://dc.scist.org",
+  },
+];
+
+const scaictMethods = [
+  {
+    icon: Mail,
+    title: "Email",
+    value: "contact@scaict.org",
+    link: "mailto:contact@scaict.org",
+  },
+  {
+    icon: Facebook,
+    title: "Facebook",
+    value: "Scaict 中電會",
+    link: "https://www.facebook.com/scaict.tw",
+  },
+  {
+    icon: Instagram,
+    title: "Instagram",
+    value: "@scaict.tw",
+    link: "https://www.instagram.com/scaict.tw",
+  },
+  {
+    icon: MessageCircle,
+    title: "Discord",
+    value: "SCAICT Community",
+    link: "https://dc.scaict.org",
   },
 ];
 
@@ -43,56 +70,70 @@ export default function Contact() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {contactMethods.map((method, idx) => {
-            const Icon = method.icon;
-            return (
-              <Card
-                key={idx}
-                className="neon-card rounded-2xl p-6 bg-muted transition-shadow cursor-pointer"
-                onClick={() => window.open(method.link, "_blank")}
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center shrink-0">
-                    <Icon className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-sm font-semibold text-foreground/60 mb-1">
-                      {method.title}
-                    </h3>
-                    <p className="text-base lg:text-lg font-medium">
-                      {method.value}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-
-        <div className="text-center">
-          <Card className="neon-card rounded-2xl p-8 bg-muted inline-block min-w-[600px]">
-            <div className="space-y-4">
-              <h3 className="text-xl font-bold text-center">主辦單位</h3>
-              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-8">
-                <div className="text-center">
-                  <p className="text-lg font-semibold">SCIST</p>
-                  <p className="text-sm text-foreground/70">
-                    南臺灣學生資訊社群
-                  </p>
-                </div>
-                <div className="text-2xl text-foreground/40">×</div>
-                <div className="text-center">
-                  <p className="text-lg font-semibold">SCAICT</p>
-                  <p className="text-sm text-foreground/70">
-                    中部高中電資聯合會議
-                  </p>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+          {/* SCIST 聯絡方式 */}
+          <div>
+            <h3 className="text-3xl font-bold mb-6 text-center lg:text-center">SCIST</h3>
+            <div className="grid grid-cols-1 gap-4">
+              {scistMethods.map((method, idx) => {
+                const Icon = method.icon;
+                return (
+                  <Card
+                    key={`scist-${idx}`}
+                    className="neon-card rounded-2xl p-6 bg-muted transition-shadow cursor-pointer"
+                    onClick={() => window.open(method.link, "_blank")}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center shrink-0">
+                        <Icon className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm font-semibold text-foreground/60 mb-1">
+                          {method.title}
+                        </h4>
+                        <p className="text-base font-medium">
+                          {method.value}
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
-          </Card>
+          </div>
+
+          {/* SCAICT 聯絡方式 */}
+          <div>
+            <h3 className="text-3xl font-bold mb-6 text-center lg:text-center">SCAICT</h3>
+            <div className="grid grid-cols-1 gap-4">
+              {scaictMethods.map((method, idx) => {
+                const Icon = method.icon;
+                return (
+                  <Card
+                    key={`scaict-${idx}`}
+                    className="neon-card rounded-2xl p-6 bg-muted transition-shadow cursor-pointer"
+                    onClick={() => window.open(method.link, "_blank")}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/10 flex items-center justify-center shrink-0">
+                        <Icon className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-sm font-semibold text-foreground/60 mb-1">
+                          {method.title}
+                        </h4>
+                        <p className="text-base font-medium">
+                          {method.value}
+                        </p>
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
         </div>
-      </div>
+      </div> 
     </section>
   );
 }

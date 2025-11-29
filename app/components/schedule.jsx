@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Calendar } from "lucide-react";
+import { Calendar, X } from "lucide-react";
 
 export default function Schedule() {
   const [scheduleData, setScheduleData] = useState([]);
-  const [leftColWidth, setLeftColWidth] = useState("150px");
+  const [selectedSlot, setSelectedSlot] = useState(null);
 
   useEffect(() => {
     fetch("/data/schedule.json")
@@ -14,71 +14,90 @@ export default function Schedule() {
       .then((data) => setScheduleData(data.scheduleData));
   }, []);
 
+  // Handle Escape key
   useEffect(() => {
-    const update = () => {
-      setLeftColWidth(window.innerWidth >= 768 ? "150px" : "80px");
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") closeModal();
     };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
-    <section id="schedule" className="py-20 lg:py-32 px-6 lg:px-40">
-      <div className="max-w-4xl mx-auto">
+    <section id="schedule" className="py-20 lg:py-32 px-6 lg:px-12 bg-secondary/20">
+      <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <div className="mb-3 flex items-center justify-center gap-2">
             <Calendar className="w-6 h-6 text-[oklch(0.75_0.15_85)]" />
             <span className="section-eyebrow">SCHEDULE // 課程活動</span>
           </div>
-          <h2 className="section-title text-3xl lg:text-4xl font-bold">課程活動</h2>
+          <h2 className="section-title text-3xl lg:text-5xl font-bold mb-4">課程活動</h2>
+          <p className="text-foreground/70 text-base lg:text-lg max-w-2xl mx-auto">
+            精心規劃四天密集課程，涵蓋破冰、課程、社群交流與黑客松
+          </p>
         </div>
 
-        <div className="overflow-x-auto">
-          <div className="inline-block min-w-full">
+        {/* Day Tabs */}
+        <div className="mb-12 flex flex-wrap gap-3 justify-center">
+          {scheduleData.map((day, idx) => (
             <div
-              className="grid gap-4 mb-4"
-              style={{
-                gridTemplateColumns: `${leftColWidth} repeat(${
-                  scheduleData.length || 1
-                }, 1fr)`,
-              }}
+              key={idx}
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-[oklch(0.75_0.15_85)]/10 to-[oklch(0.8_0.18_85)]/10 border border-[oklch(0.75_0.15_85)]/30 backdrop-blur-sm text-center"
             >
-              <div className="font-semibold text-foreground/60 text-sm py-2 px-2 md:py-4 md:px-0">
-                時間
+              <div className="font-bold text-sm md:text-base text-[oklch(0.75_0.15_85)]">
+                {day.day}
               </div>
-              {scheduleData.map((day, idx) => (
-                <div key={idx} className="text-center">
-                  <div className="font-bold text-lg">{day.day}</div>
-                  <div className="text-sm text-foreground/60">{day.date}</div>
-                </div>
-              ))}
+              <div className="text-xs text-foreground/60">{day.date}</div>
             </div>
+          ))}
+        </div>
 
-            {scheduleData[0]?.slots.map((_, slotIdx) => (
-              <div
-                key={slotIdx}
-                className="grid gap-4 mb-4"
-                style={{
-                  gridTemplateColumns: `${leftColWidth} repeat(${scheduleData.length}, 1fr)`,
-                }}
-              >
-                <div className="text-sm font-semibold text-foreground/70 py-2 px-2 md:py-4 md:px-4">
-                  {scheduleData[0].slots[slotIdx].time}
-                </div>
-                {scheduleData.map((day, dayIdx) => (
-                  <Card
-                    key={dayIdx}
-                    className="neon-card rounded-2xl p-2 md:p-4 bg-background min-h-12 md:min-h-20 flex items-center justify-center text-center transition-shadow"
-                  >
-                    <p className="text-xs md:text-sm font-semibold text-foreground">
-                      {day.slots[slotIdx]?.activity || "-"}
-                    </p>
-                  </Card>
-                ))}
+        {/* Schedule Cards Grid */}
+        <div className="space-y-6">
+          {scheduleData.map((day, dayIdx) => (
+            <div key={dayIdx} className="border-l-4 border-[oklch(0.75_0.15_85)]/50 pl-6 py-4">
+              <h3 className="text-2xl font-bold mb-6 text-[oklch(0.75_0.15_85)]">
+                {day.day} - {day.date}
+              </h3>
+
+              <div className="space-y-3">
+                {day.slots.map((slot, slotIdx) => {
+                  const hasDetail = hasDetails(slot);
+
+                  return (
+                    <div 
+                      key={slotIdx}
+                      className={`rounded-2xl p-4 md:p-6 transition-all border-2 border-[oklch(0.75_0.15_85)]/30 bg-card ${
+                        hasDetail
+                          ? "cursor-pointer hover:shadow-lg hover:scale-[1.01] hover:border-[oklch(0.75_0.15_85)]/60"
+                          : "cursor-default"
+                      }`}
+                      onClick={() => {
+                        console.log("Card clicked:", slot.activity, hasDetail);
+                        openModal(slot, dayIdx, slotIdx);
+                      }}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="text-xs md:text-sm font-bold text-[oklch(0.75_0.15_85)] mb-1 opacity-80">
+                            {slot.time}
+                          </div>
+                          <h4 className="text-lg md:text-xl font-bold text-foreground">
+                            {slot.activity}
+                          </h4>
+                        </div>
+                        {hasDetail && (
+                          <div className="ml-3 flex-shrink-0 px-3 py-1 bg-[oklch(0.75_0.15_85)]/20 rounded-full text-xs text-[oklch(0.75_0.15_85)] font-semibold">
+                            詳情
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

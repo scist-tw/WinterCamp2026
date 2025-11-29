@@ -3,7 +3,6 @@
 import { Card } from "@/components/ui/card";
 import { Users, Calendar, MapPin, Clock, AlertCircle } from "lucide-react";
 import Link from "next/link";
-import DetailNavbar from "@/components/detail-navbar";
 import { useEffect, useState } from "react";
 
 export default function PricingPage() {
@@ -38,7 +37,6 @@ export default function PricingPage() {
   
   return (
     <div className="min-h-screen">
-      <DetailNavbar currentPage="pricing" />
 
       {/* Hero */}
       <section className="pt-32 pb-20 lg:pb-32 px-6 lg:px-12">

@@ -14,7 +14,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* 主辦單位 */}
-          <div className="flex flex-col items-center md:items-start gap-6">
+          <div className="flex flex-col items-start gap-6">
             <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)]">
               主辦單位
             </h3>

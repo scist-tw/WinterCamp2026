@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Camera } from "lucide-react";
 import Image from "next/image";
-import DetailNavbar from "@/components/detail-navbar";
 
 export default function GalleryPage() {
   const [galleryImages, setGalleryImages] = useState([]);
@@ -25,7 +24,6 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen">
-      <DetailNavbar currentPage="gallery" />
 
       {/* Main content */}
       <section className="pt-32 pb-20 lg:pb-32 px-6 lg:px-12">

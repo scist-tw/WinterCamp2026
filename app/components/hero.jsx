@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
+import Image from "next/image";
 
 export default function Hero() {
   const [days, setDays] = useState(0);
@@ -30,7 +31,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 py-20 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 pt-12 pb-45 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-[oklch(0.75_0.15_85)] opacity-5 rounded-full blur-3xl"></div>
@@ -39,47 +40,28 @@ export default function Hero() {
 
       <div className="max-w-4xl text-center space-y-12 relative z-10">
         <div className="space-y-6">
-          <div className="flex justify-center"><span className="section-eyebrow">WINTER CAMP // 閃電四連編</span></div>
-          <h1 className="text-3xl lg:text-5xl font-bold tracking-tight">
+          <div className="text-sm flex justify-center"><span className="section-eyebrow">WINTER CAMP // 閃電四連編</span></div>
+          <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">
             SCIST x SCAICT 2026 聯合寒訓
           </h1>
+          <br />
           <div className="flex items-center justify-center">
-            <h2 className="text-4xl lg:text-7xl font-black tracking-tight bg-linear-to-r from-[oklch(0.65_0.13_85)] via-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] bg-clip-text text-transparent drop-shadow-2xl">
-              閃電四連編
-            </h2>
+            <Image
+              src="/assets/images/banner.png"
+              alt="閃電四連編"
+              width={300}
+              height={150}
+              className="w-full max-w-lg h-auto"
+            />
           </div>
+          <br />
           <div className="flex justify-center">
             <div className="inline-flex items-center gap-2 bg-muted text-foreground/80 rounded-lg px-3 py-2">
               <MapPin className="w-4 h-4" />
               <span className="text-lg">國立成功大學電機工程學系</span>
             </div>
           </div>
-
-          <p className="text-lg lg:text-2xl text-foreground/90 leading-relaxed max-w-3xl mx-auto font-medium">
-            想讓寒假過得更充實？想增進自己的資訊能力與技術？<br />
-            想認識更多志同道合的資訊圈朋友？<br />
-            <span className="text-[oklch(0.75_0.15_85)] font-bold text-2xl lg:text-3xl">那就來參加我們的聯合寒訓吧！</span>
-          </p>
-
-          <div className="relative group">
-            <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.65_0.13_85)] rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-            <div className="relative bg-linear-to-br from-card to-muted border-2 border-[oklch(0.75_0.15_85)]/30 rounded-3xl p-8 lg:p-10 space-y-4">
-              <h3 className="text-2xl lg:text-3xl font-black text-[oklch(0.75_0.15_85)]">
-                四天三夜，紮實做出可上線的專案
-              </h3>
-              <div className="space-y-3 text-base lg:text-xl text-foreground/80 leading-relaxed">
-                <p>
-                  從需求拆解到系統設計，從前端開發到雲端部署，帶你走過真實的產品開發流程。
-                </p>
-                <p>
-                  我們重視團隊協作與技術深度，不空談理論，專注實作落地。
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative">
+          <div className="relative">
           <div className="grid grid-cols-4 gap-4 lg:gap-6 p-8 bg-linear-to-br from-card to-muted border border-[oklch(0.75_0.15_85)]/20 rounded-3xl">
             <div className="flex flex-col items-center justify-center">
               <div className="text-4xl lg:text-6xl font-black text-[oklch(0.75_0.15_85)]">{days}</div>
@@ -120,6 +102,7 @@ export default function Hero() {
             報名名額有限，歡迎加入一起專注做事的夥伴。
           </p>
         </div>
+      </div>
       </div>
     </section>
   );

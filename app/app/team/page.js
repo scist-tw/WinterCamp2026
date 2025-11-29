@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Users } from "lucide-react";
 import Image from "next/image";
-import DetailNavbar from "@/components/detail-navbar";
 import md5 from "md5";
 
 // Generate Gravatar URL from email
@@ -16,7 +15,7 @@ function getGravatarUrl(email, size = 200) {
 }
 
 // 職位順序
-const categoryOrder = ["總召", "副召", "行政組", "課程組", "活動組", "資訊組", "隊輔組", "編輯組", "紀錄組", "其他"];
+const CATEGORY_ORDER = ["總召", "副召", "行政組", "課程組", "活動組", "資訊組", "隊輔組", "紀錄組"];
 
 export default function TeamPage() {
   const [allTeamMembers, setAllTeamMembers] = useState([]);
@@ -44,7 +43,6 @@ export default function TeamPage() {
   }, []);
   return (
     <div className="min-h-screen">
-      <DetailNavbar currentPage="team" />
 
       {/* Main content */}
       <section className="pt-32 pb-20 lg:pb-32 px-6 lg:px-12">
@@ -63,94 +61,82 @@ export default function TeamPage() {
             </p>
           </div>
 
-          {/* Team Members */}
+          {/* Team Members - Centered Layout */}
           {allTeamMembers.length === 0 ? (
             <div className="text-center py-20 text-foreground/70">
               <Users className="w-16 h-16 mx-auto mb-4 text-[oklch(0.55_0.15_85)]/40" />
               <p>工作人員名單籌備中...</p>
             </div>
           ) : (
-            <div className="space-y-16">
-              {categoryOrder.map((category) => {
+            <div className="space-y-20">
+              {CATEGORY_ORDER.map((category) => {
                 const members = groupedMembers[category];
                 if (!members || members.length === 0) return null;
 
                 return (
-                  <div key={category}>
-                    {/* Category Title */}
-                    <div className="mb-8">
-                      <h2 className="text-2xl lg:text-3xl font-bold text-center">
+                  <div key={category} className="w-full">
+                    {/* Category Title - Centered */}
+                    <div className="mb-10 text-center">
+                      <h2 className="text-2xl lg:text-3xl font-bold">
                         <span className="inline-block px-4 py-2 bg-[oklch(0.75_0.15_85)] text-black rounded-lg">
                           {category}
                         </span>
                       </h2>
                     </div>
 
-                    {/* Members Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                      {members.map((member, idx) => (
-                        <Card
-                          key={idx}
-                          className="neon-card rounded-2xl overflow-hidden group hover:scale-[1.02] transition-transform p-6"
-                        >
-                          <div className="flex flex-col items-center text-center">
-                            {/* Avatar - Gravatar */}
-                            <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 group-hover:border-[oklch(0.75_0.15_85)] transition-colors">
-                              <Image
-                                src={getGravatarUrl(member.email, 192)}
-                                alt={member.name}
-                                fill
-                                className="object-cover"
-                                unoptimized
-                              />
-                            </div>
+                    {/* Members Grid - Centered */}
+                    <div className="flex justify-center">
+                      <div className={`grid gap-6 w-full ${
+                        members.length === 1 ? "grid-cols-1 max-w-sm" :
+                        members.length === 2 ? "grid-cols-1 sm:grid-cols-2 max-w-2xl" :
+                        "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl"
+                      }`}>
+                        {members.map((member, idx) => (
+                          <Card
+                            key={idx}
+                            className="neon-card rounded-2xl overflow-hidden group hover:scale-[1.02] transition-transform p-6 relative"
+                          >
+                            {member.isLeader && (
+                              <div className="absolute top-2 right-2 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
+                            )}
+                            <div className="flex flex-col items-center text-center">
+                              {/* Avatar */}
+                              <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 group-hover:border-[oklch(0.75_0.15_85)] transition-colors flex items-center justify-center bg-secondary/50">
+                                {member.email ? (
+                                  <Image
+                                    src={getGravatarUrl(member.email, 192)}
+                                    alt={member.name}
+                                    width={96}
+                                    height={96}
+                                    className="object-cover"
+                                    unoptimized
+                                  />
+                                ) : (
+                                  <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
+                                )}
+                              </div>
 
-                            {/* Info */}
-                            <div className="inline-block px-2 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-2">
-                              {member.role}
+                              {/* Info */}
+                              <div className="inline-block px-2 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-2">
+                                {member.role}
+                              </div>
+                              <h3 className="text-lg font-bold mb-1">{member.name}</h3>
+                              {member.organization && (
+                                <p className="text-[oklch(0.75_0.15_85)] text-xs mb-2 line-clamp-2">
+                                  {member.organization}
+                                </p>
+                              )}
+                              {member.bio && (
+                                <p className="text-foreground/60 text-sm line-clamp-2">{member.bio}</p>
+                              )}
                             </div>
-                            <h3 className="text-lg font-bold mb-1">{member.name}</h3>
-                            {member.organization && (
-                              <p className="text-[oklch(0.75_0.15_85)] text-xs mb-2">
-                                {member.organization}
-                              </p>
-                            )}
-                            {member.bio && (
-                              <p className="text-foreground/60 text-sm">{member.bio}</p>
-                            )}
-                          </div>
-                        </Card>
-                      ))}
+                          </Card>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 );
               })}
-            </div>
-          )}
-
-          {/* Placeholder when no members */}
-          {allTeamMembers.length === 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, idx) => (
-                <Card
-                  key={idx}
-                  className="neon-card rounded-2xl overflow-hidden p-6"
-                >
-                  <div className="flex flex-col items-center text-center">
-                    {/* Avatar placeholder */}
-                    <div className="w-24 h-24 mb-4 rounded-full bg-secondary/50 flex items-center justify-center border-2 border-[oklch(0.75_0.15_85)]/20">
-                      <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
-                    </div>
-
-                    {/* Info placeholder */}
-                    <div className="inline-block px-2 py-1 bg-secondary/50 text-foreground/40 text-xs font-bold rounded-full mb-2">
-                      工作人員
-                    </div>
-                    <h3 className="text-lg font-bold mb-1 text-foreground/40">姓名</h3>
-                    <p className="text-foreground/30 text-sm">籌備中...</p>
-                  </div>
-                </Card>
-              ))}
             </div>
           )}
         </div>
