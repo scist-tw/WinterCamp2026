@@ -44,7 +44,7 @@ export default function Info() {
             return (
               <Card
                 key={idx}
-                className="neon-card rounded-2xl p-6 bg-background transition-shadow"
+                className="neon-card rounded-2xl p-6 transition-shadow"
               >
                 <div className="flex flex-col items-center text-center space-y-4">
                   <div className="w-12 h-12 rounded-full bg-[oklch(0.75_0.15_85)]/12 flex items-center justify-center">
@@ -62,7 +62,7 @@ export default function Info() {
           })}
         </div>
 
-        <Card className="neon-card rounded-2xl p-6 lg:p-8 bg-background">
+        <Card className="neon-card rounded-2xl p-6 lg:p-8">
           <div className="flex items-start gap-3 mb-4">
             <AlertCircle className="w-6 h-6 text-[oklch(0.55_0.15_85)] shrink-0 mt-1" />
             <h3 className="text-xl lg:text-2xl font-bold">注意事項</h3>

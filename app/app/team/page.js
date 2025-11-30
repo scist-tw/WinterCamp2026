@@ -152,7 +152,7 @@ export default function TeamPage() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-background selection:bg-primary/20">
+    <div className="min-h-screen w-full selection:bg-primary/20">
       
       {/* --- Hero Section --- */}
       <div className="text-center mb-8 px-6 py-25 lg:px-8">
@@ -191,72 +191,177 @@ export default function TeamPage() {
               return (
                 <section key={category} id={category} className="scroll-mt-24">
                   {/* Category Header */}
-                  <div className="mb-8 border-l-4 border-primary pl-4">
-                    <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                  <div className="mb-8 flex flex-col items-center text-center">
+                    <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl mb-2">
                       {category}
                     </h2>
-                    <p className="mt-2 text-base text-foreground/60">
+                    <p className="text-sm text-foreground/70 mb-4">
                       {CATEGORY_DESC[category] || "SITCON 的核心夥伴"}
                     </p>
+                    <div className="w-64 h-0.5 bg-gradient-to-r from-transparent via-[oklch(0.75_0.15_85)] to-transparent"></div>
                   </div>
 
-                  {/* Members Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                    {members.map((member, idx) => (
-                      <div
-                        key={idx}
-                        className="group relative flex flex-col items-center rounded-2xl bg-secondary/10 p-4 transition-all duration-300 hover:bg-secondary/20 hover:-translate-y-1 hover:shadow-lg"
-                      >
-                        {/* Avatar Container */}
-                        <div className="relative mb-4">
-                          <div className={`relative h-24 w-24 overflow-hidden rounded-full ring-4 ring-background transition-all duration-300 ${member.email && member.link?.trim() ? 'cursor-pointer hover:ring-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50 group' : 'group-hover:scale-105'} shadow-md`} onClick={() => member.link?.trim() && window.open(member.link.trim(), "_blank")}>
-                            {member.email ? (
-                                member.link?.trim() ? (
-                                  <>
+                  {/* Members Grid - Special layout for 總召組 */}
+                  {category === "總召組" ? (
+                    <div className="flex justify-center">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-4xl">
+                        {/* First 副召 */}
+                        {members.filter(m => resolveLabel(m, category) === "副召")[0] && (
+                          <div className="flex justify-center">
+                            <div className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
+                              <div className="flex flex-col items-center text-center flex-1">
+                                <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${members.filter(m => resolveLabel(m, category) === "副召")[0].email && members.filter(m => resolveLabel(m, category) === "副召")[0].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30'}`}>
+                                  {members.filter(m => resolveLabel(m, category) === "副召")[0].email ? (
+                                    members.filter(m => resolveLabel(m, category) === "副召")[0].link?.trim() ? (
+                                      <button onClick={() => window.open(members.filter(m => resolveLabel(m, category) === "副召")[0].link.trim(), "_blank")} className="w-full h-full relative group">
+                                        <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[0].name} fill className="object-cover" unoptimized />
+                                        <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                          <ArrowRight className="w-6 h-6 text-white -rotate-45" />
+                                        </div>
+                                      </button>
+                                    ) : (
+                                      <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[0].name} fill className="object-cover" unoptimized />
+                                    )
+                                  ) : (
+                                    <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
+                                  )}
+                                </div>
+                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(members.filter(m => resolveLabel(m, category) === "副召")[0], category)}</div>
+                                <h4 className="text-lg font-bold mb-2">{members.filter(m => resolveLabel(m, category) === "副召")[0].name}</h4>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* 總召 - Center */}
+                        {members.filter(m => resolveLabel(m, category) === "總召")[0] && (
+                          <div className="flex justify-center sm:col-span-1">
+                            <div className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col ring-2 ring-[oklch(0.75_0.15_85)]/50">
+                              {resolveLabel(members.filter(m => resolveLabel(m, category) === "總召")[0], category) === "組長" && (
+                                <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
+                              )}
+                              <div className="flex flex-col items-center text-center flex-1">
+                                <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${members.filter(m => resolveLabel(m, category) === "總召")[0].email && members.filter(m => resolveLabel(m, category) === "總召")[0].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30'}`}>
+                                  {members.filter(m => resolveLabel(m, category) === "總召")[0].email ? (
+                                    members.filter(m => resolveLabel(m, category) === "總召")[0].link?.trim() ? (
+                                      <button onClick={() => window.open(members.filter(m => resolveLabel(m, category) === "總召")[0].link.trim(), "_blank")} className="w-full h-full relative group">
+                                        <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "總召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "總召")[0].name} fill className="object-cover" unoptimized />
+                                        <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                          <ArrowRight className="w-6 h-6 text-white -rotate-45" />
+                                        </div>
+                                      </button>
+                                    ) : (
+                                      <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "總召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "總召")[0].name} fill className="object-cover" unoptimized />
+                                    )
+                                  ) : (
+                                    <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
+                                  )}
+                                </div>
+                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(members.filter(m => resolveLabel(m, category) === "總召")[0], category)}</div>
+                                <h4 className="text-lg font-bold mb-2">{members.filter(m => resolveLabel(m, category) === "總召")[0].name}</h4>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Second 副召 */}
+                        {members.filter(m => resolveLabel(m, category) === "副召")[1] && (
+                          <div className="flex justify-center">
+                            <div className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
+                              <div className="flex flex-col items-center text-center flex-1">
+                                <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${members.filter(m => resolveLabel(m, category) === "副召")[1].email && members.filter(m => resolveLabel(m, category) === "副召")[1].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30'}`}>
+                                  {members.filter(m => resolveLabel(m, category) === "副召")[1].email ? (
+                                    members.filter(m => resolveLabel(m, category) === "副召")[1].link?.trim() ? (
+                                      <button onClick={() => window.open(members.filter(m => resolveLabel(m, category) === "副召")[1].link.trim(), "_blank")} className="w-full h-full relative group">
+                                        <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[1].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[1].name} fill className="object-cover" unoptimized />
+                                        <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                          <ArrowRight className="w-6 h-6 text-white -rotate-45" />
+                                        </div>
+                                      </button>
+                                    ) : (
+                                      <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[1].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[1].name} fill className="object-cover" unoptimized />
+                                    )
+                                  ) : (
+                                    <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
+                                  )}
+                                </div>
+                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(members.filter(m => resolveLabel(m, category) === "副召")[1], category)}</div>
+                                <h4 className="text-lg font-bold mb-2">{members.filter(m => resolveLabel(m, category) === "副召")[1].name}</h4>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    /* Regular grid for other categories */
+                    <div className="flex flex-wrap justify-center gap-6">
+                      {members.map((member, idx) => (
+                        <div
+                          key={idx}
+                          className={`group relative flex flex-col items-center rounded-2xl bg-secondary/10 transition-all duration-300 hover:bg-secondary/20 hover:-translate-y-1 hover:shadow-lg ${
+                            category === "行政組"
+                              ? "p-6 w-[200px]"
+                              : "p-4 w-[140px]"
+                          }`}
+                        >
+                          {/* Avatar Container */}
+                          <div className="relative mb-4">
+                            <div className={`relative overflow-hidden rounded-full ring-4 ring-background transition-all duration-300 ${
+                              category === "行政組" ? "h-32 w-32" : "h-24 w-24"
+                            } ${member.email && member.link?.trim() ? 'cursor-pointer hover:ring-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50 group' : 'group-hover:scale-105'} shadow-md`} onClick={() => member.link?.trim() && window.open(member.link.trim(), "_blank")}>
+                              {member.email ? (
+                                  member.link?.trim() ? (
+                                    <>
+                                      <Image
+                                        src={getGravatarUrl(member.email, 256)}
+                                        alt={member.name}
+                                        fill
+                                        className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        loading="eager"
+                                        unoptimized
+                                      />
+                                      <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                        <ArrowRight className={`text-white -rotate-45 ${category === "行政組" ? "w-6 h-6" : "w-5 h-5"}`} />
+                                      </div>
+                                    </>
+                                  ) : (
                                     <Image
                                       src={getGravatarUrl(member.email, 256)}
                                       alt={member.name}
                                       fill
                                       className="object-cover"
                                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                      loading="eager"
                                       unoptimized
                                     />
-                                    <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                      <ArrowRight className="w-5 h-5 text-white -rotate-45" />
-                                    </div>
-                                  </>
-                                ) : (
-                                  <Image
-                                    src={getGravatarUrl(member.email, 256)}
-                                    alt={member.name}
-                                    fill
-                                    className="object-cover"
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    unoptimized
-                                  />
-                                )
-                            ) : (
-                              <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
-                                <Users className="h-10 w-10" />
-                              </div>
-                            )}
+                                  )
+                              ) : (
+                                <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
+                                  <Users className={category === "行政組" ? "h-12 w-12" : "h-10 w-10"} />
+                                </div>
+                              )}
+                            </div>
+                            {/* Optional: Add a subtle status dot or decoration here */}
                           </div>
-                          {/* Optional: Add a subtle status dot or decoration here */}
-                        </div>
 
-                        {/* Text Info */}
-                        <div className="text-center w-full">
-                          <h3 className="font-bold text-foreground text-lg truncate px-2">
-                            {member.name}
-                          </h3>
-                          <p className="mt-1 text-xs font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate">
-                            {resolveLabel(member, category)}
-                          </p>
+                          {/* Text Info */}
+                          <div className="text-center w-full">
+                            <h3 className={`font-bold text-foreground truncate px-2 ${
+                              category === "行政組" ? "text-xl mb-2" : "text-lg"
+                            }`}>
+                              {member.name}
+                            </h3>
+                            <p className={`mt-1 font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate ${
+                              category === "行政組" ? "text-base" : "text-xs"
+                            }`}>
+                              {resolveLabel(member, category)}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
                 </section>
               );
             })}

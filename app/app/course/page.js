@@ -93,7 +93,7 @@ export default function CoursePage() {
               return (
                 <Card
                   key={idx}
-                  className="neon-card rounded-2xl p-8 bg-background transition-all hover:scale-[1.02]"
+                  className="neon-card rounded-2xl p-8 transition-all hover:scale-[1.02] flex flex-col"
                 >
                   <div className="w-16 h-16 rounded-2xl bg-[oklch(0.75_0.15_85)]/12 flex items-center justify-center mb-6">
                     <Icon className="w-8 h-8 text-[oklch(0.55_0.15_85)]" />
@@ -101,7 +101,7 @@ export default function CoursePage() {
                   <h3 className="text-2xl font-bold mb-3">{course.title}</h3>
                   <p className="text-foreground/70 mb-6">{course.description}</p>
 
-                  <div className="space-y-3 mb-6">
+                  <div className="space-y-3 mb-6 flex-1">
                     {course.details.map((detail, detailIdx) => (
                       <div key={detailIdx} className="flex items-start gap-3">
                         <span className="w-1.5 h-1.5 rounded-full bg-[oklch(0.55_0.15_85)] shrink-0 mt-2"></span>
@@ -110,7 +110,7 @@ export default function CoursePage() {
                     ))}
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mt-auto">
                     {course.topics.map((topic, topicIdx) => (
                       <span
                         key={topicIdx}
@@ -160,7 +160,7 @@ export default function CoursePage() {
 
           {/* Schedule */}
           <div className="mb-12">
-            <div className="text-center mb-12">
+            <div className="text-center mb-16">
               <div className="mb-3 flex justify-center">
                 <span className="section-eyebrow">SCHEDULE // 課程活動</span>
               </div>
@@ -172,94 +172,58 @@ export default function CoursePage() {
               </p>
             </div>
 
-            {/* Schedule table */}
-            <div className="relative">
-              {/* Mobile version with scroll */}
-              <div className="lg:hidden flex justify-center">
-                <div className="flex gap-4 max-w-full">
-                  {/* Fixed time column */}
-                  <div className="flex-shrink-0" style={{ width: leftColWidth }}>
-                    <div className="mb-4">
-                      <div className="h-[48px] flex items-center justify-center"></div>
-                    </div>
-                    {scheduleData[0]?.slots.map((slot, slotIdx) => (
-                      <div
-                        key={slotIdx}
-                        className="text-xs font-bold text-[oklch(0.75_0.15_85)] px-2 mb-4 bg-[oklch(0.75_0.15_85)]/8 rounded-xl border-2 border-[oklch(0.75_0.15_85)]/20 flex items-center justify-center h-12"
-                      >
-                        {slot.time}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Scrollable content */}
-                  <div className="flex-1 overflow-x-auto">
-                    <div className="min-w-max">
-                      <div className="flex gap-4 mb-4">
-                        {scheduleData.map((day, idx) => (
-                          <div key={idx} className="text-center" style={{ minWidth: '200px' }}>
-                            <div className="font-bold text-lg">{day.day}</div>
-                            <div className="text-sm text-foreground/60">{day.date}</div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {scheduleData[0]?.slots.map((_, slotIdx) => (
-                        <div key={slotIdx} className="flex gap-4 mb-4">
-                          {scheduleData.map((day, dayIdx) => (
-                            <Card
-                              key={dayIdx}
-                              className="neon-card rounded-2xl p-3 bg-card/50 backdrop-blur-sm h-12 flex items-center justify-center text-center transition-all hover:bg-card hover:scale-[1.02] border border-[oklch(0.75_0.15_85)]/10"
-                              style={{ minWidth: '200px' }}
-                            >
-                              <p className="text-xs font-bold text-foreground/90 leading-tight">
-                                {day.slots[slotIdx]?.activity || "-"}
-                              </p>
-                            </Card>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Desktop version without scroll */}
-              <div className="hidden lg:block">
-                <div className="grid gap-4 mb-4" style={{ gridTemplateColumns: `150px repeat(${scheduleData.length || 1}, 1fr)` }}>
-                  <div className="py-4"></div>
-                  {scheduleData.map((day, idx) => (
-                    <div key={idx} className="text-center">
-                      <div className="font-bold text-lg">{day.day}</div>
-                      <div className="text-sm text-foreground/60">{day.date}</div>
+            {/* Schedule table - unified responsive design */}
+            <div className="max-w-6xl mx-auto">
+              <div className="flex gap-4">
+                {/* Fixed time column */}
+                <div className="flex-shrink-0" style={{ width: leftColWidth }}>
+                  <div className="mb-4 h-[60px]"></div>
+                  {scheduleData[0]?.slots.map((slot, slotIdx) => (
+                    <div
+                      key={slotIdx}
+                      className="text-sm md:text-base font-semibold text-white py-3 px-2 md:py-4 md:px-4 mb-4 flex items-center justify-center text-center h-16 md:h-24"
+                    >
+                      {slot.time}
                     </div>
                   ))}
                 </div>
 
-                {scheduleData[0]?.slots.map((_, slotIdx) => (
-                  <div key={slotIdx} className="grid gap-4 mb-4" style={{ gridTemplateColumns: `150px repeat(${scheduleData.length}, 1fr)` }}>
-                    <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] py-4 px-4 bg-[oklch(0.75_0.15_85)]/8 rounded-xl border-2 border-[oklch(0.75_0.15_85)]/20 flex items-center justify-center">
-                      {scheduleData[0].slots[slotIdx].time}
+                {/* Days container - scrollable on mobile, full width on desktop */}
+                <div className="flex-1 overflow-x-auto lg:overflow-x-visible scrollbar-hide relative">
+                  {/* Left fade overlay - only on mobile */}
+                  <div className="lg:hidden absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-[hsl(var(--background))] via-[hsl(var(--background))]/70 via-[hsl(var(--background))]/40 to-transparent pointer-events-none z-10"></div>
+                  {/* Right fade overlay - only on mobile */}
+                  <div className="lg:hidden absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-[hsl(var(--background))] via-[hsl(var(--background))]/70 via-[hsl(var(--background))]/40 to-transparent pointer-events-none z-10"></div>
+
+                  <div className="min-w-max lg:min-w-0 lg:w-full">
+                    {/* Day headers */}
+                    <div className="flex gap-4 mb-4">
+                      {scheduleData.map((day, idx) => (
+                        <div key={idx} className="text-center flex-1" style={{ minWidth: '200px' }}>
+                          <div className="font-bold text-lg md:text-xl">{day.day}</div>
+                          <div className="text-sm md:text-base text-foreground/60">{day.date}</div>
+                        </div>
+                      ))}
                     </div>
-                    {scheduleData.map((day, dayIdx) => (
-                      <Card
-                        key={dayIdx}
-                        className="neon-card rounded-2xl p-4 bg-card/50 backdrop-blur-sm min-h-20 flex items-center justify-center text-center transition-all hover:bg-card hover:scale-[1.02] border border-[oklch(0.75_0.15_85)]/10"
-                      >
-                        <p className="text-sm font-bold text-foreground/90">
-                          {day.slots[slotIdx]?.activity || "-"}
-                        </p>
-                      </Card>
+
+                    {/* Schedule rows */}
+                    {scheduleData[0]?.slots.map((_, slotIdx) => (
+                      <div key={slotIdx} className="flex gap-4 mb-4">
+                        {scheduleData.map((day, dayIdx) => (
+                          <Card
+                            key={dayIdx}
+                            className="neon-card rounded-2xl p-3 md:p-5 bg-card h-16 md:h-24 flex items-center justify-center text-center transition-all hover:shadow-lg hover:shadow-[oklch(0.75_0.15_85)]/10 hover:-translate-y-0.5 flex-1"
+                            style={{ minWidth: '200px' }}
+                          >
+                            <p className="text-xs md:text-sm font-semibold text-foreground leading-tight">
+                              {day.slots[slotIdx]?.activity || "-"}
+                            </p>
+                          </Card>
+                        ))}
+                      </div>
                     ))}
                   </div>
-                ))}
-              </div>
-
-              {/* Scroll hint - mobile only */}
-              <div className="mt-4 text-center text-foreground/50 text-sm lg:hidden">
-                <span className="inline-flex items-center gap-2">
-                  ← 左右滑動查看完整課表 →
-                </span>
+                </div>
               </div>
             </div>
           </div>

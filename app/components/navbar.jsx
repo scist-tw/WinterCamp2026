@@ -110,6 +110,22 @@ export default function Navbar() {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
             </button>
 
+            <button
+              onClick={() => scrollToSection("gallery")}
+              className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+            >
+              過往紀錄
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("team")}
+              className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
+            >
+              工作人員
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[oklch(0.75_0.15_85)] group-hover:w-full transition-all"></span>
+            </button>
+
             <div className="relative group">
               <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] rounded-full blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
               <Button
@@ -123,6 +139,7 @@ export default function Navbar() {
 
           <div className="md:hidden">
             <button
+              aria-label={mobileOpen ? "關閉選單" : "開啟選單"}
               aria-controls="mobile-menu"
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((s) => !s)}

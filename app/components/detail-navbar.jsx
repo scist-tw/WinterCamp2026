@@ -14,6 +14,7 @@ export default function DetailNavbar({ currentPage }) {
     { name: "課程內容", href: "/course", key: "course" },
     { name: "報名資訊", href: "/pricing", key: "pricing" },
     { name: "過往紀錄", href: "/gallery", key: "gallery" },
+    { name: "工作人員", href: "/team", key: "team" },
   ];
 
   useEffect(() => {

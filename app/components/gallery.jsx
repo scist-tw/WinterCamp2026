@@ -43,18 +43,19 @@ export default function Gallery() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {galleryImages.length > 0 ? (
             galleryImages.map((image, idx) => (
-              <Link key={idx} href="/gallery">
-                <Card
-                  className="neon-card rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform"
-                >
+              <Card
+                key={idx}
+                className="neon-card rounded-2xl overflow-hidden group hover:scale-105 transition-transform cursor-default"
+              >
                 <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
                   {/* Actual Image */}
                   <Image
                     src={image.src}
                     alt={image.alt}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading="lazy"
                   />
 
                   {/* Image overlay on hover */}
@@ -75,22 +76,19 @@ export default function Gallery() {
                     )}
                   </div>
                 </div>
-                </Card>
-              </Link>
+              </Card>
             ))
           ) : (
             // Placeholder cards when no images
             Array.from({ length: 6 }).map((_, idx) => (
-              <Link key={idx} href="/gallery">
-                <Card className="neon-card rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform">
-                  <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-secondary/80 to-background/80">
-                      <Camera className="w-12 h-12 text-[oklch(0.55_0.15_85)]/40 mb-3" />
-                      <p className="text-foreground/40 text-sm">待上傳照片</p>
-                    </div>
+              <Card key={idx} className="neon-card rounded-2xl overflow-hidden">
+                <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-secondary/80 to-background/80">
+                    <Camera className="w-12 h-12 text-[oklch(0.55_0.15_85)]/40 mb-3" />
+                    <p className="text-foreground/40 text-sm">待上傳照片</p>
                   </div>
-                </Card>
-              </Link>
+                </div>
+              </Card>
             ))
           )}
         </div>

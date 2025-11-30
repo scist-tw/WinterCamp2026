@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 export default function Intro() {
   return (
-    <section className="py-20 lg:py-32 px-6 lg:px-12 bg-background">
+    <section className="py-20 lg:py-32 px-6 lg:px-12">
       <div className="max-w-3xl mx-auto text-center">
         <p className="text-lg lg:text-3xl text-foreground/90 leading-relaxed font-bold">
           想讓寒假過得更加充實？留下更多回憶?<br />

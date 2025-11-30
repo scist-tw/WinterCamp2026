@@ -45,12 +45,7 @@ export default function Course() {
   }, []);
 
   return (
-    <section id="course" className="py-20 lg:py-32 px-6 lg:px-12 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 right-0 w-96 h-96 bg-[oklch(0.75_0.15_85)] opacity-3 rounded-full blur-3xl"></div>
-      </div>
-
+    <section id="course" className="py-20 lg:py-32 px-6 lg:px-12 relative">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <div className="flex items-center justify-center mb-3">
@@ -61,6 +56,17 @@ export default function Course() {
             從 LLM 基礎到多平台應用，再到雲端部署維運，<br />
             四天三夜帶你完整掌握現代 AI 應用開發流程
           </p>
+          <div className="mt-6">
+            <a
+              href="/course"
+              className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
+            >
+              查看完整課程內容
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -134,49 +140,57 @@ export default function Course() {
             </p>
           </div>
 
-          <div className="overflow-x-auto">
-            <div className="inline-block min-w-full">
-              <div
-                className="grid gap-4 mb-4"
-                style={{
-                  gridTemplateColumns: `${leftColWidth} repeat(${
-                    scheduleData.length || 1
-                  }, 1fr)`,
-                }}
-              >
-                <div className="font-semibold text-foreground/60 text-sm py-2 px-2 md:py-4 md:px-0">
-                </div>
-                {scheduleData.map((day, idx) => (
-                  <div key={idx} className="text-center">
-                    <div className="font-bold text-lg">{day.day}</div>
-                    <div className="text-sm text-foreground/60">{day.date}</div>
+          <div className="max-w-6xl mx-auto">
+            <div className="flex gap-4">
+              {/* Fixed time column */}
+              <div className="flex-shrink-0" style={{ width: leftColWidth }}>
+                <div className="mb-4 h-[48px]"></div>
+                {scheduleData[0]?.slots.map((slot, slotIdx) => (
+                  <div
+                    key={slotIdx}
+                    className="text-sm font-semibold text-white py-2 px-2 md:py-4 md:px-4 mb-4 flex items-center justify-center text-center h-12 md:h-20"
+                  >
+                    {slot.time}
                   </div>
                 ))}
               </div>
 
-              {scheduleData[0]?.slots.map((_, slotIdx) => (
-                <div
-                  key={slotIdx}
-                  className="grid gap-4 mb-4"
-                  style={{
-                    gridTemplateColumns: `${leftColWidth} repeat(${scheduleData.length}, 1fr)`,
-                  }}
-                >
-                  <div className="text-sm font-semibold text-foreground/70 py-2 px-2 md:py-4 md:px-4">
-                    {scheduleData[0].slots[slotIdx].time}
-                  </div>
-                  {scheduleData.map((day, dayIdx) => (
-                    <Card
-                      key={dayIdx}
-                      className="neon-card rounded-2xl p-2 md:p-4 bg-card min-h-12 md:min-h-20 flex items-center justify-center text-center transition-shadow"
-                    >
-                      <p className="text-xs md:text-sm font-semibold text-foreground">
-                        {day.slots[slotIdx]?.activity || "-"}
-                      </p>
-                    </Card>
+              {/* Days container - scrollable on mobile, full width on desktop */}
+              <div className="flex-1 overflow-x-auto lg:overflow-x-visible scrollbar-hide relative">
+                {/* Left fade overlay - only on mobile */}
+                <div className="lg:hidden absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-[hsl(var(--background))] via-[hsl(var(--background))]/70 via-[hsl(var(--background))]/40 to-transparent pointer-events-none z-10"></div>
+                {/* Right fade overlay - only on mobile */}
+                <div className="lg:hidden absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-[hsl(var(--background))] via-[hsl(var(--background))]/70 via-[hsl(var(--background))]/40 to-transparent pointer-events-none z-10"></div>
+
+                <div className="min-w-max lg:min-w-0 lg:w-full">
+                {/* Day headers */}
+                <div className="flex gap-4 mb-4">
+                  {scheduleData.map((day, idx) => (
+                    <div key={idx} className="text-center flex-1 lg:flex-1" style={{ minWidth: '200px' }}>
+                      <div className="font-bold text-lg">{day.day}</div>
+                      <div className="text-sm text-foreground/60">{day.date}</div>
+                    </div>
                   ))}
                 </div>
-              ))}
+
+                {/* Schedule rows */}
+                {scheduleData[0]?.slots.map((_, slotIdx) => (
+                  <div key={slotIdx} className="flex gap-4 mb-4">
+                    {scheduleData.map((day, dayIdx) => (
+                      <Card
+                        key={dayIdx}
+                        className="neon-card rounded-2xl p-2 md:p-4 bg-card h-12 md:h-20 flex items-center justify-center text-center transition-shadow flex-1"
+                        style={{ minWidth: '200px' }}
+                      >
+                        <p className="text-xs md:text-sm font-semibold text-foreground">
+                          {day.slots[slotIdx]?.activity || "-"}
+                        </p>
+                      </Card>
+                    ))}
+                  </div>
+                ))}
+              </div>
+              </div>
             </div>
           </div>
         </div>

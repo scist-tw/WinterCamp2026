@@ -57,7 +57,7 @@ export default function PricingPage() {
 
           {/* Event Info Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <Card className="neon-card rounded-2xl p-8 bg-background">
+            <Card className="neon-card rounded-2xl p-8">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 rounded-full bg-[oklch(0.75_0.15_85)]/12 flex items-center justify-center shrink-0">
                   <Calendar className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
@@ -70,7 +70,7 @@ export default function PricingPage() {
               </div>
             </Card>
 
-            <Card className="neon-card rounded-2xl p-8 bg-background">
+            <Card className="neon-card rounded-2xl p-8">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 rounded-full bg-[oklch(0.75_0.15_85)]/12 flex items-center justify-center shrink-0">
                   <MapPin className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
@@ -83,7 +83,7 @@ export default function PricingPage() {
               </div>
             </Card>
 
-            <Card className="neon-card rounded-2xl p-8 bg-background">
+            <Card className="neon-card rounded-2xl p-8">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 rounded-full bg-[oklch(0.75_0.15_85)]/12 flex items-center justify-center shrink-0">
                   <Clock className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
@@ -96,7 +96,7 @@ export default function PricingPage() {
               </div>
             </Card>
 
-            <Card className="neon-card rounded-2xl p-8 bg-background">
+            <Card className="neon-card rounded-2xl p-8">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-12 h-12 rounded-full bg-[oklch(0.75_0.15_85)]/12 flex items-center justify-center shrink-0">
                   <Users className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
@@ -119,7 +119,7 @@ export default function PricingPage() {
               </p>
             </div>
 
-            <Card className="neon-card rounded-2xl p-8 lg:p-12 bg-background max-w-3xl mx-auto">
+            <Card className="neon-card rounded-2xl p-8 lg:p-12 max-w-3xl mx-auto">
               <div className="space-y-6">
                 <div className="flex items-center justify-between pb-6 border-b border-[oklch(0.75_0.15_85)]/20">
                   <div>
@@ -228,7 +228,7 @@ export default function PricingPage() {
                 {faqs.map((faq, idx) => (
                   <Card
                     key={idx}
-                    className="neon-card rounded-2xl p-6 bg-background hover:border-[oklch(0.75_0.15_85)]/40 transition-colors"
+                    className="neon-card rounded-2xl p-6 hover:border-[oklch(0.75_0.15_85)]/40 transition-colors"
                   >
                     <h3 className="font-bold text-lg mb-3 text-[oklch(0.75_0.15_85)]">
                       {faq.question}

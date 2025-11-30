@@ -12,18 +12,20 @@ import ScrollToTop from "@/components/scroll-to-top";
 
 export default function Home() {
   return (
-    <div>
-      <Hero />
-      <Intro />
-      <Course />
-      <Pricing />
-      <Gallery />
-      <Team />
-      <Partners />
-      <Info />
-      <Contact />
+    <>
+      <main>
+        <Hero />
+        <Intro />
+        <Course />
+        <Pricing />
+        <Gallery />
+        <Team />
+        <Partners />
+        <Info />
+        <Contact />
+      </main>
       <Footer />
       <ScrollToTop />
-    </div>
+    </>
   );
 }

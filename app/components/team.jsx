@@ -89,7 +89,7 @@ export default function Team() {
   }, []);
 
   return (
-    <section id="team" className="py-20 lg:py-32 px-6 lg:px-12 bg-background">
+    <section id="team" className="py-20 lg:py-32 px-6 lg:px-12">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <div className="mb-3 flex justify-center">
@@ -111,12 +111,10 @@ export default function Team() {
         {/* Groups - Centered Layout */}
         {(groupedMembers["總召"]?.length > 0 || groupedMembers["副召"]?.length > 0) && (
           <div className="w-full text-center">
-            <div className="mb-16">
-              <h3 className="text-2xl lg:text-3xl font-bold">
-                <span className="inline-block px-4 py-2 bg-[oklch(0.75_0.15_85)] text-black rounded-lg">
-                  總召組
-                </span>
-              </h3>
+            <div className="mb-16 flex flex-col items-center">
+              <h3 className="text-2xl lg:text-3xl font-bold mb-2">總召組</h3>
+              <p className="text-foreground/70 text-sm mb-4">負責整體活動規劃與執行</p>
+              <div className="w-64 h-0.5 bg-gradient-to-r from-transparent via-[oklch(0.75_0.15_85)] to-transparent"></div>
             </div>
             <div className="flex justify-center">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-4xl">

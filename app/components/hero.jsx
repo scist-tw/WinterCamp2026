@@ -31,13 +31,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 pt-12 pb-45 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[oklch(0.75_0.15_85)] opacity-5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[oklch(0.75_0.15_85)] opacity-5 rounded-full blur-3xl"></div>
-      </div>
-
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 pt-12 pb-45 relative">
       <div className="max-w-4xl text-center space-y-12 relative z-10">
         <div className="space-y-6">
           <div className="text-sm flex justify-center"><span className="section-eyebrow">WINTER CAMP // 閃電四連編</span></div>
@@ -51,7 +45,9 @@ export default function Hero() {
               alt="閃電四連編"
               width={300}
               height={150}
-              loading="eager"
+              priority
+              fetchPriority="high"
+              sizes="(max-width: 768px) 100vw, 512px"
               className="w-full max-w-lg h-auto"
             />
           </div>
