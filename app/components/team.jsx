@@ -5,6 +5,7 @@ import { ArrowRight, Users } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import md5 from "md5";
+import AutoFitText from "@/components/auto-fit-text";
 
 // Generate Gravatar URL from email
 function getGravatarUrl(email, size = 200) {
@@ -170,7 +171,9 @@ export default function Team() {
                         )}
                         </div>
                         <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(groupedMembers["總召"][0], "總召組")}</div>
-                        <h4 className="text-xl font-bold mb-2 line-clamp-2">{groupedMembers["總召"][0].name}</h4>
+                        <AutoFitText as="h4" className="font-bold mb-2" maxLines={2} min={12} max={22}>
+                          {groupedMembers["總召"][0].name}
+                        </AutoFitText>
                         <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["總召"][0].bio || groupedMembers["總召"][0].role}</p>
                       </div>
                     </div>
@@ -197,7 +200,9 @@ export default function Team() {
                         )}
                         </div>
                         <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(groupedMembers["副召"][1], "總召組")}</div>
-                        <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["副召"][1].name}</h4>
+                        <AutoFitText as="h4" className="font-bold mb-2" maxLines={2} min={12} max={20}>
+                          {groupedMembers["副召"][1].name}
+                        </AutoFitText>
                         <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["副召"][1].bio || groupedMembers["副召"][1].role}</p>
                       </div>
                     </div>

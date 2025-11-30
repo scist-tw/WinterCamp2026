@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Users, ArrowRight, Mail } from "lucide-react";
+import AutoFitText from "@/components/auto-fit-text";
 import Image from "next/image";
 import md5 from "md5";
 
@@ -341,9 +342,9 @@ export default function TeamPage() {
 
                           {/* Text Info */}
                           <div className="text-center w-full">
-                            <h3 className={`font-bold text-foreground truncate px-2 text-xl mb-2`}>
+                            <AutoFitText as="h3" className={`font-bold text-foreground px-2 mb-2`} maxLines={1} min={12} max={20}>
                               {member.name}
-                            </h3>
+                            </AutoFitText>
                             <p className={`mt-1 font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate text-base`}>
                               {resolveLabel(member, category)}
                             </p>

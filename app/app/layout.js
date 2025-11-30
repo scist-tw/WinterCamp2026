@@ -24,8 +24,14 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://font.emtech.cc" />
+        <link href="https://font.emtech.cc/fonts/GenJyuuGothicX" rel="stylesheet" />
+        <link href="https://font.emtech.cc/css/GenJyuuGothicX" rel="stylesheet" />
+        <link href="https://font.emtech.cc/css/ChenYuLuoYan" rel="stylesheet" />
+        
       </head>
-      <body className={`font-sans antialiased overscroll-none relative pt-20`}>
+      <body className={`antialiased overscroll-none relative pt-20 font-zh`}>
         <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>

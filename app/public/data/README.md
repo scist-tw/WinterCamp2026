@@ -5,7 +5,7 @@
 - 主要檔案：
   - partners.json：合作社團清單（名稱、Logo、連結）
   - team.json：工作人員清單（姓名、職務、所屬組別等）
-  - fonts.json：全站字體與尺寸、字重設定，支援 Google Fonts 連結
+  - fonts.json：已改為固定於程式碼，不再使用
   - 其他：faq.json、gallery.json、schedule.json 供各區塊使用
 
 
@@ -24,52 +24,18 @@ partners.json（合作社團）
 - 輪播已做成無縫連續滾動，會自動讀取此檔案。
 
 
-fonts.json（全站字體設定，支援 link/emfont/自訂 CDN）
+字體設定（已固定於程式碼）
 - 結構：
-  {
-    "links": [
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap"
-    ],
-    "fonts": {
-      "zh": {
-        "family": "'Noto Sans TC', system-ui, -apple-system, sans-serif",
-        "link": "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap",
-        "emfont": "https://example.emfont.dev/some-font.css",
-        "links": ["https://your.cdn/any-font.css"],
-        "sizes": { "sm": "12px", "base": "14px", "lg": "16px", "xl": "20px" },
-        "weight": { "normal": 400, "bold": 700 }
-      },
-      "en": {
-        "family": "Inter, system-ui, -apple-system, sans-serif",
-        "link": "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap",
-        "emfont": "",
-        "links": [],
-        "sizes": { "sm": "12px", "base": "14px", "lg": "16px", "xl": "20px" },
-        "weight": { "normal": 400, "bold": 700 }
-      },
-      "display": {
-        "family": "'Space Grotesk', Inter, system-ui, sans-serif",
-        "link": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&display=swap",
-        "emfont": "",
-        "links": [],
-        "sizes": { "sm": "20px", "base": "28px", "lg": "36px", "xl": "48px" },
-        "weight": { "normal": 700, "bold": 900 }
-      }
-    }
-  }
-- 使用方式：
-  1) 可將任意字體 CSS 連結填入：
-     - 頂層 `links`（全域），或
-     - 個別字族的 `link`（單一）、`emfont`（單一）或 `links`（陣列，皆可併用）。
-     - 備註：舊欄位 `google` 仍相容，但建議改用 `link`。
-  2) 在 `family` 寫對應 CSS 字族（含備援字體），大小與字重可依需求調整。
-  3) 網站啟動後由 FontManager 自動：
-     - 注入 `<link rel="stylesheet" ...>` 與 `preconnect` 至 `<head>`
-     - 寫入 CSS 變數供全站使用：
-       - 家族：`--font-zh`、`--font-en`、`--font-display-family`
-       - 尺寸：`--font-size-zh-*`、`--font-size-en-*`、`--font-size-display-*`
-       - 字重：`--font-weight-*-normal|bold`
-- 前端快捷 class（在任何元件可用）：
+  - 目前字體載入與綁定位於：
+    - `app/app/layout.js`：以 `<link>` 直接載入 Google Fonts / emfont。
+    - `app/app/globals.css`：以 CSS 變數固定全站預設字體與區塊專屬字體。
+  - 現行預設：
+    - 全站中文：GenSen Rounded（備援 Noto Sans TC）
+    - 全站英文／Display：Lato（Google Fonts）
+    - Logo：Space Grotesk（固定，不受全站設定影響）
+    - Hero 區：GenYoMinTW（emfont）
+    - Intro 區：ChenYuLuoYan（emfont）
+  - 前端快捷 class（在任何元件可用）：
   - 字族：`.font-zh`、`.font-en`、`.font-display`
   - 尺寸：`.text-zh-{sm|base|lg|xl}`、`.text-en-{sm|base|lg|xl}`、`.text-display-{sm|base|lg|xl}`
 
@@ -95,5 +61,4 @@ team.json（工作人員）
 
 注意事項
 - 圖片路徑請放在 `app/public` 底下，前端引用以 `/` 開頭（例如 `/assets/logo.png`）。
-- 字體載入會自動加入 Google Fonts 連結，避免 FOUT 已加入 preconnect。
-- 若編輯 fonts.json 後發現字體未更新，請重新整理頁面；開發中建議清掉快取再測試。
+- 字體載入直接在 layout.js 以 `<link>` 注入，已加 preconnect 以降低 FOUT。

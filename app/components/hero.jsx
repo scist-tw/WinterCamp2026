@@ -31,7 +31,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 pt-12 pb-45 relative">
+    <section className="min-h-screen flex flex-col items-center justify-center px-6 lg:px-12 pt-12 pb-45 relative font-front">
       <div className="max-w-4xl text-center space-y-12 relative z-10">
         <div className="space-y-6">
           <div className="text-sm flex justify-center"><span className="section-eyebrow">WINTER CAMP // 閃電四連編</span></div>

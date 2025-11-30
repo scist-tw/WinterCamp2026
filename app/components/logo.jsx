@@ -5,8 +5,7 @@ export default function Logo() {
   return (
     <div className="flex items-center gap-2 sm:gap-3">
       <h2
-        className="text-2xl sm:text-3xl md:text-4xl font-black italic tracking-tighter uppercase whitespace-nowrap"
-        style={{ fontFamily: "'Space Grotesk', Inter, system-ui, -apple-system, sans-serif" }}
+        className="logo-title text-2xl sm:text-3xl md:text-4xl font-black italic tracking-tighter uppercase whitespace-nowrap"
       >
         閃電
         <span className="text-stroke text-transparent" style={{ WebkitTextStroke: "0.8px #E0A419" }}>
