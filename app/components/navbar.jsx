@@ -8,6 +8,18 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef(null);
+  const menuRef = useRef(null);
+  const toggleRef = useRef(null);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const closeMenu = () => {
+    if (!mobileOpen) return;
+    setIsClosing(true);
+    setTimeout(() => {
+      setMobileOpen(false);
+      setIsClosing(false);
+    }, 200);
+  };
 
   const scrollToSection = (id) => {
     if (typeof window === "undefined") return;
@@ -20,7 +32,7 @@ export default function Navbar() {
     // More advanced smooth scroll with easing and offset
     const navOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-height")) || 72;
     smoothScrollTo(element, { duration: 700, offset: navOffset });
-    setMobileOpen(false);
+    closeMenu();
   };
 
   // Smooth scroll helper (requestAnimationFrame + easing)
@@ -51,10 +63,10 @@ export default function Navbar() {
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "Escape") setMobileOpen(false);
+      if (e.key === "Escape") closeMenu();
     };
     const onResize = () => {
-      if (window.innerWidth >= 768) setMobileOpen(false);
+      if (window.innerWidth >= 768) closeMenu();
     };
     const onScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -64,10 +76,21 @@ export default function Navbar() {
       const h = navRef.current?.offsetHeight || 72;
       document.documentElement.style.setProperty("--nav-height", `${h}px`);
     };
+    const onDocClick = (e) => {
+      if (!mobileOpen) return;
+      const menuEl = menuRef.current;
+      const toggleEl = toggleRef.current;
+      if (menuEl && menuEl.contains(e.target)) return;
+      if (toggleEl && toggleEl.contains(e.target)) return;
+      closeMenu();
+    };
+
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     window.addEventListener("scroll", onScroll);
     window.addEventListener("resize", updateNavHeight);
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("touchstart", onDocClick, { passive: true });
     // initial set
     updateNavHeight();
     return () => {
@@ -75,6 +98,8 @@ export default function Navbar() {
       window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", updateNavHeight);
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("touchstart", onDocClick);
     };
   }, []);
 
@@ -139,10 +164,11 @@ export default function Navbar() {
 
           <div className="md:hidden">
             <button
+              ref={toggleRef}
               aria-label={mobileOpen ? "關閉選單" : "開啟選單"}
               aria-controls="mobile-menu"
               aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen((s) => !s)}
+              onClick={() => (mobileOpen ? closeMenu() : setMobileOpen(true))}
               className="inline-flex items-center justify-center p-2 rounded-lg text-[oklch(0.75_0.15_85)] hover:bg-card focus:outline-none border border-[oklch(0.75_0.15_85)]/30"
             >
               {mobileOpen ? (
@@ -160,7 +186,20 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div id="mobile-menu" className="md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl">
+        <>
+          {/* Backdrop overlay to close on outside click */}
+          <div
+            className="fixed inset-0 z-40 md:hidden bg-black/30"
+            aria-hidden
+            onClick={closeMenu}
+            style={{ animation: isClosing ? "fadeOut 200ms ease-in forwards" : "fadeIn 200ms ease-out" }}
+          />
+          <div
+            id="mobile-menu"
+            ref={menuRef}
+            className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl"
+            style={{ animation: isClosing ? "mobileMenuOut 200ms ease-in forwards" : "mobileMenuIn 200ms ease-out" }}
+          >
           <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
             <button onClick={() => scrollToSection("course")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">課程內容</button>
             <button onClick={() => scrollToSection("pricing")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">報名資訊</button>
@@ -168,7 +207,26 @@ export default function Navbar() {
             <button onClick={() => scrollToSection("team")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">工作人員</button>
             <Button className="bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-6 py-3 font-bold cursor-pointer w-full transition-all" onClick={() => window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")}>立即報名</Button>
           </div>
-        </div>
+          </div>
+          <style jsx>{`
+            @keyframes mobileMenuIn {
+              0% { transform: translateY(-8px); opacity: 0; }
+              100% { transform: translateY(0); opacity: 1; }
+            }
+            @keyframes mobileMenuOut {
+              0% { transform: translateY(0); opacity: 1; }
+              100% { transform: translateY(-8px); opacity: 0; }
+            }
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            @keyframes fadeOut {
+              from { opacity: 1; }
+              to { opacity: 0; }
+            }
+          `}</style>
+        </>
       )}
     </nav>
   );

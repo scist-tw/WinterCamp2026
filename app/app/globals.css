@@ -21,8 +21,9 @@ html {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-noto-sans-tc), var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-display: var(--font-space-grotesk), var(--font-inter), sans-serif;
+  /* Fallback to previously used variables; can be overridden via FontManager */
+  --font-sans: var(--font-zh, var(--font-noto-sans-tc)), var(--font-en, var(--font-inter)), system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-display-family, var(--font-space-grotesk)), var(--font-en, var(--font-inter)), sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -207,6 +208,26 @@ html {
 h1, h2, h3 {
   font-family: var(--font-display);
 }
+
+/* Font utility classes bound to JSON-driven CSS variables */
+.font-zh { font-family: var(--font-zh, var(--font-sans)); }
+.font-en { font-family: var(--font-en, var(--font-sans)); }
+.font-display { font-family: var(--font-display-family, var(--font-display)); }
+
+.text-zh-sm { font-size: var(--font-size-zh-sm, 0.875rem); }
+.text-zh-base { font-size: var(--font-size-zh-base, 1rem); }
+.text-zh-lg { font-size: var(--font-size-zh-lg, 1.125rem); }
+.text-zh-xl { font-size: var(--font-size-zh-xl, 1.25rem); }
+
+.text-en-sm { font-size: var(--font-size-en-sm, 0.875rem); }
+.text-en-base { font-size: var(--font-size-en-base, 1rem); }
+.text-en-lg { font-size: var(--font-size-en-lg, 1.125rem); }
+.text-en-xl { font-size: var(--font-size-en-xl, 1.25rem); }
+
+.text-display-sm { font-size: var(--font-size-display-sm, 1.25rem); }
+.text-display-base { font-size: var(--font-size-display-base, 1.75rem); }
+.text-display-lg { font-size: var(--font-size-display-lg, 2.25rem); }
+.text-display-xl { font-size: var(--font-size-display-xl, 3rem); }
 
 .pill {
   border: 1px solid color-mix(in oklab, var(--primary) 40%, transparent 60%);

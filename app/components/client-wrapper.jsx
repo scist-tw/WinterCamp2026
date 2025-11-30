@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import NavbarSwitcher from "@/components/navbar-switcher";
 import RouteScrollTop from "@/components/route-scroll-top";
 import SmoothScroll from "@/components/smooth-scroll";
+import FontManager from "@/components/font-manager";
 
 // Lazy load AnimatedGlow to improve initial load performance
 const AnimatedGlow = dynamic(() => import("@/components/animated-glow"), {
@@ -13,6 +14,7 @@ const AnimatedGlow = dynamic(() => import("@/components/animated-glow"), {
 export default function ClientWrapper({ children }) {
   return (
     <>
+      <FontManager />
       <AnimatedGlow />
       <div className="relative z-10">
         <NavbarSwitcher />

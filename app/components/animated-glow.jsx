@@ -21,22 +21,10 @@ export default function AnimatedGlow() {
   }, []);
 
   useEffect(() => {
+    if (isMobile) return; // Skip animation entirely on mobile
     // Mobile: only 1 glow, slower, lower opacity
     // Desktop: 3 glows, original speed
-    const glows = isMobile
-      ? [
-          {
-            ref: glow1Ref,
-            duration: 55000,
-            baseSize: 360,
-            path: [
-              { x: 30, y: 40 },
-              { x: 65, y: 50 },
-              { x: 30, y: 40 },
-            ],
-          },
-        ]
-      : [
+    const glows = [
           {
             ref: glow1Ref,
             duration: 25000,
@@ -110,9 +98,8 @@ export default function AnimatedGlow() {
       if (glow.ref.current) {
         glow.ref.current.style.left = `${x}%`;
         glow.ref.current.style.top = `${y}%`;
-        // Reduce brightness further on mobile
-        const brightness = isMobile ? 0.4 : 0.6;
-        glow.ref.current.style.opacity = opacity * brightness;
+        // Desktop brightness
+        glow.ref.current.style.opacity = opacity * 0.6;
         glow.ref.current.style.transform = `translate(-50%, -50%) scale(${scale})`;
       }
     };
@@ -132,43 +119,37 @@ export default function AnimatedGlow() {
     };
   }, [isMobile]);
 
+  if (isMobile) return null; // Do not render glows on mobile
+
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       <div
         ref={glow1Ref}
-        className={`${
-          isMobile
-            ? "absolute w-[360px] h-[360px] rounded-full blur-2xl transition-opacity duration-1000"
-            : "absolute w-[500px] h-[500px] rounded-full blur-3xl transition-opacity duration-1000"
-        }`}
+        className={"absolute w-[500px] h-[500px] rounded-full blur-3xl transition-opacity duration-1000"}
         style={{
           background:
             'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
           opacity: 0,
         }}
       />
-      {!isMobile && (
-        <>
-          <div
-            ref={glow2Ref}
-            className="absolute w-[600px] h-[600px] rounded-full blur-3xl transition-opacity duration-1000"
-            style={{
-              background:
-                'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-              opacity: 0,
-            }}
-          />
-          <div
-            ref={glow3Ref}
-            className="absolute w-[550px] h-[550px] rounded-full blur-3xl transition-opacity duration-1000"
-            style={{
-              background:
-                'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-              opacity: 0,
-            }}
-          />
-        </>
-      )}
+      <div
+        ref={glow2Ref}
+        className="absolute w-[600px] h-[600px] rounded-full blur-3xl transition-opacity duration-1000"
+        style={{
+          background:
+            'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
+          opacity: 0,
+        }}
+      />
+      <div
+        ref={glow3Ref}
+        className="absolute w-[550px] h-[550px] rounded-full blur-3xl transition-opacity duration-1000"
+        style={{
+          background:
+            'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
+          opacity: 0,
+        }}
+      />
     </div>
   );
 }

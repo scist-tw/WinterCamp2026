@@ -201,8 +201,8 @@ export default function TeamPage() {
                     <div className="w-64 h-0.5 bg-gradient-to-r from-transparent via-[oklch(0.75_0.15_85)] to-transparent"></div>
                   </div>
 
-                  {/* Members Grid - Special layout for 總召組 */}
-                  {category === "總召組" ? (
+                  {/* Members Grid - unified card design for all categories */}
+                  {false ? (
                     <div className="flex justify-center">
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-4xl">
                         {/* First 副召 */}
@@ -294,22 +294,16 @@ export default function TeamPage() {
                       </div>
                     </div>
                   ) : (
-                    /* Regular grid for other categories */
+                    /* Regular grid for all categories */
                     <div className="flex flex-wrap justify-center gap-6">
                       {members.map((member, idx) => (
                         <div
                           key={idx}
-                          className={`group relative flex flex-col items-center rounded-2xl bg-secondary/10 transition-all duration-300 hover:bg-secondary/20 hover:-translate-y-1 hover:shadow-lg ${
-                            category === "行政組"
-                              ? "p-6 w-[200px]"
-                              : "p-4 w-[140px]"
-                          }`}
+                          className={`group relative flex flex-col items-center rounded-2xl bg-secondary/10 transition-all duration-300 hover:bg-secondary/20 hover:-translate-y-1 hover:shadow-lg p-6 w-[200px]`}
                         >
                           {/* Avatar Container */}
                           <div className="relative mb-4">
-                            <div className={`relative overflow-hidden rounded-full ring-4 ring-background transition-all duration-300 ${
-                              category === "行政組" ? "h-32 w-32" : "h-24 w-24"
-                            } ${member.email && member.link?.trim() ? 'cursor-pointer hover:ring-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50 group' : 'group-hover:scale-105'} shadow-md`} onClick={() => member.link?.trim() && window.open(member.link.trim(), "_blank")}>
+                            <div className={`relative overflow-hidden rounded-full ring-4 ring-background transition-all duration-300 h-32 w-32 ${member.email && member.link?.trim() ? 'cursor-pointer hover:ring-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50 group' : 'group-hover:scale-105'} shadow-md`} onClick={() => member.link?.trim() && window.open(member.link.trim(), "_blank")}>
                               {member.email ? (
                                   member.link?.trim() ? (
                                     <>
@@ -323,7 +317,7 @@ export default function TeamPage() {
                                         unoptimized
                                       />
                                       <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                        <ArrowRight className={`text-white -rotate-45 ${category === "行政組" ? "w-6 h-6" : "w-5 h-5"}`} />
+                                        <ArrowRight className={`text-white -rotate-45 w-6 h-6`} />
                                       </div>
                                     </>
                                   ) : (
@@ -338,7 +332,7 @@ export default function TeamPage() {
                                   )
                               ) : (
                                 <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
-                                  <Users className={category === "行政組" ? "h-12 w-12" : "h-10 w-10"} />
+                                  <Users className={"h-12 w-12"} />
                                 </div>
                               )}
                             </div>
@@ -347,14 +341,10 @@ export default function TeamPage() {
 
                           {/* Text Info */}
                           <div className="text-center w-full">
-                            <h3 className={`font-bold text-foreground truncate px-2 ${
-                              category === "行政組" ? "text-xl mb-2" : "text-lg"
-                            }`}>
+                            <h3 className={`font-bold text-foreground truncate px-2 text-xl mb-2`}>
                               {member.name}
                             </h3>
-                            <p className={`mt-1 font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate ${
-                              category === "行政組" ? "text-base" : "text-xs"
-                            }`}>
+                            <p className={`mt-1 font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate text-base`}>
                               {resolveLabel(member, category)}
                             </p>
                           </div>
