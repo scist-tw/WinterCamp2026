@@ -4,6 +4,7 @@ import Course from "@/components/course";
 import Pricing from "@/components/pricing";
 import Gallery from "@/components/gallery";
 import Team from "@/components/team";
+import Partners from "@/components/partners";
 import Info from "@/components/info";
 import Contact from "@/components/contact";
 import Footer from "@/components/footer";
@@ -18,6 +19,7 @@ export default function Home() {
       <Pricing />
       <Gallery />
       <Team />
+      <Partners />
       <Info />
       <Contact />
       <Footer />

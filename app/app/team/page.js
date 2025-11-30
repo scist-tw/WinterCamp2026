@@ -124,6 +124,20 @@ export default function TeamPage() {
         // Sort each group's members so that '組長' appear first, then by name
         Object.keys(grouped).forEach((key) => {
           grouped[key].sort((a, b) => {
+            // For 總召組, prioritize 總召 > 副召 > others
+            if (key === "總召組") {
+              const aLabel = resolveLabel(a, key);
+              const bLabel = resolveLabel(b, key);
+              
+              const roleOrder = { "總召": 0, "副召": 1, "組長": 2 };
+              const aRank = roleOrder[aLabel] !== undefined ? roleOrder[aLabel] : 3;
+              const bRank = roleOrder[bLabel] !== undefined ? roleOrder[bLabel] : 3;
+              
+              if (aRank !== bRank) return aRank - bRank;
+              return (a.name || "").localeCompare(b.name || "");
+            }
+            
+            // For other groups, '組長' appear first, then by name
             const aIsLeader = resolveLabel(a, key) === "組長" ? 0 : 1;
             const bIsLeader = resolveLabel(b, key) === "組長" ? 0 : 1;
             if (aIsLeader !== bIsLeader) return aIsLeader - bIsLeader;
@@ -195,10 +209,10 @@ export default function TeamPage() {
                       >
                         {/* Avatar Container */}
                         <div className="relative mb-4">
-                          <div className="relative h-24 w-24 overflow-hidden rounded-full ring-4 ring-background transition-transform duration-300 group-hover:scale-105 shadow-md">
+                          <div className={`relative h-24 w-24 overflow-hidden rounded-full ring-4 ring-background transition-all duration-300 ${member.email && member.link?.trim() ? 'cursor-pointer hover:ring-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50 group' : 'group-hover:scale-105'} shadow-md`} onClick={() => member.link?.trim() && window.open(member.link.trim(), "_blank")}>
                             {member.email ? (
-                                member.link ? (
-                                  <a href={member.link} target="_blank" rel="noopener noreferrer" title={member.name} className="block">
+                                member.link?.trim() ? (
+                                  <>
                                     <Image
                                       src={getGravatarUrl(member.email, 256)}
                                       alt={member.name}
@@ -208,7 +222,10 @@ export default function TeamPage() {
                                       loading="eager"
                                       unoptimized
                                     />
-                                  </a>
+                                    <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                      <ArrowRight className="w-5 h-5 text-white -rotate-45" />
+                                    </div>
+                                  </>
                                 ) : (
                                   <Image
                                     src={getGravatarUrl(member.email, 256)}

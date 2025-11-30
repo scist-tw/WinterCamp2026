@@ -89,7 +89,7 @@ export default function Team() {
   }, []);
 
   return (
-    <section id="team" className="py-20 lg:py-32 px-6 lg:px-12 bg-secondary/20">
+    <section id="team" className="py-20 lg:py-32 px-6 lg:px-12 bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <div className="mb-3 flex justify-center">
@@ -111,7 +111,7 @@ export default function Team() {
         {/* Groups - Centered Layout */}
         {(groupedMembers["總召"]?.length > 0 || groupedMembers["副召"]?.length > 0) && (
           <div className="w-full text-center">
-            <div className="mb-8">
+            <div className="mb-16">
               <h3 className="text-2xl lg:text-3xl font-bold">
                 <span className="inline-block px-4 py-2 bg-[oklch(0.75_0.15_85)] text-black rounded-lg">
                   總召組
@@ -119,16 +119,19 @@ export default function Team() {
               </h3>
             </div>
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-4xl">
                 {groupedMembers["副召"]?.[0] && (
                   <div className="flex justify-center">
                     <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
                       <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 border-2 border-[oklch(0.75_0.15_85)]/30">
+                        <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${ groupedMembers["副召"][0].email && groupedMembers["副召"][0].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30' }`}>
                         {groupedMembers["副召"][0].email ? (
-                          groupedMembers["副召"][0].link ? (
-                            <button onClick={() => window.open(groupedMembers["副召"][0].link, "_blank")} title={groupedMembers["副召"][0].name} className="w-full h-full relative">
+                          groupedMembers["副召"][0].link?.trim() ? (
+                            <button onClick={() => window.open(groupedMembers["副召"][0].link.trim(), "_blank")} title={groupedMembers["副召"][0].name} className="w-full h-full relative group">
                               <Image src={getGravatarUrl(groupedMembers["副召"][0].email, 256)} alt={groupedMembers["副召"][0].name} fill className="object-cover" unoptimized />
+                              <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <ArrowRight className="w-6 h-6 text-white -rotate-45" />
+                              </div>
                             </button>
                           ) : (
                             <Image src={getGravatarUrl(groupedMembers["副召"][0].email, 256)} alt={groupedMembers["副召"][0].name} fill className="object-cover" unoptimized />
@@ -146,17 +149,20 @@ export default function Team() {
                 )}
 
                 {groupedMembers["總召"]?.[0] && (
-                  <div className="flex justify-center">
-                    <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col ring-2 ring-[oklch(0.75_0.15_85)]/50">
+                  <div className="flex justify-center sm:col-span-1">
+                    <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-8 hover:scale-[1.04] transition-transform h-full w-full relative flex flex-col ring-2 ring-[oklch(0.75_0.15_85)]/50" style={{ transform: "scale(1.08)" }}>
                       {resolveLabel(groupedMembers["總召"][0], "總召組") === "組長" && (
                         <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
                       )}
                       <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 border-4 border-[oklch(0.75_0.15_85)]/50">
+                        <div className={`relative w-38 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${ groupedMembers["總召"][0].email && groupedMembers["總召"][0].link?.trim() ? 'border-4 border-[oklch(0.75_0.15_85)]/50 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-4 border-[oklch(0.75_0.15_85)]/50' }`}>
                         {groupedMembers["總召"][0].email ? (
-                          groupedMembers["總召"][0].link ? (
-                            <button onClick={() => window.open(groupedMembers["總召"][0].link, "_blank")} title={groupedMembers["總召"][0].name} className="w-full h-full relative">
+                          groupedMembers["總召"][0].link?.trim() ? (
+                            <button onClick={() => window.open(groupedMembers["總召"][0].link.trim(), "_blank")} title={groupedMembers["總召"][0].name} className="w-full h-full relative group">
                               <Image src={getGravatarUrl(groupedMembers["總召"][0].email, 256)} alt={groupedMembers["總召"][0].name} fill className="object-cover" unoptimized />
+                              <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <ArrowRight className="w-6 h-6 text-white -rotate-45" />
+                              </div>
                             </button>
                           ) : (
                             <Image src={getGravatarUrl(groupedMembers["總召"][0].email, 256)} alt={groupedMembers["總召"][0].name} fill className="object-cover" unoptimized />
@@ -166,7 +172,7 @@ export default function Team() {
                         )}
                         </div>
                         <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(groupedMembers["總召"][0], "總召組")}</div>
-                        <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["總召"][0].name}</h4>
+                        <h4 className="text-xl font-bold mb-2 line-clamp-2">{groupedMembers["總召"][0].name}</h4>
                         <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["總召"][0].bio || groupedMembers["總召"][0].role}</p>
                       </div>
                     </div>
@@ -176,11 +182,14 @@ export default function Team() {
                   <div className="flex justify-center">
                     <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
                       <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 border-2 border-[oklch(0.75_0.15_85)]/30">
+                        <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${ groupedMembers["副召"][1].email && groupedMembers["副召"][1].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30' }`}>
                         {groupedMembers["副召"][1].email ? (
-                          groupedMembers["副召"][1].link ? (
-                            <button onClick={() => window.open(groupedMembers["副召"][1].link, "_blank")} title={groupedMembers["副召"][1].name} className="w-full h-full relative">
+                          groupedMembers["副召"][1].link?.trim() ? (
+                            <button onClick={() => window.open(groupedMembers["副召"][1].link.trim(), "_blank")} title={groupedMembers["副召"][1].name} className="w-full h-full relative group">
                               <Image src={getGravatarUrl(groupedMembers["副召"][1].email, 256)} alt={groupedMembers["副召"][1].name} fill className="object-cover" unoptimized />
+                              <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                <ArrowRight className="w-6 h-6 text-white -rotate-45" />
+                              </div>
                             </button>
                           ) : (
                             <Image src={getGravatarUrl(groupedMembers["副召"][1].email, 256)} alt={groupedMembers["副召"][1].name} fill className="object-cover" unoptimized />

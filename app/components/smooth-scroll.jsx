@@ -28,6 +28,14 @@ export default function SmoothScroll({ children }) {
       lerp: 0.1,
     })
 
+    // expose for global consumers (e.g., scroll helpers) so other components
+    // can call `window.__lenis?.scrollTo(...)` when needed.
+    try {
+      window.__lenis = lenis
+    } catch (e) {
+      // ignore if not writable
+    }
+
     let rafId
     function raf(time) {
       lenis.raf(time)
@@ -45,6 +53,11 @@ export default function SmoothScroll({ children }) {
       }
       // restore previous CSS scroll behavior
       document.documentElement.style.scrollBehavior = prevScrollBehavior || ""
+      try {
+        if (window.__lenis === lenis) delete window.__lenis
+      } catch (e) {
+        // ignore
+      }
     }
   }, [])
 
