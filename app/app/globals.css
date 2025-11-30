@@ -13,7 +13,7 @@ html {
   scroll-behavior: smooth;
   /* CSS variable --nav-height is set by the Navbar on mount/resize; fallback to 72px */
   scroll-padding-top: var(--nav-height, 72px);
-  -webkit-overflow-scrolling: touch;
+  /* Removed -webkit-overflow-scrolling: touch to avoid interfering with Lenis smooth scrolling on macOS trackpads */
 }
 
 @custom-variant dark (&:is(.dark *));
