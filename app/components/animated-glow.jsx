@@ -1,24 +1,73 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function AnimatedGlow() {
   const glow1Ref = useRef(null);
   const glow2Ref = useRef(null);
   const glow3Ref = useRef(null);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
-    const glows = [
-      { ref: glow1Ref, duration: 25000, baseSize: 500, path: [
-        { x: 20, y: 30 }, { x: 75, y: 25 }, { x: 20, y: 30 }
-      ]},
-      { ref: glow2Ref, duration: 30000, baseSize: 600, path: [
-        { x: 80, y: 60 }, { x: 15, y: 70 }, { x: 80, y: 60 }
-      ]},
-      { ref: glow3Ref, duration: 28000, baseSize: 550, path: [
-        { x: 50, y: 90 }, { x: 60, y: 15 }, { x: 50, y: 90 }
-      ]}
-    ];
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    // Mobile: only 1 glow, slower, lower opacity
+    // Desktop: 3 glows, original speed
+    const glows = isMobile
+      ? [
+          {
+            ref: glow1Ref,
+            duration: 55000,
+            baseSize: 360,
+            path: [
+              { x: 30, y: 40 },
+              { x: 65, y: 50 },
+              { x: 30, y: 40 },
+            ],
+          },
+        ]
+      : [
+          {
+            ref: glow1Ref,
+            duration: 25000,
+            baseSize: 500,
+            path: [
+              { x: 20, y: 30 },
+              { x: 75, y: 25 },
+              { x: 20, y: 30 },
+            ],
+          },
+          {
+            ref: glow2Ref,
+            duration: 30000,
+            baseSize: 600,
+            path: [
+              { x: 80, y: 60 },
+              { x: 15, y: 70 },
+              { x: 80, y: 60 },
+            ],
+          },
+          {
+            ref: glow3Ref,
+            duration: 28000,
+            baseSize: 550,
+            path: [
+              { x: 50, y: 90 },
+              { x: 60, y: 15 },
+              { x: 50, y: 90 },
+            ],
+          },
+        ];
 
     const animate = (glow, startTime) => {
       const elapsed = Date.now() - startTime;
@@ -61,7 +110,9 @@ export default function AnimatedGlow() {
       if (glow.ref.current) {
         glow.ref.current.style.left = `${x}%`;
         glow.ref.current.style.top = `${y}%`;
-        glow.ref.current.style.opacity = opacity * 0.6; // Reduce brightness to 60%
+        // Reduce brightness further on mobile
+        const brightness = isMobile ? 0.4 : 0.6;
+        glow.ref.current.style.opacity = opacity * brightness;
         glow.ref.current.style.transform = `translate(-50%, -50%) scale(${scale})`;
       }
     };
@@ -79,34 +130,45 @@ export default function AnimatedGlow() {
     return () => {
       if (animationFrame) cancelAnimationFrame(animationFrame);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       <div
         ref={glow1Ref}
-        className="absolute w-[500px] h-[500px] rounded-full blur-3xl transition-opacity duration-1000"
+        className={`${
+          isMobile
+            ? "absolute w-[360px] h-[360px] rounded-full blur-2xl transition-opacity duration-1000"
+            : "absolute w-[500px] h-[500px] rounded-full blur-3xl transition-opacity duration-1000"
+        }`}
         style={{
-          background: 'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-          opacity: 0
+          background:
+            'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
+          opacity: 0,
         }}
       />
-      <div
-        ref={glow2Ref}
-        className="absolute w-[600px] h-[600px] rounded-full blur-3xl transition-opacity duration-1000"
-        style={{
-          background: 'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-          opacity: 0
-        }}
-      />
-      <div
-        ref={glow3Ref}
-        className="absolute w-[550px] h-[550px] rounded-full blur-3xl transition-opacity duration-1000"
-        style={{
-          background: 'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-          opacity: 0
-        }}
-      />
+      {!isMobile && (
+        <>
+          <div
+            ref={glow2Ref}
+            className="absolute w-[600px] h-[600px] rounded-full blur-3xl transition-opacity duration-1000"
+            style={{
+              background:
+                'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
+              opacity: 0,
+            }}
+          />
+          <div
+            ref={glow3Ref}
+            className="absolute w-[550px] h-[550px] rounded-full blur-3xl transition-opacity duration-1000"
+            style={{
+              background:
+                'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
+              opacity: 0,
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }
