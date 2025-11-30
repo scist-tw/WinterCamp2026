@@ -15,7 +15,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  // Add cache headers
+  // Add cache headers and CSP
   async headers() {
     return [
       {
@@ -33,6 +33,15 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://font.emtech.cc; font-src 'self' https://fonts.gstatic.com https://font.emtech.cc data:; img-src 'self' data: https: blob:; connect-src 'self' https:; frame-ancestors 'self';",
           },
         ],
       },

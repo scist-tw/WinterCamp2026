@@ -3,9 +3,9 @@ import Link from "next/link";
 export default function Intro() {
   return (
     <section className="py-20 lg:py-32 px-6 lg:px-12 font-intro">
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="max-w-4xl mx-auto text-center">
         <p
-          className="text-lg lg:text-4xl text-foreground/90 leading-relaxed font-light"
+          className="font-medium text-2xl lg:text-4xl text-foreground/90 leading-relaxed font-light"
         >
           想讓寒假過得更加充實？留下更多回憶?<br />
           想增進自己的資訊能力與技術？<br />

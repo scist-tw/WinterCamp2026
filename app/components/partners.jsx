@@ -1,74 +1,105 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState, useRef } from "react";
 
 export default function Partners() {
   const [partners, setPartners] = useState([]);
   const trackRef = useRef(null);
+  const pausedRef = useRef(false);
 
   useEffect(() => {
     fetch("/data/partners.json")
       .then((res) => res.json())
-      .then((data) => {
-        setPartners(data.partners || []);
-      })
+      .then((data) => setPartners(data.partners || []))
       .catch((err) => console.error("Failed to load partners:", err));
   }, []);
 
-  // Duplicate for seamless loop
-  const duplicatedPartners = [...partners, ...partners];
-
-  // rAF-driven marquee to avoid CSS keyframe reset jump
+  // rAF marquee: wait for images to load then run continuous translate
   useEffect(() => {
     if (!trackRef.current) return;
+    const el = trackRef.current;
+    let rafId = null;
+    let ro = null;
+    let mounted = true;
 
-    let rafId;
+    const waitImages = () => {
+      const imgs = Array.from(el.querySelectorAll('img'));
+      return Promise.all(
+        imgs.map((img) =>
+          img.complete
+            ? Promise.resolve()
+            : new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+        )
+      );
+    };
+
     let last = performance.now();
-    let pos = 0; // px
+    let pos = 0;
     let halfWidth = 0;
 
     const measure = () => {
-      const el = trackRef.current;
       if (!el) return;
-      // width of a single sequence is half of total scrollWidth
       halfWidth = el.scrollWidth / 2;
+      // Ensure transform stays within bounds
+      if (Math.abs(pos) >= halfWidth) pos = pos % halfWidth;
     };
 
-    measure();
-
-    const ro = new ResizeObserver(() => {
+    const start = async () => {
+      await waitImages();
+      if (!mounted) return;
       measure();
-    });
-    ro.observe(trackRef.current);
 
-    const speed = 40; // px per second
+      // prefer duration-based speed: one half-loop in duration seconds
+      const duration = 8; // seconds for half sequence
+      let speed = halfWidth / Math.max(duration, 0.01); // px per second
 
-    const step = (now) => {
-      const dt = (now - last) / 1000;
-      last = now;
-      pos -= speed * dt;
-      if (halfWidth > 0 && pos <= -halfWidth) {
-        pos += halfWidth; // carry forward to avoid reset jump
-      }
-      if (trackRef.current) {
-        trackRef.current.style.transform = `translateX(${pos}px)`;
-      }
+      const step = (now) => {
+        const dt = (now - last) / 1000;
+        last = now;
+        if (!pausedRef.current) {
+          pos -= speed * dt;
+          if (halfWidth > 0 && pos <= -halfWidth) {
+            pos += halfWidth;
+          }
+          el.style.transform = `translate3d(${pos}px,0,0)`;
+        }
+        rafId = requestAnimationFrame(step);
+      };
+
+      // observe size changes
+      ro = new ResizeObserver(() => {
+        measure();
+        // recalc speed based on new width
+        const newSpeed = halfWidth / Math.max(duration, 0.01);
+        speed = newSpeed;
+      });
+      ro.observe(el);
+
+      last = performance.now();
       rafId = requestAnimationFrame(step);
     };
 
-    rafId = requestAnimationFrame(step);
+    start().catch((e) => console.error('marquee start error', e));
 
     return () => {
-      cancelAnimationFrame(rafId);
-      ro.disconnect();
+      mounted = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      try {
+        if (ro) ro.disconnect();
+      } catch (e) {}
     };
   }, [partners.length]);
 
-  if (partners.length === 0) return null;
+  if (!partners || partners.length === 0) return null;
+
+  // duplicate for seamless loop
+  const items = [...partners, ...partners];
 
   return (
-    <section id="partners" className="py-20 lg:py-32 px-6 lg:px-12">
+    <section id="partners" className="py-20 lg:py-32 px-6 lg:px-12 background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <div className="mb-3 flex justify-center">
@@ -80,56 +111,46 @@ export default function Partners() {
           </p>
         </div>
 
-        {/* Marquee Container */}
-        <div className="relative w-full overflow-hidden">
-          {/* Left fade overlay */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent pointer-events-none z-10"></div>
-          {/* Right fade overlay */}
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent pointer-events-none z-10"></div>
-
+        <div className="club-container relative w-full overflow-hidden">
           <div
+            className="club-list"
             ref={trackRef}
-            className="flex gap-8 flex-nowrap will-change-transform"
-            style={{ transform: "translateX(0px)" }}
+            onMouseEnter={() => (pausedRef.current = true)}
+            onMouseLeave={() => (pausedRef.current = false)}
+            onTouchStart={() => (pausedRef.current = true)}
+            onTouchEnd={() => (pausedRef.current = false)}
           >
-            {duplicatedPartners.map((partner, idx) => (
-              <div
-                key={idx}
-                className="flex-shrink-0 w-48 h-48 rounded-2xl bg-card/50 backdrop-blur border border-[oklch(0.75_0.15_85)]/20 overflow-hidden group cursor-pointer transition-all duration-300 hover:border-[oklch(0.75_0.15_85)]/50 hover:shadow-lg hover:shadow-[oklch(0.75_0.15_85)]/20"
-              >
-                <div className="relative w-full h-full flex items-center justify-center bg-secondary/30 group-hover:bg-secondary/50 transition-colors duration-300">
-                  {partner.logo ? (
-                    <Image
-                      src={partner.logo}
-                      alt={partner.name}
-                      width={192}
-                      height={192}
-                      className="object-contain p-4 w-full h-full"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center p-4 text-center">
-                      <div className="text-4xl font-bold text-[oklch(0.75_0.15_85)]/60 mb-2">
-                        {partner.name.charAt(0)}
-                      </div>
-                      <div className="text-sm text-foreground/60">{partner.name}</div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Overlay with club name */}
-                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                  <div className="w-full p-4 bg-gradient-to-t from-black to-transparent">
-                    <h4 className="text-lg font-bold text-[oklch(0.75_0.15_85)]">
-                      {partner.name}
-                    </h4>
+            {items.map((p, i) => (
+              <div key={i} className="club-item">
+                <a
+                  href={p.link || '#'}
+                  target={p.link ? '_blank' : undefined}
+                  rel={p.link ? 'noopener noreferrer' : undefined}
+                  className="relative w-full h-full block"
+                  aria-label={p.link ? `前往 ${p.name}` : p.name}
+                >
+                  <img src={p.logo || '/assets/images/placeholder.png'} alt={p.name} />
+                  <div className="back">
+                    <h4>{p.name}</h4>
                   </div>
-                </div>
+                </a>
               </div>
             ))}
           </div>
         </div>
       </div>
-      {/* No keyframes needed; JS rAF handles smooth infinite loop */}
+
+      <style>{`
+        .club-container { position: relative; }
+        .club-list { display:flex; gap:1rem; padding:2rem 0; margin-top:2rem; will-change: transform; }
+        .club-item { position: relative; flex: 0 0 auto; width: 8rem; height: 8rem; border-radius: 1rem; overflow: hidden; background: rgba(255,255,255,0.03); display:flex; align-items:center; justify-content:center }
+        .club-item img { width:100%; height:100%; object-fit:contain; display:block }
+        .club-item .back { position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center; background: linear-gradient(180deg, transparent, rgba(0,0,0,0.6)); opacity:0; transition: opacity .25s }
+        .club-item:hover .back { opacity:1 }
+        .club-item h4 { color: white; font-weight:700; padding:0.75rem; font-size:0.9rem }
+        /* rAF-driven marquee - no keyframes to avoid reset jump */
+        @media (min-width: 1024px) { .club-item { width:10rem; height:10rem } }
+      `}</style>
     </section>
   );
 }

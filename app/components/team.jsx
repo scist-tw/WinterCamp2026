@@ -118,7 +118,7 @@ export default function Team() {
               <div className="w-64 h-0.5 bg-gradient-to-r from-transparent via-[oklch(0.75_0.15_85)] to-transparent"></div>
             </div>
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-4xl">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-4xl auto-rows-max">
                 {groupedMembers["副召"]?.[0] && (
                   <div className="flex justify-center">
                     <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
@@ -149,7 +149,7 @@ export default function Team() {
 
                 {groupedMembers["總召"]?.[0] && (
                   <div className="flex justify-center sm:col-span-1">
-                    <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-8 hover:scale-[1.04] transition-transform h-full w-full relative flex flex-col ring-2 ring-[oklch(0.75_0.15_85)]/50" style={{ transform: "scale(1.08)" }}>
+                    <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-8 hover:scale-[1.04] transition-transform h-full w-full relative flex flex-col ring-2 ring-[oklch(0.75_0.15_85)]/50 sm:scale-[1.08]">
                       {resolveLabel(groupedMembers["總召"][0], "總召組") === "組長" && (
                         <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
                       )}

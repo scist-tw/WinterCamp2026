@@ -1,71 +1,305 @@
-SCIST x SCAICT 2026 網站（Next.js App Router）
+# SCIST x SCAICT 2026 聯合寒訓 官方網站
 
-快速指南
-- 開發啟動：`npm run dev` 後開啟 `http://localhost:3000`
-- 資料檔目錄：`app/public/data/*`
-- 全站樣式入口：`app/app/globals.css`
+## 目錄
 
-資料設定
-- Team（工作人員）：`app/public/data/team.json`
-- Partners（合作社團）：`app/public/data/partners.json`
-- Fonts（全站字體）：`app/public/data/fonts.json`
+- [技術棧](#技術棧)
+- [快速開始](#快速開始)
+- [資料管理](#資料管理)
+- [專案結構](#專案結構)
+- [開發指南](#開發指南)
+- [部署](#部署)
 
-合作社團（Partners）
-- 檔案：`app/public/data/partners.json`
-- 欄位說明：
-  - `name`：社團名稱（必填）
-  - `logo`：圖片路徑（放在 `app/public` 底下，例 `/assets/club-a.png`）
-  - `link`：點擊導向連結（可留空）
-- 使用方式：直接新增或編輯 JSON 陣列，前台會自動讀取；輪播已做成無縫連續捲動（不會跳回第一則）。
+---
 
-字體設定（Fonts）
-- 檔案：`app/public/data/fonts.json`
-- 支援以 JSON 綁定不同字族（中文 zh、英文 en、標題 display），可自訂 family、大小、字重，並可直接填入 Google Fonts 連結。
-- 結構範例：
-  {
-    "links": [
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap"
-    ],
-    "fonts": {
-      "zh": {
-        "family": "'Noto Sans TC', system-ui, -apple-system, sans-serif",
-        "google": "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap",
-        "sizes": { "sm": "12px", "base": "14px", "lg": "16px", "xl": "20px" },
-        "weight": { "normal": 400, "bold": 700 }
-      },
-      "en": {
-        "family": "Inter, system-ui, -apple-system, sans-serif",
-        "google": "https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap",
-        "sizes": { "sm": "12px", "base": "14px", "lg": "16px", "xl": "20px" },
-        "weight": { "normal": 400, "bold": 700 }
-      },
-      "display": {
-        "family": "'Space Grotesk', Inter, system-ui, sans-serif",
-        "google": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&display=swap",
-        "sizes": { "sm": "20px", "base": "28px", "lg": "36px", "xl": "48px" },
-        "weight": { "normal": 700, "bold": 900 }
-      }
+## 技術棧
+
+| 技術 | 版本 | 用途 |
+|------|------|------|
+| **Next.js** | 16.0.3 | React 框架（App Router） |
+| **React** | 19.2.0 | UI 組件庫 |
+| **Tailwind CSS** | 4.x | 樣式工具 |
+| **Lenis** | 1.0.42 | 平滑滾動效果 |
+| **Framer Motion** | 12.23.24 | 動畫庫 |
+| **Lucide React** | - | Icon 組件集 |
+| **md5** | - | Gravatar 頭像雜湊 |
+
+---
+
+## 快速開始
+
+### 前置需求
+- Node.js 18+
+- npm 或 yarn
+
+### 安裝依賴
+
+```bash
+cd app
+npm install
+```
+
+### 開發環境
+
+```bash
+npm run dev
+```
+
+開啟瀏覽器訪問 [`http://localhost:3000`](http://localhost:3000)
+
+### 生產構建
+
+```bash
+npm run build
+npm run start
+```
+
+---
+
+## 📊 資料管理
+
+所有內容數據存放於 `app/public/data/` 目錄，透過 JSON 檔案管理。
+
+### 工作人員（Team）
+
+**檔案：** `app/public/data/team.json`
+
+```json
+{
+  "allMembers": [
+    {
+      "id": "001",
+      "name": "TEST",
+      "email": "email@example.com",
+      "bio": "TEST",
+      "category": ["總召組"],
+      "role": ["副召"],
+      "link": "https://example.com"
     }
+  ]
+}
+```
+
+**欄位說明：**
+| 欄位 | 型態 | 說明 |
+|------|------|------|
+| `id` | string | 唯一識別碼 |
+| `name` | string | 人員名稱（必填） |
+| `email` | string | Email（用於 Gravatar） |
+| `bio` | string | 簡介/職位 |
+| `category` | string \| string[] | 分類（如 `"總召組"`、`"行政組"` 等） |
+| `role` | string \| string[] | 角色（如 `"總召"`、`"副召"`、`"組長"` 等） |
+| `link` | string | 點擊頭像導向的連結（社群、個人網站等） |
+
+**特殊機制：**
+- **Gravatar 頭像**：若提供 `email`，會自動生成對應的 Gravatar 頭像
+- **總召組顯示**：只有 `category` 包含 `"總召組"` 且 `role` 為 `"總召"` 或 `"副召"` 的成員會在首頁展示
+- **排序**：同分類內優先顯示 `role` 為組長的成員
+
+### 合作社團（Partners）
+
+**檔案：** `app/public/data/partners.json`
+
+```json
+[
+  {
+    "name": "臺南高商資訊研究社",
+    "logo": "/assets/images/club/臺南高商資訊研究社.png",
+    "link": "https://example.com"
   }
-- 套用邏輯：
-  - 首頁載入時由 `FontManager` 讀取該 JSON，自動插入 Google Fonts `<link>` 與 `preconnect`，並寫入 CSS 變數：
-    - 家族：`--font-zh`、`--font-en`、`--font-display-family`
-    - 尺寸：`--font-size-zh-*`、`--font-size-en-*`、`--font-size-display-*`
-    - 字重：`--font-weight-*-{normal|bold}`
-  - 全站預設字族來自 `globals.css` 中：`--font-sans` 與 `--font-display`，會自動使用上述變數。
-  - 你也可以在任意元件用以下工具 class 覆蓋：
-    - 字族：`.font-zh`、`.font-en`、`.font-display`
-    - 尺寸：`.text-zh-{sm|base|lg|xl}`、`.text-en-{sm|base|lg|xl}`、`.text-display-{sm|base|lg|xl}`
+]
+```
 
-注意事項
-- 圖片路徑：放在 `app/public/...`，前台引用以 `/...` 開頭。
-- 行動裝置：為省資源，首頁的光暈裝飾在手機上已停用（不渲染、不執行動畫）。
-- 導覽列：手機選單支援點擊外側收回，含開合動畫。
+**欄位說明：**
+| 欄位 | 型態 | 必填 | 說明 |
+|------|------|------|------|
+| `name` | string | ✅ | 社團名稱 |
+| `logo` | string | ✅ | Logo 圖片路徑（放在 `app/public` 下） |
+| `link` | string | ❌ | 點擊導向連結（可留空） |
 
-開發
-- 啟動：
-  - `npm run dev`
-- 編輯：
-  - 首頁區段在 `app/components/*`
-  - 子頁位於 `app/app/{course|gallery|pricing|team}`
-  - 資料 JSON 在 `app/public/data/*`
+**Logo 放置：**
+- 路徑：`app/public/assets/images/club/`
+- 推薦格式：PNG 或 WebP
+- 建議尺寸：300×300px 或以上
+
+**輪播機制：**
+- 已實現無縫連續捲動（rAF 驅動）
+- 速度可透過組件 props 調整（預設 8 秒半輪播）
+- 支持滑鼠懸停暫停，觸控停止時同樣暫停
+
+---
+
+## 📁 專案結構
+
+```
+app/
+├── app/                          # Next.js App Router
+│   ├── globals.css              # 全站全局樣式
+│   ├── layout.js                # 主佈局
+│   ├── page.js                  # 首頁
+│   ├── course/
+│   │   └── page.js              # 課程頁
+│   ├── gallery/
+│   │   └── page.js              # 相簿頁
+│   ├── pricing/
+│   │   └── page.js              # 定價頁
+│   └── team/
+│       └── page.js              # 完整團隊頁
+│
+├── components/
+│   ├── navbar.jsx               # 導航欄
+│   ├── hero.jsx                 # Hero 區段
+│   ├── intro.jsx                # 介紹區段
+│   ├── info.jsx                 # 資訊區段
+│   ├── course.jsx               # 課程區段
+│   ├── schedule.jsx             # 日程表區段
+│   ├── team.jsx                 # 工作人員區段（首頁）
+│   ├── gallery.jsx              # 相簿區段
+│   ├── pricing.jsx              # 定價區段
+│   ├── partners.jsx             # 合作社團輪播
+│   ├── contact.jsx              # 聯絡我們區段
+│   ├── footer.jsx               # 頁尾
+│   ├── smooth-scroll.jsx        # Lenis 平滑滾動初始化
+│   ├── scroll-to-top.jsx        # 回到頂部按鈕
+│   ├── detail-navbar.jsx        # 詳細頁導航欄
+│   ├── auto-fit-text.jsx        # 自適應文字大小組件
+│   └── ui/
+│       ├── button.jsx           # 按鈕組件
+│       └── card.jsx             # 卡片組件
+│
+├── lib/
+│   └── utils.js                 # 工具函數
+│
+├── public/
+│   ├── assets/
+│   │   └── images/
+│   │       └── club/            # 社團 Logo 圖片
+│   └── data/
+│       ├── team.json            # 工作人員資料
+│       ├── partners.json        # 合作社團資料
+│       ├── schedule.json        # 日程表資料
+│       ├── gallery.json         # 相簿資料
+│       └── faq.json             # 常見問題資料
+│
+├── package.json                 # 專案依賴
+├── next.config.mjs              # Next.js 設定
+├── tailwind.config.js           # Tailwind CSS 設定
+├── postcss.config.mjs           # PostCSS 設定
+└── README.md                    # 本文件
+```
+
+---
+
+## 🎨 開發指南
+
+### 新增首頁區段
+
+1. 在 `app/components/` 建立新檔案（如 `new-section.jsx`）
+2. 編寫 React 組件
+3. 在 `app/app/page.js` 引入並使用
+
+### 編輯樣式
+
+- **全站樣式**：編輯 `app/app/globals.css`
+- **Tailwind 工具類**：直接在 JSX 中使用（已配置 Tailwind CSS 4）
+- **自訂顏色**：主色調使用 `oklch(0.75_0.15_85)`
+
+### 使用 Lenis 平滑滾動
+
+```javascript
+// 已自動啟用，無需額外設定
+// 若需在代碼中使用：
+window.__lenis?.scrollTo('#section-id', { duration: 1.5 })
+```
+
+### 自訂組件
+
+#### AutoFitText（自適應文字）
+
+```jsx
+import AutoFitText from "@/components/auto-fit-text";
+
+<AutoFitText as="h2" maxLines={2} min={12} max={24}>
+  動態調整大小的標題
+</AutoFitText>
+```
+
+**Props：**
+- `as`：HTML 標籤（預設 `div`）
+- `maxLines`：最多行數
+- `min`：最小字體大小（px）
+- `max`：最大字體大小（px）
+
+### 常見工作
+
+#### 修改首頁標題
+📄 `app/app/page.js` 中修改 Hero 區段
+
+#### 新增團隊成員
+📝 編輯 `app/public/data/team.json`
+
+#### 新增合作社團
+📝 編輯 `app/public/data/partners.json` 並上傳 Logo 到 `app/public/assets/images/club/`
+
+#### 修改導航項目
+📄 編輯 `app/components/navbar.jsx`
+
+---
+
+## 部署
+
+### Vercel（推薦）
+
+1. 推送代碼到 GitHub
+2. 連接 Vercel 項目
+3. Vercel 自動部署
+
+### Docker
+
+```bash
+# 構建 Docker 鏡像
+docker-compose build
+
+# 啟動容器
+docker-compose up -d
+```
+
+訪問 `http://localhost:3000`
+
+---
+
+## 📱 響應式設計
+
+採用 Tailwind CSS 斷點：
+
+| 斷點 | 寬度 | 用途 |
+|------|------|------|
+| `sm` | ≥640px | 平板豎向 |
+| `md` | ≥768px | 平板橫向 |
+| `lg` | ≥1024px | 桌面 |
+| `xl` | ≥1280px | 寬桌面 |
+
+所有組件已適配行動裝置。
+
+---
+
+## 🔧 常見問題
+
+### 圖片無法加載？
+確認圖片路徑以 `/` 開頭，且放在 `app/public/` 目錄下。
+
+### 頭像顯示為預設圖案？
+檢查 JSON 中的 `email` 欄位，或確認 Gravatar 賬戶設定。
+
+### 樣式不生效？
+- 重啟開發服務器
+- 清理 Tailwind 緩存：`rm -rf .next`
+- 檢查 Tailwind 設定中的 `content` 路徑
+
+### 輪播速度過快/過慢？
+編輯 `app/components/partners.jsx` 中的 `duration` 常數（單位：秒）
+
+---
+
+## 授權
+
+© 2026 SCIST x SCAICT. All rights reserved.
