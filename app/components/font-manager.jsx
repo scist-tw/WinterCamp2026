@@ -18,33 +18,50 @@ export default function FontManager() {
 
         const root = document.documentElement.style;
 
-        // Optionally inject Google Fonts (or any CSS) links from JSON
+        // Optionally inject font CSS links from JSON (Google Fonts, emfont, or any CDN)
         const toLinks = new Set();
         // top-level links array
         if (Array.isArray(json.links)) json.links.forEach((h) => h && toLinks.add(h));
-        // per-font google link
+        // per-font link fields
         [zh, en, display].forEach((cfg) => {
-          if (cfg && cfg.google) toLinks.add(cfg.google);
+          if (!cfg) return;
+          // Preferred
+          if (cfg.link) toLinks.add(cfg.link);
+          // Back-compat
+          if (cfg.google) toLinks.add(cfg.google);
+          if (cfg.emfont) toLinks.add(cfg.emfont);
+          if (Array.isArray(cfg.links)) cfg.links.forEach((h) => h && toLinks.add(h));
         });
 
         const appended = [];
-        const ensurePreconnect = (href, id) => {
+        const origins = new Set();
+        const ensurePreconnect = (origin) => {
+          const id = `preconnect-${origin}`;
           if (document.getElementById(id)) return;
           const link = document.createElement("link");
           link.id = id;
           link.rel = "preconnect";
-          link.href = href;
-          if (href.includes("gstatic")) link.crossOrigin = "anonymous";
+          link.href = origin;
+          // Use anonymous for cross-origin requests
+          try {
+            const u = new URL(origin);
+            if (u.origin !== window.location.origin) link.crossOrigin = "anonymous";
+          } catch (_) {}
           document.head.appendChild(link);
           appended.push(link);
         };
 
         if (toLinks.size > 0) {
-          const needsGoogle = [...toLinks].some((h) => h.includes("fonts.googleapis.com"));
-          if (needsGoogle) {
-            ensurePreconnect("https://fonts.googleapis.com", "gf-preconnect-api");
-            ensurePreconnect("https://fonts.gstatic.com", "gf-preconnect-static");
-          }
+          // Derive origins from links and preconnect them
+          [...toLinks].forEach((href) => {
+            try {
+              const u = new URL(href, window.location.origin);
+              origins.add(u.origin);
+            } catch (_) {}
+          });
+          origins.forEach((o) => ensurePreconnect(o));
+
+          // Append stylesheet links if not already present
           toLinks.forEach((href) => {
             if (!document.querySelector(`link[rel="stylesheet"][href="${href}"]`)) {
               const l = document.createElement("link");
