@@ -2,6 +2,7 @@ import React from "react";
 import "./globals.css";
 import NavbarSwitcher from "@/components/navbar-switcher";
 import RouteScrollTop from "@/components/route-scroll-top";
+import SmoothScroll from "@/components/smooth-scroll";
 // Note: Google fonts fetching is disabled in this environment.
 // Fallback to default system fonts to avoid network during build/dev.
 
@@ -20,7 +21,7 @@ export default function RootLayout({ children }) {
       <body className={`font-sans antialiased overscroll-none relative pt-20`}>
         <NavbarSwitcher />
         <RouteScrollTop />
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );
