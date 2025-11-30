@@ -1,25 +1,83 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Users } from "lucide-react";
+import { Users, ArrowRight, Mail } from "lucide-react";
 import Image from "next/image";
 import md5 from "md5";
 
 // Generate Gravatar URL from email
-function getGravatarUrl(email, size = 200) {
+function getGravatarUrl(email, size = 400) {
   if (!email) return `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=${size}`;
-
   const hash = md5(email.trim().toLowerCase());
   return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`;
 }
 
 // 職位順序
-const CATEGORY_ORDER = ["總召", "副召", "行政組", "課程組", "活動組", "資訊組", "隊輔組", "紀錄組"];
+const CATEGORY_ORDER = [
+  "總召組",
+  "行政組",
+  "課程組",
+  "活動組",
+  "資訊組",
+  "隊輔組",
+  "編輯組",
+  "紀錄組",
+];
+
+// 職位描述對照表
+const CATEGORY_DESC = {
+  "總召組": "掌握協調年會籌備進度，主持核心討論及決策。",
+  "行政組": "負責維持年會常務行政事務、財務與場地協調。",
+  "課程組": "負責議程規劃、講師邀請與課程內容安排。",
+  "活動組": "負責年會當天的活動流程、場控與體驗設計。",
+  "資訊組": "負責官網開發、系統維護與技術支援。",
+  "隊輔組": "引導學員參與活動，凝聚小隊向心力。",
+  "紀錄組": "透過影像與文字，紀錄年會的精彩瞬間。",
+  "編輯組": "負責活動文案、文稿編輯與文字內容品質把關。",
+};
 
 export default function TeamPage() {
   const [allTeamMembers, setAllTeamMembers] = useState([]);
   const [groupedMembers, setGroupedMembers] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Helper: support category/role being string or array
+  const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
+
+  // Resolve the display label for a member within a specific category group
+  const resolveLabel = (member, categoryKey) => {
+    const cats = toArray(member.category);
+    const roles = toArray(member.role);
+
+    // If member explicitly lists the category and there is a parallel role entry, use it
+    const idx = cats.indexOf(categoryKey);
+    if (idx !== -1 && roles[idx]) return roles[idx];
+
+    // If the current categoryKey matches the member's role (or one of their roles),
+    // and the member has a qualifier like 組長/組員 in their category, show that qualifier.
+    const roleMatchesCategory = Array.isArray(member.role)
+      ? member.role.includes(categoryKey)
+      : member.role === categoryKey;
+    if (roleMatchesCategory) {
+      const qual = cats.find((c) => c === "組長" || c === "組員");
+      if (qual) return qual;
+    }
+
+    // If viewing 總召組, prefer a 總召/副召 role if provided
+    if (categoryKey === "總召組") {
+      const found = roles.find((r) => r === "總召" || r === "副召");
+      if (found) return found;
+    }
+
+    // If roles includes 組長/組員, use that qualification
+    const leader = roles.find((r) => r === "組長" || r === "組員");
+    if (leader) return leader;
+
+    // Fallbacks
+    if (roles.length > 0) return roles[0];
+    if (cats.length > 0) return cats[0];
+    return member.role || member.category || "";
+  };
 
   useEffect(() => {
     fetch("/data/team.json")
@@ -28,119 +86,166 @@ export default function TeamPage() {
         const members = data.allMembers || [];
         setAllTeamMembers(members);
 
-        // 依照職位分組
+        // Helper: support category being string or array
+        const toArray = (c) => (Array.isArray(c) ? c : c ? [c] : []);
+
+        // Group members: allow a member to appear in multiple categories if category is an array.
         const grouped = members.reduce((acc, member) => {
-          const category = member.category || "其他";
-          if (!acc[category]) {
-            acc[category] = [];
+          const cats = toArray(member.category);
+
+          // If category contains 組長/組員 (these are role qualifiers), ensure the member is grouped under their role (e.g., 行政組)
+          const roleQual = cats.find((c) => c === "組長" || c === "組員");
+          if (roleQual) {
+            // If member.role is an array, we can't use it directly as a key; fall back to the first role string
+            const roleKey = Array.isArray(member.role) ? (member.role.find((r) => r && r !== "組長" && r !== "組員") || member.role[0]) : member.role || "其他";
+            acc[roleKey] = acc[roleKey] || [];
+            acc[roleKey].push(member);
           }
-          acc[category].push(member);
+
+          // For every explicit category (except the role qualifiers), add the member to that category group
+          cats.forEach((cat) => {
+            if (!cat) return;
+            if (cat === "組長" || cat === "組員") return; // already handled above
+            const key = cat;
+            acc[key] = acc[key] || [];
+            acc[key].push(member);
+          });
+
+          // If member has no category, fallback to their role
+          if (cats.length === 0) {
+            const key = member.role || "其他";
+            acc[key] = acc[key] || [];
+            acc[key].push(member);
+          }
+
           return acc;
         }, {});
+
+        // Sort each group's members so that '組長' appear first, then by name
+        Object.keys(grouped).forEach((key) => {
+          grouped[key].sort((a, b) => {
+            const aIsLeader = resolveLabel(a, key) === "組長" ? 0 : 1;
+            const bIsLeader = resolveLabel(b, key) === "組長" ? 0 : 1;
+            if (aIsLeader !== bIsLeader) return aIsLeader - bIsLeader;
+            return (a.name || "").localeCompare(b.name || "");
+          });
+        });
+
         setGroupedMembers(grouped);
       })
-      .catch((err) => console.error("Failed to load team:", err));
+      .catch((err) => console.error("Failed to load team:", err))
+      .finally(() => setIsLoading(false));
   }, []);
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full bg-background selection:bg-primary/20">
+      
+      {/* --- Hero Section --- */}
+      <div className="text-center mb-8 px-6 py-25 lg:px-8">
+        <div className="mb-3 flex justify-center">
+          <span className="section-eyebrow">TEAM // 工作人員</span>
+        </div>
+        <h1 className="section-title text-4xl lg:text-6xl font-bold mb-6">籌備團隊</h1>
+        <p className="text-foreground/70 text-lg lg:text-xl max-w-3xl mx-auto">
+          由 SCIST x SCAICT 攜手打造
+          <br />
+          致力於提供最優質的學習體驗與活動規劃
+        </p>
+      </div>
 
-      {/* Main content */}
-      <section className="pt-32 pb-20 lg:pb-32 px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="mb-3 flex justify-center">
-              <span className="section-eyebrow">TEAM // 工作人員</span>
-            </div>
-            <h1 className="section-title text-4xl lg:text-6xl font-bold mb-6">
-              籌備團隊
-            </h1>
-            <p className="text-foreground/70 text-lg lg:text-xl max-w-3xl mx-auto">
-              由 SCIST x SCAICT 攜手打造
-              <br />
-              致力於提供最優質的學習體驗與活動規劃
-            </p>
+      {/* --- Team Members Content --- */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-24">
+        {isLoading ? (
+          // Loading Skeleton
+          <div className="flex flex-col items-center justify-center py-20 space-y-4 animate-pulse">
+            <div className="w-16 h-16 bg-foreground/10 rounded-full"></div>
+            <div className="h-4 w-48 bg-foreground/10 rounded"></div>
           </div>
+        ) : allTeamMembers.length === 0 ? (
+          // Empty State
+          <div className="text-center py-20 text-foreground/60 border-2 border-dashed border-foreground/10 rounded-3xl mx-auto max-w-2xl">
+            <Users className="w-16 h-16 mx-auto mb-4 opacity-50" />
+            <p className="text-lg font-medium">工作人員名單籌備中...</p>
+            <p className="text-sm mt-2">敬請期待</p>
+          </div>
+        ) : (
+          <div className="space-y-16">
+            {CATEGORY_ORDER.map((category) => {
+              const members = groupedMembers[category];
+              if (!members || members.length === 0) return null;
 
-          {/* Team Members - Centered Layout */}
-          {allTeamMembers.length === 0 ? (
-            <div className="text-center py-20 text-foreground/70">
-              <Users className="w-16 h-16 mx-auto mb-4 text-[oklch(0.55_0.15_85)]/40" />
-              <p>工作人員名單籌備中...</p>
-            </div>
-          ) : (
-            <div className="space-y-20">
-              {CATEGORY_ORDER.map((category) => {
-                const members = groupedMembers[category];
-                if (!members || members.length === 0) return null;
+              return (
+                <section key={category} id={category} className="scroll-mt-24">
+                  {/* Category Header */}
+                  <div className="mb-8 border-l-4 border-primary pl-4">
+                    <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                      {category}
+                    </h2>
+                    <p className="mt-2 text-base text-foreground/60">
+                      {CATEGORY_DESC[category] || "SITCON 的核心夥伴"}
+                    </p>
+                  </div>
 
-                return (
-                  <div key={category} className="w-full">
-                    {/* Category Title - Centered */}
-                    <div className="mb-10 text-center">
-                      <h2 className="text-2xl lg:text-3xl font-bold">
-                        <span className="inline-block px-4 py-2 bg-[oklch(0.75_0.15_85)] text-black rounded-lg">
-                          {category}
-                        </span>
-                      </h2>
-                    </div>
-
-                    {/* Members Grid - Centered */}
-                    <div className="flex justify-center">
-                      <div className={`grid gap-6 w-full ${
-                        members.length === 1 ? "grid-cols-1 max-w-sm" :
-                        members.length === 2 ? "grid-cols-1 sm:grid-cols-2 max-w-2xl" :
-                        "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-6xl"
-                      }`}>
-                        {members.map((member, idx) => (
-                          <Card
-                            key={idx}
-                            className="neon-card rounded-2xl overflow-hidden group hover:scale-[1.02] transition-transform p-6 relative"
-                          >
-                            {member.isLeader && (
-                              <div className="absolute top-2 right-2 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
-                            )}
-                            <div className="flex flex-col items-center text-center">
-                              {/* Avatar */}
-                              <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 group-hover:border-[oklch(0.75_0.15_85)] transition-colors flex items-center justify-center bg-secondary/50">
-                                {member.email ? (
+                  {/* Members Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+                    {members.map((member, idx) => (
+                      <div
+                        key={idx}
+                        className="group relative flex flex-col items-center rounded-2xl bg-secondary/10 p-4 transition-all duration-300 hover:bg-secondary/20 hover:-translate-y-1 hover:shadow-lg"
+                      >
+                        {/* Avatar Container */}
+                        <div className="relative mb-4">
+                          <div className="relative h-24 w-24 overflow-hidden rounded-full ring-4 ring-background transition-transform duration-300 group-hover:scale-105 shadow-md">
+                            {member.email ? (
+                                member.link ? (
+                                  <a href={member.link} target="_blank" rel="noopener noreferrer" title={member.name} className="block">
+                                    <Image
+                                      src={getGravatarUrl(member.email, 256)}
+                                      alt={member.name}
+                                      fill
+                                      className="object-cover"
+                                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                      loading="eager"
+                                      unoptimized
+                                    />
+                                  </a>
+                                ) : (
                                   <Image
-                                    src={getGravatarUrl(member.email, 192)}
+                                    src={getGravatarUrl(member.email, 256)}
                                     alt={member.name}
-                                    width={96}
-                                    height={96}
+                                    fill
                                     className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     unoptimized
                                   />
-                                ) : (
-                                  <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
-                                )}
+                                )
+                            ) : (
+                              <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
+                                <Users className="h-10 w-10" />
                               </div>
+                            )}
+                          </div>
+                          {/* Optional: Add a subtle status dot or decoration here */}
+                        </div>
 
-                              {/* Info */}
-                              <div className="inline-block px-2 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-2">
-                                {member.role}
-                              </div>
-                              <h3 className="text-lg font-bold mb-1">{member.name}</h3>
-                              {member.organization && (
-                                <p className="text-[oklch(0.75_0.15_85)] text-xs mb-2 line-clamp-2">
-                                  {member.organization}
-                                </p>
-                              )}
-                              {member.bio && (
-                                <p className="text-foreground/60 text-sm line-clamp-2">{member.bio}</p>
-                              )}
-                            </div>
-                          </Card>
-                        ))}
+                        {/* Text Info */}
+                        <div className="text-center w-full">
+                          <h3 className="font-bold text-foreground text-lg truncate px-2">
+                            {member.name}
+                          </h3>
+                          <p className="mt-1 text-xs font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate">
+                            {resolveLabel(member, category)}
+                          </p>
+                        </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
+                </section>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -51,6 +51,7 @@ export default function Hero() {
               alt="閃電四連編"
               width={300}
               height={150}
+              loading="eager"
               className="w-full max-w-lg h-auto"
             />
           </div>

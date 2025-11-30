@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
 import { ArrowRight, Users } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,12 +14,39 @@ function getGravatarUrl(email, size = 200) {
   return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`;
 }
 
-// 職位順序（首頁只顯示總召和副召）
-const DISPLAY_CATEGORIES = ["總召", "副召"];
+// 改用 role 來判斷
+const DISPLAY_ROLES = ["總召", "副召"];
 
 export default function Team() {
   const [members, setMembers] = useState([]);
   const [groupedMembers, setGroupedMembers] = useState({});
+
+  const toArray = (v) => (Array.isArray(v) ? v : v ? [v] : []);
+
+  const resolveLabel = (member, categoryKey) => {
+    const cats = toArray(member.category);
+    const roles = toArray(member.role);
+    const idx = cats.indexOf(categoryKey);
+    if (idx !== -1 && roles[idx]) return roles[idx];
+    // If the current categoryKey matches the member's role (or one of their roles),
+    // and the member has a qualifier like 組長/組員 in their category, show that qualifier.
+    const roleMatchesCategory = Array.isArray(member.role)
+      ? member.role.includes(categoryKey)
+      : member.role === categoryKey;
+    if (roleMatchesCategory) {
+      const qual = cats.find((c) => c === "組長" || c === "組員");
+      if (qual) return qual;
+    }
+    if (categoryKey === "總召組") {
+      const found = roles.find((r) => r === "總召" || r === "副召");
+      if (found) return found;
+    }
+    const leader = roles.find((r) => r === "組長" || r === "組員");
+    if (leader) return leader;
+    if (roles.length > 0) return roles[0];
+    if (cats.length > 0) return cats[0];
+    return member.role || member.category || "";
+  };
 
   useEffect(() => {
     fetch("/data/team.json")
@@ -29,17 +55,34 @@ export default function Team() {
         const allMembers = data.allMembers || [];
         setMembers(allMembers);
 
-        // 依照職位分組，只保留要在首頁顯示的
+        const catIncludes = (member, key) => {
+          const c = member.category;
+          if (Array.isArray(c)) return c.includes(key);
+          return c === key;
+        };
+
         const grouped = allMembers.reduce((acc, member) => {
-          const category = member.category || "其他";
-          if (DISPLAY_CATEGORIES.includes(category)) {
-            if (!acc[category]) {
-              acc[category] = [];
-            }
-            acc[category].push(member);
+          const cats = Array.isArray(member.category) ? member.category : [member.category];
+          const roles = toArray(member.role);
+          if (catIncludes(member, "總召組")) {
+            roles.forEach((r) => {
+              if (DISPLAY_ROLES.includes(r)) {
+                acc[r] = acc[r] || [];
+                acc[r].push(member);
+              }
+            });
           }
           return acc;
-        }, {});
+        }, { 總召: [], 副召: [] });
+        // put 組長 first
+        Object.keys(grouped).forEach((k) => {
+          grouped[k].sort((a, b) => {
+            const aIsLeader = resolveLabel(a, "總召組") === "組長" ? 0 : 1;
+            const bIsLeader = resolveLabel(b, "總召組") === "組長" ? 0 : 1;
+            if (aIsLeader !== bIsLeader) return aIsLeader - bIsLeader;
+            return (a.name || "").localeCompare(b.name || "");
+          });
+        });
         setGroupedMembers(grouped);
       })
       .catch((err) => console.error("Failed to load team:", err));
@@ -77,79 +120,81 @@ export default function Team() {
             </div>
             <div className="flex justify-center">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-4xl">
-                {/* 副召左 */}
                 {groupedMembers["副召"]?.[0] && (
-                  <Link href="/team" className="flex justify-center">
-                    <Card className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
-                      {groupedMembers["副召"][0].isLeader && (
-                        <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
-                      )}
+                  <div className="flex justify-center">
+                    <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
                       <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 flex-shrink-0">
-                          {groupedMembers["副召"][0].email ? (
+                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 border-2 border-[oklch(0.75_0.15_85)]/30">
+                        {groupedMembers["副召"][0].email ? (
+                          groupedMembers["副召"][0].link ? (
+                            <button onClick={() => window.open(groupedMembers["副召"][0].link, "_blank")} title={groupedMembers["副召"][0].name} className="w-full h-full relative">
+                              <Image src={getGravatarUrl(groupedMembers["副召"][0].email, 256)} alt={groupedMembers["副召"][0].name} fill className="object-cover" unoptimized />
+                            </button>
+                          ) : (
                             <Image src={getGravatarUrl(groupedMembers["副召"][0].email, 256)} alt={groupedMembers["副召"][0].name} fill className="object-cover" unoptimized />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-secondary/50 text-foreground/40">
-                              <Users className="w-12 h-12" />
-                            </div>
-                          )}
+                          )
+                        ) : (
+                          <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
+                        )}
                         </div>
-                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{groupedMembers["副召"][0].role}</div>
+                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(groupedMembers["副召"][0], "總召組")}</div>
                         <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["副召"][0].name}</h4>
-                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["副召"][0].organization}</p>
+                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["副召"][0].bio || groupedMembers["副召"][0].role}</p>
                       </div>
-                    </Card>
-                  </Link>
+                    </div>
+                  </div>
                 )}
 
-                {/* 總召中 */}
                 {groupedMembers["總召"]?.[0] && (
-                  <Link href="/team" className="flex justify-center">
-                    <Card className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
-                      {groupedMembers["總召"][0].isLeader && (
+                  <div className="flex justify-center">
+                    <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col ring-2 ring-[oklch(0.75_0.15_85)]/50">
+                      {resolveLabel(groupedMembers["總召"][0], "總召組") === "組長" && (
                         <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
                       )}
                       <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 flex-shrink-0">
-                          {groupedMembers["總召"][0].email ? (
+                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 border-4 border-[oklch(0.75_0.15_85)]/50">
+                        {groupedMembers["總召"][0].email ? (
+                          groupedMembers["總召"][0].link ? (
+                            <button onClick={() => window.open(groupedMembers["總召"][0].link, "_blank")} title={groupedMembers["總召"][0].name} className="w-full h-full relative">
+                              <Image src={getGravatarUrl(groupedMembers["總召"][0].email, 256)} alt={groupedMembers["總召"][0].name} fill className="object-cover" unoptimized />
+                            </button>
+                          ) : (
                             <Image src={getGravatarUrl(groupedMembers["總召"][0].email, 256)} alt={groupedMembers["總召"][0].name} fill className="object-cover" unoptimized />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-secondary/50 text-foreground/40">
-                              <Users className="w-12 h-12" />
-                            </div>
-                          )}
+                          )
+                        ) : (
+                          <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
+                        )}
                         </div>
-                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{groupedMembers["總召"][0].role}</div>
+                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(groupedMembers["總召"][0], "總召組")}</div>
                         <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["總召"][0].name}</h4>
-                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["總召"][0].organization}</p>
+                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["總召"][0].bio || groupedMembers["總召"][0].role}</p>
                       </div>
-                    </Card>
-                  </Link>
+                    </div>
+                  </div>
                 )}
-
-                {/* 副召右 */}
                 {groupedMembers["副召"]?.[1] && (
-                  <Link href="/team" className="flex justify-center">
-                    <Card className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
-                      {groupedMembers["副召"][1].isLeader && (
-                        <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
-                      )}
+                  <div className="flex justify-center">
+                    <div className="bg-card text-card-foreground gap-6 border shadow-sm neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
                       <div className="flex flex-col items-center text-center flex-1">
-                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden border-2 border-[oklch(0.75_0.15_85)]/30 flex-shrink-0">
-                          {groupedMembers["副召"][1].email ? (
-                            <Image src={getGravatarUrl(groupedMembers["副召"][1].email, 256)} alt={groupedMembers["副召"][1].name} fill className="object-cover" unoptimized />
+                        <div className="relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 border-2 border-[oklch(0.75_0.15_85)]/30">
+                        {groupedMembers["副召"][1].email ? (
+                          groupedMembers["副召"][1].link ? (
+                            <button onClick={() => window.open(groupedMembers["副召"][1].link, "_blank")} title={groupedMembers["副召"][1].name} className="w-full h-full relative">
+                              <Image src={getGravatarUrl(groupedMembers["副召"][1].email, 256)} alt={groupedMembers["副召"][1].name} fill className="object-cover" unoptimized />
+                            </button>
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-secondary/50 text-foreground/40">
-                              <Users className="w-12 h-12" />
-                            </div>
-                          )}
+                            <Image src={getGravatarUrl(groupedMembers["副召"][1].email, 256)} alt={groupedMembers["副召"][1].name} fill className="object-cover" unoptimized />
+                          )
+                        ) : (
+                          <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
+                        )}
                         </div>
-                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{groupedMembers["副召"][1].role}</div>
+                        <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(groupedMembers["副召"][1], "總召組")}</div>
                         <h4 className="text-lg font-bold mb-2 line-clamp-2">{groupedMembers["副召"][1].name}</h4>
-                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["副召"][1].organization}</p>
+                        <p className="text-foreground/60 text-sm line-clamp-3">{groupedMembers["副召"][1].bio || groupedMembers["副召"][1].role}</p>
                       </div>
-                    </Card>
-                  </Link>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
