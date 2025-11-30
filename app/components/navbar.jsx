@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Logo from "@/components/logo";
@@ -7,6 +7,7 @@ import Logo from "@/components/logo";
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navRef = useRef(null);
 
   const scrollToSection = (id) => {
     if (typeof window === "undefined") return;
@@ -15,9 +16,38 @@ export default function Navbar() {
       return;
     }
     const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (!element) return;
+    // More advanced smooth scroll with easing and offset
+    const navOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--nav-height")) || 72;
+    smoothScrollTo(element, { duration: 700, offset: navOffset });
     setMobileOpen(false);
   };
+
+  // Smooth scroll helper (requestAnimationFrame + easing)
+  function smoothScrollTo(target, { duration = 600, offset = 0 } = {}) {
+    const startY = window.scrollY || window.pageYOffset;
+    const targetRect = target.getBoundingClientRect();
+    const targetY = startY + targetRect.top - offset;
+    const distance = targetY - startY;
+    let startTime = null;
+
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInOutCubic(progress);
+      window.scrollTo(0, Math.round(startY + distance * eased));
+      if (elapsed < duration) {
+        window.requestAnimationFrame(step);
+      }
+    }
+
+    window.requestAnimationFrame(step);
+  }
 
   useEffect(() => {
     const onKey = (e) => {
@@ -29,31 +59,41 @@ export default function Navbar() {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
+    // Update CSS var for nav height so `scroll-padding-top` is accurate
+    const updateNavHeight = () => {
+      const h = navRef.current?.offsetHeight || 72;
+      document.documentElement.style.setProperty("--nav-height", `${h}px`);
+    };
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     window.addEventListener("scroll", onScroll);
+    window.addEventListener("resize", updateNavHeight);
+    // initial set
+    updateNavHeight();
     return () => {
       window.removeEventListener("keydown", onKey);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateNavHeight);
     };
   }, []);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav
+        ref={navRef}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/40 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20 shadow-lg rounded-b-2xl mx-4 lg:mx-6 mt-2"
+          ? "bg-background/40 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20 shadow-lg rounded-2xl mx-6 lg:mx-20 mt-2"
           : "bg-background/80 backdrop-blur-xl border-b border-[oklch(0.75_0.15_85)]/20"
       }`}
     >
-      <div className="w-full px-6 lg:px-12 py-4">
+      <div className="max-w-8xl mx-auto px-6 lg:px-12 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Logo />
           </Link>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-5">
             <button
               onClick={() => scrollToSection("course")}
               className="text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-all cursor-pointer relative group"
