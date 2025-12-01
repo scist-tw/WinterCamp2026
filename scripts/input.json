@@ -1,0 +1,266 @@
+{
+  "allMembers": [
+    {
+      "name": "Fearnot/盧明澤",
+      "role": "總召",
+      "email": "kenin221@gmail.com",
+      "category": "總召組",
+      "link": "https://fearnot.tw/",
+      "bio": "SCIST 總召"
+    },
+    {
+      "name": "伊藤蒼太/郭家睿",
+      "role": ["副召", "組員", "組長"],
+      "email": "kuoray333@gmail.com",
+      "category": ["總召組", "資訊組", "編輯組"],
+      "link": "https://itousouta15.tw",
+      "bio": "SCAICT 會長"
+    },
+    {
+      "name": "Sissi/王郁茜",
+      "role": "副召",
+      "email": "wangyuqian131@gmail.com",
+      "category": "總召組",
+      "link": "https://www.instagram.com/siiyian_7?igsh=MmVnemQ2dG5kcjFj",
+      "bio": "SCIST 行政組"
+    },
+    {
+      "name": "KK",
+      "role": "行政組",
+      "email": "xblindfire5@gmail.com",
+      "category": "組長",
+      "link": ""
+    },
+    {
+      "name": "凡凡",
+      "role": "行政組",
+      "email": "capqq82@gmail.com",
+      "category": "組員",
+      "link": "https://gravatar.com/tigerradiant04c26d2639"
+    },
+    {
+      "name": "燒餅不加蛋",
+      "role": "活動組",
+      "email": "chenericgggggggggg@gmail.com",
+      "category": "組長",
+      "link": ""
+    },
+    {
+      "name": "Frank",
+      "role": "活動組",
+      "email": "ganl68384@gmail.com",
+      "category": "組員",
+      "link": "https://frankk.uk"
+    },
+    {
+      "name": "三線",
+      "role": "活動組",
+      "email": "a0973369873@gmail.com",
+      "category": "組員",
+      "link": "https://linktr.ee/Sanxian?fbclid=PAb21jcAOCn9ZleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAadbRFtLNKNMND4viSLK5Ya84CwxMsGOvU7iEIrXbvlM3R8j4R6LoWOqo8RO6Q_aem_0XN0KRXvXgb0HQuPtTg_gg"
+    },
+    {
+      "name": "傻白",
+      "role": "活動組",
+      "email": "andy0912326908@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "LDN",
+      "role": "活動組",
+      "email": "ldn970110@gmail.com",
+      "category": "組員",
+      "link": "https://ldn970110.github.io/"
+    },
+    {
+      "name": "xs",
+      "role": "活動組",
+      "email": "ooixinsheng12345@gmail.com",
+      "category": "組員",
+      "link": "https://xs1128.github.io/me/"
+    },
+    {
+      "name": "妍安",
+      "role": "活動組",
+      "email": "sophiahsu22@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "竺原",
+      "role": "紀錄組",
+      "email": "neiljiang064580@gmail.com",
+      "category": "組長",
+      "link": "https://gravatar.com/avatar/078d4f7476d88199377c8a84a1a260f10b860269ebc83889ced05a29bf0d72ed?s=512&d=https://sitcon.org/2022/imgs/deafult_avatar.webp&r=g"
+    },
+    {
+      "name": "康喔",
+      "role": "紀錄組",
+      "email": "hi@kangjw.me",
+      "category": "組員",
+      "link": "https://kangjw.me"
+    },
+    {
+      "name": "OnCloud",
+      "role": "紀錄組",
+      "email": "anonymousaaaa41414141@gmail.com",
+      "category": "組員",
+      "link": "https://on-cloud.tw"
+    },
+    {
+      "name": "空白",
+      "role": "隊輔組",
+      "email": "nn198226@gmail.com",
+      "category": "組長",
+      "link": "https://blank-0103.github.io/"
+    },
+    {
+      "name": "melon",
+      "role": "隊輔組",
+      "email": "jason11010125@gmail.com",
+      "category": "組長",
+      "link": ""
+    },
+    {
+      "name": "水餃",
+      "role": "隊輔組",
+      "email": "h0980199619@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "蝦淇",
+      "role": "隊輔組",
+      "email": "311021@ms6.pmsh.khc.edu.tw",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "Lisa",
+      "role": "隊輔組",
+      "email": "lisa205139@gmail.com",
+      "category": "組員",
+      "link": "https://www.instagram.com/lyuuu_.00?igsh=MXNhcnk4dXE4aXQxNg%3D%3D&utm_source=qr"
+    },
+    {
+      "name": "鴨鴨",
+      "role": "隊輔組",
+      "email": "hn121017@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "北極熊",
+      "role": "隊輔組",
+      "email": "kaon980831@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "fallingcat",
+      "role": "隊輔組",
+      "email": "youxiqwtui@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "walnut",
+      "role": "隊輔組",
+      "email": "coding8569@gmail.com",
+      "category": "組員",
+      "link": "https://walnut8569.github.io"
+    },
+    {
+      "name": "森上梅友前",
+      "role": "隊輔組",
+      "email": "lycjoe12345678910@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "Chao",
+      "role": "隊輔組",
+      "email": "zhaoy7329@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "churyn",
+      "role": "隊輔組",
+      "email": "chupocheng0312@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "水壺哥",
+      "role": "隊輔組",
+      "email": "xutiancai97@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "pika",
+      "role": "隊輔組",
+      "email": "pikachu.idos@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "有C",
+      "role": "隊輔組",
+      "email": "siewilly405@gmail.com",
+      "category": "組員",
+      "link": "https://blog.siewilly.me/"
+    },
+    {
+      "name": "喵喵喵",
+      "role": "隊輔組",
+      "email": "jeremy980204@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "Tako 章魚🐙",
+      "role": "隊輔組",
+      "email": "yunchen967162@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "辰",
+      "role": "隊輔組",
+      "email": "peterchang109@gmail.com",
+      "category": "組員",
+      "link": ""
+    },
+    {
+      "name": "g4o2",
+      "role": "資訊組",
+      "email": "maxhu787@gmail.com",
+      "category": "組長",
+      "link": "https://g4o2.com"
+    },
+    {
+      "name": "Kaiyasi",
+      "role": "資訊組",
+      "email": "zengcode0315@gmail.com",
+      "category": "組員",
+      "link": "https://blog.gonets.top"
+    },
+    {
+      "name": "Justin",
+      "role": "資訊組",
+      "email": "justin@justin0711.com",
+      "category": "組員",
+      "link": "https://justin0711.com"
+    },
+    {
+      "name": "OsGa",
+      "role": "課程組",
+      "email": "oscarhuang950324@gmail.com",
+      "category": "組長",
+      "link": "https://osga.dev"
+    }
+  ]
+}
