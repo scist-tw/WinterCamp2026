@@ -28,7 +28,7 @@ export default function Footer() {
                   className="group relative h-24 w-40 rounded-xl bg-muted/30 flex items-center justify-center border border-foreground/10 overflow-hidden transition-all hover:border-[oklch(0.75_0.15_85)]/40 hover:bg-muted/50"
                 >
                   <Image
-                    src="/assets/images/scist.png"
+                    src="/assets/images/scist.webp"
                     alt="SCIST"
                     width={110}
                     height={80}
@@ -53,7 +53,7 @@ export default function Footer() {
                   className="group relative h-24 w-40 rounded-xl bg-muted/30 flex items-center justify-center border border-foreground/10 overflow-hidden transition-all hover:border-[oklch(0.75_0.15_85)]/40 hover:bg-muted/50"
                 >
                   <Image
-                    src="/assets/images/scaict.png"
+                    src="/assets/images/scaict.webp"
                     alt="SCAICT"
                     width={110}
                     height={80}

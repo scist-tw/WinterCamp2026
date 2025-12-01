@@ -129,7 +129,7 @@ export default function Partners() {
                   className="relative w-full h-full block"
                   aria-label={p.link ? `前往 ${p.name}` : p.name}
                 >
-                  <img src={p.logo || '/assets/images/placeholder.png'} alt={p.name} />
+                  <img src={p.logo || '/assets/images/placeholder.webp'} alt={p.name} />
                   <div className="back">
                     <h4>{p.name}</h4>
                   </div>

@@ -43,15 +43,14 @@ export default function Hero() {
           <br />
           <div className="flex items-center justify-center">
             <Image
-              src="/assets/images/banner.png"
+              src="/assets/images/banner.webp"
               alt="閃電四連編"
-              width={300}
-              height={150}
+              width={461}
+              height={239}
               priority
               fetchPriority="high"
-              sizes="(max-width: 768px) 100vw, 512px"
+              sizes="(max-width: 768px) 100vw, 461px"
               className="w-full max-w-lg h-auto"
-              unoptimized
             />
           </div>
           <br />

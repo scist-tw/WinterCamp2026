@@ -103,7 +103,7 @@ npm run start
 [
   {
     "name": "臺南高商資訊研究社",
-    "logo": "/assets/images/club/臺南高商資訊研究社.png",
+    "logo": "/assets/images/club/臺南高商資訊研究社.webp",
     "link": "https://example.com"
   }
 ]

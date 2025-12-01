@@ -2,6 +2,9 @@
 const nextConfig = {
   output: "export",
   images: {
+    // Disable Next.js Image Optimization API for `output: 'export'` (static export)
+    // This allows `next/image` to render without the image optimizer in export mode.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
