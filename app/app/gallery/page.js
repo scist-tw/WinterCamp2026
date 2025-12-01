@@ -53,16 +53,19 @@ export default function GalleryPage() {
   };
 
   const handlePrevious = () => {
-    setCurrentImageIndex((prev) => (prev > 0 ? prev - 1 : galleryImages.length - 1));
+    setCurrentImageIndex((prev) =>
+      prev > 0 ? prev - 1 : galleryImages.length - 1
+    );
   };
 
   const handleNext = () => {
-    setCurrentImageIndex((prev) => (prev < galleryImages.length - 1 ? prev + 1 : 0));
+    setCurrentImageIndex((prev) =>
+      prev < galleryImages.length - 1 ? prev + 1 : 0
+    );
   };
 
   return (
     <div className="min-h-screen">
-
       {/* Main content */}
       <section className="pt-32 pb-20 lg:pb-32 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
@@ -93,7 +96,13 @@ export default function GalleryPage() {
             </div>
           ) : (
             <div className="space-y-20">
-              {["2024", "2025", ...Object.keys(groupedByYear).filter(y => y !== "2024" && y !== "2025")].map((year) => {
+              {[
+                "2024",
+                "2025",
+                ...Object.keys(groupedByYear).filter(
+                  (y) => y !== "2024" && y !== "2025"
+                ),
+              ].map((year) => {
                 const yearImages = groupedByYear[year];
                 if (!yearImages || yearImages.length === 0) return null;
 
@@ -125,6 +134,7 @@ export default function GalleryPage() {
                                 fill
                                 className="object-cover"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                unoptimized
                               />
 
                               {/* Gradient overlay */}
@@ -154,7 +164,6 @@ export default function GalleryPage() {
               })}
             </div>
           )}
-
         </div>
       </section>
 
@@ -174,7 +183,10 @@ export default function GalleryPage() {
 
           {/* Previous button */}
           <button
-            onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handlePrevious();
+            }}
             className="absolute left-4 z-60 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors cursor-pointer"
           >
             <ChevronLeft className="w-8 h-8 text-white" />
@@ -182,14 +194,20 @@ export default function GalleryPage() {
 
           {/* Next button */}
           <button
-            onClick={(e) => { e.stopPropagation(); handleNext(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleNext();
+            }}
             className="absolute right-4 z-60 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors cursor-pointer"
           >
             <ChevronRight className="w-8 h-8 text-white" />
           </button>
 
           {/* Image container */}
-          <div className="relative w-full h-full flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative w-full h-full flex items-center justify-center p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="relative max-w-7xl max-h-[90vh] w-full h-full">
               <Image
                 src={galleryImages[currentImageIndex].src}
@@ -198,6 +216,7 @@ export default function GalleryPage() {
                 className="object-contain"
                 sizes="100vw"
                 priority
+                unoptimized
               />
             </div>
             {/* Image info */}

@@ -33,6 +33,7 @@ export default function Footer() {
                     width={110}
                     height={80}
                     className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                    unoptimized
                   />
                 </a>
                 <div className="text-xs text-foreground/60 text-center">
@@ -57,6 +58,7 @@ export default function Footer() {
                     width={110}
                     height={80}
                     className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                    unoptimized
                   />
                 </a>
                 <div className="text-xs text-foreground/60 text-center">
@@ -112,7 +114,11 @@ export default function Footer() {
               關於活動
             </h3>
             <p className="text-foreground/70 text-sm leading-relaxed text-left">
-              今年，SCIST 與 SCAICT 首度攜手合作，聯合策劃寒訓活動。以「做一個自己的 ChatGPT」為主題，透過程式設計、人工智慧和實作，激發高中生技術熱情，學習 LLM 核心原理，實際打造專屬的智慧助理。強調跨領域協作與問題解決能力的培養，讓參與者能在團隊合作中磨練領導與溝通技巧，為未來技術發展奠定扎實基礎。
+              今年，SCIST 與 SCAICT
+              首度攜手合作，聯合策劃寒訓活動。以「做一個自己的
+              ChatGPT」為主題，透過程式設計、人工智慧和實作，激發高中生技術熱情，學習
+              LLM
+              核心原理，實際打造專屬的智慧助理。強調跨領域協作與問題解決能力的培養，讓參與者能在團隊合作中磨練領導與溝通技巧，為未來技術發展奠定扎實基礎。
             </p>
           </div>
         </div>
@@ -125,9 +131,7 @@ export default function Footer() {
           <p>
             Copyright &copy; 2025-2026 SCIST x SCAICT | All rights reserved.
           </p>
-          <p>
-            Crafted by SCIST x SCAICT 2026 Winter Camp Organizing Team
-          </p>
+          <p>Crafted by SCIST x SCAICT 2026 Winter Camp Organizing Team</p>
         </div>
       </div>
     </footer>

@@ -41,58 +41,59 @@ export default function Gallery() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {galleryImages.length > 0 ? (
-            galleryImages.map((image, idx) => (
-              <Card
-                key={idx}
-                className="neon-card rounded-2xl overflow-hidden group hover:scale-105 transition-transform cursor-default"
-              >
-                <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
-                  {/* Actual Image */}
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-110"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    loading="lazy"
-                  />
+          {galleryImages.length > 0
+            ? galleryImages.map((image, idx) => (
+                <Card
+                  key={idx}
+                  className="neon-card rounded-2xl overflow-hidden group hover:scale-105 transition-transform cursor-default"
+                >
+                  <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
+                    {/* Actual Image */}
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      loading="lazy"
+                      unoptimized
+                    />
 
-                  {/* Image overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* Image overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                  {/* Title overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <div className="inline-block px-2 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded mb-2">
-                      {image.year}
+                    {/* Title overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="inline-block px-2 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded mb-2">
+                        {image.year}
+                      </div>
+                      <h3 className="text-white font-bold text-xl mb-1 drop-shadow-lg">
+                        {image.title}
+                      </h3>
+                      {image.description && (
+                        <p className="text-white/80 text-sm drop-shadow-lg">
+                          {image.description}
+                        </p>
+                      )}
                     </div>
-                    <h3 className="text-white font-bold text-xl mb-1 drop-shadow-lg">
-                      {image.title}
-                    </h3>
-                    {image.description && (
-                      <p className="text-white/80 text-sm drop-shadow-lg">
-                        {image.description}
-                      </p>
-                    )}
                   </div>
-                </div>
-              </Card>
-            ))
-          ) : (
-            // Placeholder cards when no images
-            Array.from({ length: 6 }).map((_, idx) => (
-              <Card key={idx} className="neon-card rounded-2xl overflow-hidden">
-                <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-secondary/80 to-background/80">
-                    <Camera className="w-12 h-12 text-[oklch(0.55_0.15_85)]/40 mb-3" />
-                    <p className="text-foreground/40 text-sm">待上傳照片</p>
+                </Card>
+              ))
+            : // Placeholder cards when no images
+              Array.from({ length: 6 }).map((_, idx) => (
+                <Card
+                  key={idx}
+                  className="neon-card rounded-2xl overflow-hidden"
+                >
+                  <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-secondary/80 to-background/80">
+                      <Camera className="w-12 h-12 text-[oklch(0.55_0.15_85)]/40 mb-3" />
+                      <p className="text-foreground/40 text-sm">待上傳照片</p>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))
-          )}
+                </Card>
+              ))}
         </div>
-
       </div>
     </section>
   );
