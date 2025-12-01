@@ -27,7 +27,7 @@ jobs:
 
       - name: Build project
         working-directory: ./app
-        run: npm run build # 只要 build，不要 export
+        run: npm run build
 
       - name: Add CNAME
         run: echo "scist.camp" > app/out/CNAME
@@ -36,4 +36,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          publish_dir: ./app/out
