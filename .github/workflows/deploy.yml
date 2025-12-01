@@ -27,13 +27,9 @@ jobs:
 
       - name: Build project
         working-directory: ./app
-        run: npm run build
+        run: npm run build # 只要 build，不要 export
 
-      - name: Export static site
-        working-directory: ./app
-        run: npm run export
-
-      - name: Move CNAME
+      - name: Add CNAME
         run: echo "scist.camp" > app/out/CNAME
 
       - name: Deploy
