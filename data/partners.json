@@ -1,0 +1,44 @@
+{
+  "partners": [
+    {
+      "name": "屏東高中資訊研習社",
+      "logo": "/assets/images/club/屏東高中資訊研習社.webp",
+      "link": "https://www.instagram.com/pths_circ_116/"
+    },
+    {
+      "name": "台南女中資訊研究社",
+      "logo": "/assets/images/club/台南女中資訊研究社.png",
+      "link": "https://www.instagram.com/tngs_tgirc?igsh=aHhrYTI4bHVxcXJv"
+    },
+    {
+      "name": "大里高中資訊校隊",
+      "logo": "/assets/images/club/大里高中資訊校隊.png",
+      "link": "https://www.instagram.com/dlhit_/"
+    },
+    {
+      "name": "臺南高商資訊研究社",
+      "logo": "/assets/images/club/臺南高商資訊研究社.png",
+      "link": "https://www.instagram.com/tncvs_itc/"
+    },
+    {
+      "name": "嘉義女中程式研究社",
+      "logo": "/assets/images/club/嘉義女中程式研究社.png",
+      "link": "https://www.instagram.com/cygsh_irc_12?igsh=MTE1N2d5cXZzZ3N2eA=="
+    },
+    {
+      "name": "南大附中資訊研究社",
+      "logo": "/assets/images/club/南大附中資訊研究社.jpg",
+      "link": "https://www.instagram.com/nfirc_3rd?igsh=MXZ4enJnNmtqYmFmcQ=="
+    },
+    {
+      "name": "臺南二中資訊研究社",
+      "logo": "/assets/images/club/臺南二中資訊研究社.jpeg",
+      "link": "https://www.instagram.com/tnssh_ciss31_club"
+    },
+    {
+      "name": "嘉義高中資訊研究社",
+      "logo": "/assets/images/club/嘉義高中資訊研究社.png",
+      "link": "https://www.instagram.com/cysh_irc?igsh=MXB0d3I4NDd2dmczYg=="
+    }
+  ]
+}
