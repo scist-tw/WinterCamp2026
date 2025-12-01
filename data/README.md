@@ -13,13 +13,13 @@ partners.json（合作社團）
 - 結構：
   {
     "partners": [
-      { "name": "社團 A", "logo": "/assets/club-a.png", "link": "https://example.com" },
-      { "name": "社團 B", "logo": "/assets/club-b.png", "link": "" }
+      { "name": "社團 A", "logo": "/assets/club-a.webp", "link": "https://example.com" },
+      { "name": "社團 B", "logo": "/assets/club-b.webp", "link": "" }
     ]
   }
 - 欄位：
   - name：社團名稱（必填）
-  - logo：圖片路徑（放在 app/public 底下，前台以 "/" 開頭引用，如 /assets/club-a.png）
+  - logo：圖片路徑（放在 app/public 底下，前台以 "/" 開頭引用，如 /assets/club-a.webp）
   - link：點擊導向連結（可留空）
 - 輪播已做成無縫連續滾動，會自動讀取此檔案。
 
@@ -60,5 +60,5 @@ team.json（工作人員）
 
 
 注意事項
-- 圖片路徑請放在 `app/public` 底下，前端引用以 `/` 開頭（例如 `/assets/logo.png`）。
+- 圖片路徑請放在 `app/public` 底下，前端引用以 `/` 開頭（例如 `/assets/logo.webp`）。
 - 字體載入直接在 layout.js 以 `<link>` 注入，已加 preconnect 以降低 FOUT。
