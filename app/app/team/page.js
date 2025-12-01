@@ -8,8 +8,10 @@ import md5 from "md5";
 
 // Generate Gravatar URL from email
 function getGravatarUrl(email, size = 400) {
-  if (!email) return `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=${size}`;
-  const hash = md5(email.trim().toLowerCase());
+  if (!email)
+    return `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=${size}`;
+  // const hash = md5(email.trim().toLowerCase());
+  const hash = email;
   return `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`;
 }
 
@@ -27,14 +29,14 @@ const CATEGORY_ORDER = [
 
 // 職位描述對照表
 const CATEGORY_DESC = {
-  "總召組": "掌握協調寒訓籌備進度，主持核心討論及決策。",
-  "行政組": "負責維持寒訓常務行政事務、財務與場地協調。",
-  "課程組": "負責議程規劃、講師邀請與課程內容安排。",
-  "活動組": "負責寒訓當天的活動流程、場控與體驗設計。",
-  "資訊組": "負責官網開發、系統維護與技術支援。",
-  "隊輔組": "引導學員參與活動，凝聚小隊向心力。",
-  "紀錄組": "透過影像與文字，紀錄寒訓的精彩瞬間。",
-  "編輯組": "負責主視覺設計，文案設計與文字內容品質把關。",
+  總召組: "掌握協調寒訓籌備進度，主持核心討論及決策。",
+  行政組: "負責維持寒訓常務行政事務、財務與場地協調。",
+  課程組: "負責議程規劃、講師邀請與課程內容安排。",
+  活動組: "負責寒訓當天的活動流程、場控與體驗設計。",
+  資訊組: "負責官網開發、系統維護與技術支援。",
+  隊輔組: "引導學員參與活動，凝聚小隊向心力。",
+  紀錄組: "透過影像與文字，紀錄寒訓的精彩瞬間。",
+  編輯組: "負責主視覺設計，文案設計與文字內容品質把關。",
 };
 
 export default function TeamPage() {
@@ -98,7 +100,10 @@ export default function TeamPage() {
           const roleQual = cats.find((c) => c === "組長" || c === "組員");
           if (roleQual) {
             // If member.role is an array, we can't use it directly as a key; fall back to the first role string
-            const roleKey = Array.isArray(member.role) ? (member.role.find((r) => r && r !== "組長" && r !== "組員") || member.role[0]) : member.role || "其他";
+            const roleKey = Array.isArray(member.role)
+              ? member.role.find((r) => r && r !== "組長" && r !== "組員") ||
+                member.role[0]
+              : member.role || "其他";
             acc[roleKey] = acc[roleKey] || [];
             acc[roleKey].push(member);
           }
@@ -129,15 +134,17 @@ export default function TeamPage() {
             if (key === "總召組") {
               const aLabel = resolveLabel(a, key);
               const bLabel = resolveLabel(b, key);
-              
-              const roleOrder = { "總召": 0, "副召": 1, "組長": 2 };
-              const aRank = roleOrder[aLabel] !== undefined ? roleOrder[aLabel] : 3;
-              const bRank = roleOrder[bLabel] !== undefined ? roleOrder[bLabel] : 3;
-              
+
+              const roleOrder = { 總召: 0, 副召: 1, 組長: 2 };
+              const aRank =
+                roleOrder[aLabel] !== undefined ? roleOrder[aLabel] : 3;
+              const bRank =
+                roleOrder[bLabel] !== undefined ? roleOrder[bLabel] : 3;
+
               if (aRank !== bRank) return aRank - bRank;
               return (a.name || "").localeCompare(b.name || "");
             }
-            
+
             // For other groups, '組長' appear first, then by name
             const aIsLeader = resolveLabel(a, key) === "組長" ? 0 : 1;
             const bIsLeader = resolveLabel(b, key) === "組長" ? 0 : 1;
@@ -154,13 +161,14 @@ export default function TeamPage() {
 
   return (
     <div className="min-h-screen w-full selection:bg-primary/20">
-      
       {/* --- Hero Section --- */}
       <div className="text-center mb-8 px-6 py-25 lg:px-8">
         <div className="mb-3 flex justify-center">
           <span className="section-eyebrow">TEAM // 工作人員</span>
         </div>
-        <h1 className="section-title text-4xl lg:text-6xl font-bold mb-6">籌備團隊</h1>
+        <h1 className="section-title text-4xl lg:text-6xl font-bold mb-6">
+          籌備團隊
+        </h1>
         <p className="text-foreground/70 text-lg lg:text-xl max-w-3xl mx-auto">
           由 SCIST x SCAICT 攜手打造
           <br />
@@ -207,87 +215,367 @@ export default function TeamPage() {
                     <div className="flex justify-center">
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 w-full max-w-4xl">
                         {/* First 副召 */}
-                        {members.filter(m => resolveLabel(m, category) === "副召")[0] && (
+                        {members.filter(
+                          (m) => resolveLabel(m, category) === "副召"
+                        )[0] && (
                           <div className="flex justify-center">
                             <div className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
                               <div className="flex flex-col items-center text-center flex-1">
-                                <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${members.filter(m => resolveLabel(m, category) === "副召")[0].email && members.filter(m => resolveLabel(m, category) === "副召")[0].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30'}`}>
-                                  {members.filter(m => resolveLabel(m, category) === "副召")[0].email ? (
-                                    members.filter(m => resolveLabel(m, category) === "副召")[0].link?.trim() ? (
-                                      <button onClick={() => window.open(members.filter(m => resolveLabel(m, category) === "副召")[0].link.trim(), "_blank")} className="w-full h-full relative group">
-                                        <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[0].name} fill className="object-cover" unoptimized />
+                                <div
+                                  className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "副召"
+                                    )[0].email &&
+                                    members
+                                      .filter(
+                                        (m) =>
+                                          resolveLabel(m, category) === "副召"
+                                      )[0]
+                                      .link?.trim()
+                                      ? "border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50"
+                                      : "border-2 border-[oklch(0.75_0.15_85)]/30"
+                                  }`}
+                                >
+                                  {members.filter(
+                                    (m) => resolveLabel(m, category) === "副召"
+                                  )[0].email ? (
+                                    members
+                                      .filter(
+                                        (m) =>
+                                          resolveLabel(m, category) === "副召"
+                                      )[0]
+                                      .link?.trim() ? (
+                                      <button
+                                        onClick={() =>
+                                          window.open(
+                                            members
+                                              .filter(
+                                                (m) =>
+                                                  resolveLabel(m, category) ===
+                                                  "副召"
+                                              )[0]
+                                              .link.trim(),
+                                            "_blank"
+                                          )
+                                        }
+                                        className="w-full h-full relative group"
+                                      >
+                                        <Image
+                                          src={getGravatarUrl(
+                                            members.filter(
+                                              (m) =>
+                                                resolveLabel(m, category) ===
+                                                "副召"
+                                            )[0].email,
+                                            256
+                                          )}
+                                          alt={
+                                            members.filter(
+                                              (m) =>
+                                                resolveLabel(m, category) ===
+                                                "副召"
+                                            )[0].name
+                                          }
+                                          fill
+                                          className="object-cover"
+                                          unoptimized
+                                        />
                                         <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                           <ArrowRight className="w-6 h-6 text-white -rotate-45" />
                                         </div>
                                       </button>
                                     ) : (
-                                      <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[0].name} fill className="object-cover" unoptimized />
+                                      <Image
+                                        src={getGravatarUrl(
+                                          members.filter(
+                                            (m) =>
+                                              resolveLabel(m, category) ===
+                                              "副召"
+                                          )[0].email,
+                                          256
+                                        )}
+                                        alt={
+                                          members.filter(
+                                            (m) =>
+                                              resolveLabel(m, category) ===
+                                              "副召"
+                                          )[0].name
+                                        }
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
+                                      />
                                     )
                                   ) : (
                                     <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
                                   )}
                                 </div>
-                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(members.filter(m => resolveLabel(m, category) === "副召")[0], category)}</div>
-                                <h4 className="text-lg font-bold mb-2">{members.filter(m => resolveLabel(m, category) === "副召")[0].name}</h4>
+                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">
+                                  {resolveLabel(
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "副召"
+                                    )[0],
+                                    category
+                                  )}
+                                </div>
+                                <h4 className="text-lg font-bold mb-2">
+                                  {
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "副召"
+                                    )[0].name
+                                  }
+                                </h4>
                               </div>
                             </div>
                           </div>
                         )}
 
                         {/* 總召 - Center */}
-                        {members.filter(m => resolveLabel(m, category) === "總召")[0] && (
+                        {members.filter(
+                          (m) => resolveLabel(m, category) === "總召"
+                        )[0] && (
                           <div className="flex justify-center sm:col-span-1">
                             <div className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col ring-2 ring-[oklch(0.75_0.15_85)]/50">
-                              {resolveLabel(members.filter(m => resolveLabel(m, category) === "總召")[0], category) === "組長" && (
-                                <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">組長</div>
+                              {resolveLabel(
+                                members.filter(
+                                  (m) => resolveLabel(m, category) === "總召"
+                                )[0],
+                                category
+                              ) === "組長" && (
+                                <div className="absolute top-3 right-3 px-2 py-1 bg-yellow-400 text-black text-xs font-bold rounded-full z-10">
+                                  組長
+                                </div>
                               )}
                               <div className="flex flex-col items-center text-center flex-1">
-                                <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${members.filter(m => resolveLabel(m, category) === "總召")[0].email && members.filter(m => resolveLabel(m, category) === "總召")[0].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30'}`}>
-                                  {members.filter(m => resolveLabel(m, category) === "總召")[0].email ? (
-                                    members.filter(m => resolveLabel(m, category) === "總召")[0].link?.trim() ? (
-                                      <button onClick={() => window.open(members.filter(m => resolveLabel(m, category) === "總召")[0].link.trim(), "_blank")} className="w-full h-full relative group">
-                                        <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "總召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "總召")[0].name} fill className="object-cover" unoptimized />
+                                <div
+                                  className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "總召"
+                                    )[0].email &&
+                                    members
+                                      .filter(
+                                        (m) =>
+                                          resolveLabel(m, category) === "總召"
+                                      )[0]
+                                      .link?.trim()
+                                      ? "border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50"
+                                      : "border-2 border-[oklch(0.75_0.15_85)]/30"
+                                  }`}
+                                >
+                                  {members.filter(
+                                    (m) => resolveLabel(m, category) === "總召"
+                                  )[0].email ? (
+                                    members
+                                      .filter(
+                                        (m) =>
+                                          resolveLabel(m, category) === "總召"
+                                      )[0]
+                                      .link?.trim() ? (
+                                      <button
+                                        onClick={() =>
+                                          window.open(
+                                            members
+                                              .filter(
+                                                (m) =>
+                                                  resolveLabel(m, category) ===
+                                                  "總召"
+                                              )[0]
+                                              .link.trim(),
+                                            "_blank"
+                                          )
+                                        }
+                                        className="w-full h-full relative group"
+                                      >
+                                        <Image
+                                          src={getGravatarUrl(
+                                            members.filter(
+                                              (m) =>
+                                                resolveLabel(m, category) ===
+                                                "總召"
+                                            )[0].email,
+                                            256
+                                          )}
+                                          alt={
+                                            members.filter(
+                                              (m) =>
+                                                resolveLabel(m, category) ===
+                                                "總召"
+                                            )[0].name
+                                          }
+                                          fill
+                                          className="object-cover"
+                                          unoptimized
+                                        />
                                         <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                           <ArrowRight className="w-6 h-6 text-white -rotate-45" />
                                         </div>
                                       </button>
                                     ) : (
-                                      <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "總召")[0].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "總召")[0].name} fill className="object-cover" unoptimized />
+                                      <Image
+                                        src={getGravatarUrl(
+                                          members.filter(
+                                            (m) =>
+                                              resolveLabel(m, category) ===
+                                              "總召"
+                                          )[0].email,
+                                          256
+                                        )}
+                                        alt={
+                                          members.filter(
+                                            (m) =>
+                                              resolveLabel(m, category) ===
+                                              "總召"
+                                          )[0].name
+                                        }
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
+                                      />
                                     )
                                   ) : (
                                     <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
                                   )}
                                 </div>
-                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(members.filter(m => resolveLabel(m, category) === "總召")[0], category)}</div>
-                                <h4 className="text-lg font-bold mb-2">{members.filter(m => resolveLabel(m, category) === "總召")[0].name}</h4>
+                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">
+                                  {resolveLabel(
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "總召"
+                                    )[0],
+                                    category
+                                  )}
+                                </div>
+                                <h4 className="text-lg font-bold mb-2">
+                                  {
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "總召"
+                                    )[0].name
+                                  }
+                                </h4>
                               </div>
                             </div>
                           </div>
                         )}
 
                         {/* Second 副召 */}
-                        {members.filter(m => resolveLabel(m, category) === "副召")[1] && (
+                        {members.filter(
+                          (m) => resolveLabel(m, category) === "副召"
+                        )[1] && (
                           <div className="flex justify-center">
                             <div className="neon-card rounded-2xl p-6 hover:scale-[1.02] transition-transform h-full w-full relative flex flex-col">
                               <div className="flex flex-col items-center text-center flex-1">
-                                <div className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${members.filter(m => resolveLabel(m, category) === "副召")[1].email && members.filter(m => resolveLabel(m, category) === "副召")[1].link?.trim() ? 'border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50' : 'border-2 border-[oklch(0.75_0.15_85)]/30'}`}>
-                                  {members.filter(m => resolveLabel(m, category) === "副召")[1].email ? (
-                                    members.filter(m => resolveLabel(m, category) === "副召")[1].link?.trim() ? (
-                                      <button onClick={() => window.open(members.filter(m => resolveLabel(m, category) === "副召")[1].link.trim(), "_blank")} className="w-full h-full relative group">
-                                        <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[1].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[1].name} fill className="object-cover" unoptimized />
+                                <div
+                                  className={`relative w-36 h-36 mb-4 rounded-full overflow-hidden flex-shrink-0 transition-all duration-300 ${
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "副召"
+                                    )[1].email &&
+                                    members
+                                      .filter(
+                                        (m) =>
+                                          resolveLabel(m, category) === "副召"
+                                      )[1]
+                                      .link?.trim()
+                                      ? "border-2 border-[oklch(0.75_0.15_85)]/30 cursor-pointer hover:border-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50"
+                                      : "border-2 border-[oklch(0.75_0.15_85)]/30"
+                                  }`}
+                                >
+                                  {members.filter(
+                                    (m) => resolveLabel(m, category) === "副召"
+                                  )[1].email ? (
+                                    members
+                                      .filter(
+                                        (m) =>
+                                          resolveLabel(m, category) === "副召"
+                                      )[1]
+                                      .link?.trim() ? (
+                                      <button
+                                        onClick={() =>
+                                          window.open(
+                                            members
+                                              .filter(
+                                                (m) =>
+                                                  resolveLabel(m, category) ===
+                                                  "副召"
+                                              )[1]
+                                              .link.trim(),
+                                            "_blank"
+                                          )
+                                        }
+                                        className="w-full h-full relative group"
+                                      >
+                                        <Image
+                                          src={getGravatarUrl(
+                                            members.filter(
+                                              (m) =>
+                                                resolveLabel(m, category) ===
+                                                "副召"
+                                            )[1].email,
+                                            256
+                                          )}
+                                          alt={
+                                            members.filter(
+                                              (m) =>
+                                                resolveLabel(m, category) ===
+                                                "副召"
+                                            )[1].name
+                                          }
+                                          fill
+                                          className="object-cover"
+                                          unoptimized
+                                        />
                                         <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                           <ArrowRight className="w-6 h-6 text-white -rotate-45" />
                                         </div>
                                       </button>
                                     ) : (
-                                      <Image src={getGravatarUrl(members.filter(m => resolveLabel(m, category) === "副召")[1].email, 256)} alt={members.filter(m => resolveLabel(m, category) === "副召")[1].name} fill className="object-cover" unoptimized />
+                                      <Image
+                                        src={getGravatarUrl(
+                                          members.filter(
+                                            (m) =>
+                                              resolveLabel(m, category) ===
+                                              "副召"
+                                          )[1].email,
+                                          256
+                                        )}
+                                        alt={
+                                          members.filter(
+                                            (m) =>
+                                              resolveLabel(m, category) ===
+                                              "副召"
+                                          )[1].name
+                                        }
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
+                                      />
                                     )
                                   ) : (
                                     <Users className="w-8 h-8 text-[oklch(0.55_0.15_85)]/40" />
                                   )}
                                 </div>
-                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">{resolveLabel(members.filter(m => resolveLabel(m, category) === "副召")[1], category)}</div>
-                                <h4 className="text-lg font-bold mb-2">{members.filter(m => resolveLabel(m, category) === "副召")[1].name}</h4>
+                                <div className="inline-block px-3 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded-full mb-3">
+                                  {resolveLabel(
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "副召"
+                                    )[1],
+                                    category
+                                  )}
+                                </div>
+                                <h4 className="text-lg font-bold mb-2">
+                                  {
+                                    members.filter(
+                                      (m) =>
+                                        resolveLabel(m, category) === "副召"
+                                    )[1].name
+                                  }
+                                </h4>
                               </div>
                             </div>
                           </div>
@@ -304,33 +592,45 @@ export default function TeamPage() {
                         >
                           {/* Avatar Container */}
                           <div className="relative mb-4">
-                            <div className={`relative overflow-hidden rounded-full ring-4 ring-background transition-all duration-300 h-32 w-32 ${member.email && member.link?.trim() ? 'cursor-pointer hover:ring-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50 group' : 'group-hover:scale-105'} shadow-md`} onClick={() => member.link?.trim() && window.open(member.link.trim(), "_blank")}>
+                            <div
+                              className={`relative overflow-hidden rounded-full ring-4 ring-background transition-all duration-300 h-32 w-32 ${
+                                member.email && member.link?.trim()
+                                  ? "cursor-pointer hover:ring-primary hover:scale-110 hover:shadow-lg hover:shadow-primary/50 group"
+                                  : "group-hover:scale-105"
+                              } shadow-md`}
+                              onClick={() =>
+                                member.link?.trim() &&
+                                window.open(member.link.trim(), "_blank")
+                              }
+                            >
                               {member.email ? (
-                                  member.link?.trim() ? (
-                                    <>
-                                      <Image
-                                        src={getGravatarUrl(member.email, 256)}
-                                        alt={member.name}
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        loading="eager"
-                                        unoptimized
-                                      />
-                                      <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                        <ArrowRight className={`text-white -rotate-45 w-6 h-6`} />
-                                      </div>
-                                    </>
-                                  ) : (
+                                member.link?.trim() ? (
+                                  <>
                                     <Image
                                       src={getGravatarUrl(member.email, 256)}
                                       alt={member.name}
                                       fill
                                       className="object-cover"
                                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                      loading="eager"
                                       unoptimized
                                     />
-                                  )
+                                    <div className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                      <ArrowRight
+                                        className={`text-white -rotate-45 w-6 h-6`}
+                                      />
+                                    </div>
+                                  </>
+                                ) : (
+                                  <Image
+                                    src={getGravatarUrl(member.email, 256)}
+                                    alt={member.name}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    unoptimized
+                                  />
+                                )
                               ) : (
                                 <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-400">
                                   <Users className={"h-12 w-12"} />
@@ -342,10 +642,18 @@ export default function TeamPage() {
 
                           {/* Text Info */}
                           <div className="text-center w-full">
-                            <AutoFitText as="h3" className={`font-bold text-foreground px-2 mb-2`} maxLines={1} min={12} max={20}>
+                            <AutoFitText
+                              as="h3"
+                              className={`font-bold text-foreground px-2 mb-2`}
+                              maxLines={1}
+                              min={12}
+                              max={20}
+                            >
                               {member.name}
                             </AutoFitText>
-                            <p className={`mt-1 font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate text-base`}>
+                            <p
+                              className={`mt-1 font-medium uppercase tracking-wider text-foreground/60 bg-foreground/5 rounded-full py-1 px-2 inline-block max-w-full truncate text-base`}
+                            >
                               {resolveLabel(member, category)}
                             </p>
                           </div>
