@@ -1,6 +1,13 @@
 {
   "featuredImages": [
     {
+      "src": "/gallery/2025-1.webp",
+      "alt": "2025 寒訓活動照片 1",
+      "title": "大合照",
+      "description": "2025年寒訓開幕典禮",
+      "year": "2025"
+    },
+    {
       "src": "/gallery/2024-1.webp",
       "alt": "2024 寒訓活動照片 1",
       "title": "開幕式",
@@ -13,13 +20,6 @@
       "title": "",
       "description": "",
       "year": "2024"
-    },
-    {
-      "src": "/gallery/2025-1.webp",
-      "alt": "2025 寒訓活動照片 1",
-      "title": "大合照",
-      "description": "2025年寒訓開幕典禮",
-      "year": "2025"
     }
   ],
   "allImages": [
