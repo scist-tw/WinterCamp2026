@@ -312,3 +312,13 @@ h1.font-semibold, h2.font-semibold, h3.font-semibold, h4.font-semibold, h5.font-
   }
 }
 
+/* Shimmer loading animation for skeleton screens */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+

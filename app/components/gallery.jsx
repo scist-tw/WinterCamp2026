@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Camera, ArrowRight } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import LazyImage from "@/components/lazy-image";
 
 export default function Gallery() {
   const [galleryImages, setGalleryImages] = useState([]);
@@ -48,14 +48,14 @@ export default function Gallery() {
                   className="neon-card rounded-2xl overflow-hidden group hover:scale-105 transition-transform cursor-default"
                 >
                   <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
-                    {/* Actual Image */}
-                    <Image
+                    {/* Lazy loaded image */}
+                    <LazyImage
                       src={image.src}
                       alt={image.alt}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-110"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      loading="lazy"
+                      priority={idx < 3}
                       unoptimized
                     />
 

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Camera, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import LazyImage from "@/components/lazy-image";
 
 export default function GalleryPage() {
   const [galleryImages, setGalleryImages] = useState([]);
@@ -11,6 +12,7 @@ export default function GalleryPage() {
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [renderedCount, setRenderedCount] = useState({});
 
   useEffect(() => {
     fetch("/data/gallery.json")
@@ -64,6 +66,81 @@ export default function GalleryPage() {
     );
   };
 
+  // Memoize sorted years to avoid recalculation
+  const sortedYears = useMemo(() => {
+    return [
+      "2025",
+      "2024",
+      ...Object.keys(groupedByYear).filter(
+        (y) => y !== "2024" && y !== "2025"
+      ),
+    ];
+  }, [groupedByYear]);
+
+  // Scroll-based progressive rendering
+  useEffect(() => {
+    if (!groupedByYear || Object.keys(groupedByYear).length === 0) return;
+
+    const INITIAL_BATCH = 3; // Start with only 3 images per year
+    const BATCH_SIZE = 2; // Load 2 at a time
+    const BATCH_DELAY = 150; // Slower, more controlled
+
+    // Initialize with small batch
+    const initialCounts = {};
+    sortedYears.forEach((year) => {
+      initialCounts[year] = INITIAL_BATCH;
+    });
+    setRenderedCount(initialCounts);
+
+    // Create intersection observer for each year section
+    const observers = [];
+
+    sortedYears.forEach((year, yearIndex) => {
+      const yearImages = groupedByYear[year];
+      if (!yearImages) return;
+
+      const totalImages = yearImages.length;
+
+      // Find the year section element
+      const yearSection = document.getElementById(`year-${year}`);
+      if (!yearSection) return;
+
+      let currentBatch = INITIAL_BATCH;
+      let isLoading = false;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !isLoading && currentBatch < totalImages) {
+              isLoading = true;
+
+              // Delay based on year index to avoid simultaneous loading
+              setTimeout(() => {
+                setRenderedCount((prev) => ({
+                  ...prev,
+                  [year]: Math.min(currentBatch + BATCH_SIZE, totalImages),
+                }));
+                currentBatch += BATCH_SIZE;
+                isLoading = false;
+              }, yearIndex * 100);
+            }
+          });
+        },
+        {
+          rootMargin: "200px",
+          threshold: 0.1,
+        }
+      );
+
+      observer.observe(yearSection);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect());
+    };
+  }, [groupedByYear, sortedYears]);
+
   return (
     <div className="min-h-screen">
       {/* Main content */}
@@ -96,18 +173,12 @@ export default function GalleryPage() {
             </div>
           ) : (
             <div className="space-y-20">
-              {[
-                "2024",
-                "2025",
-                ...Object.keys(groupedByYear).filter(
-                  (y) => y !== "2024" && y !== "2025"
-                ),
-              ].map((year) => {
+              {sortedYears.map((year) => {
                 const yearImages = groupedByYear[year];
                 if (!yearImages || yearImages.length === 0) return null;
 
                 return (
-                  <div key={year}>
+                  <div key={year} id={`year-${year}`}>
                     {/* Year Section Header */}
                     <div className="mb-8 flex flex-col items-center text-center">
                       <h2 className="text-3xl font-bold tracking-tight text-foreground mb-2">
@@ -118,17 +189,21 @@ export default function GalleryPage() {
 
                     {/* Images Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                      {yearImages.map((image, idx) => {
+                      {yearImages.slice(0, renderedCount[year] || 3).map((image, idx) => {
                         const globalIdx = galleryImages.indexOf(image);
                         return (
                           <Card
                             key={idx}
                             onClick={() => openLightbox(globalIdx)}
                             className="neon-card rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+                            style={{
+                              contain: "layout style paint",
+                              contentVisibility: "auto",
+                            }}
                           >
-                            <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
-                              {/* Actual Image */}
-                              <Image
+                            <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden" style={{ transform: "translateZ(0)" }}>
+                              {/* Lazy loaded image */}
+                              <LazyImage
                                 src={image.src}
                                 alt={image.alt}
                                 fill
