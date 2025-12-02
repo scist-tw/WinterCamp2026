@@ -1,155 +1,160 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function AnimatedGlow() {
-  const glow1Ref = useRef(null);
-  const glow2Ref = useRef(null);
-  const glow3Ref = useRef(null);
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < 768 : false
-  );
+  const [isLowPerf, setIsLowPerf] = useState(false);
+  const [shouldRender, setShouldRender] = useState(true);
+  const [glows, setGlows] = useState([]);
+  const animationRefs = useRef([]);
 
   useEffect(() => {
-    // Detect mobile device
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    // Performance detection
+    const checkPerformance = () => {
+      const isMobile = window.innerWidth < 768;
+      const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024;
+
+      // Check for integrated graphics or low-end devices
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+      let isIntegrated = false;
+      if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          // Detect integrated graphics
+          isIntegrated = /intel|mesa|swiftshader/i.test(renderer);
+        }
+      }
+
+      // Disable on mobile, reduce on tablet/integrated graphics
+      if (isMobile) {
+        setShouldRender(false);
+      } else if (isTablet || isIntegrated) {
+        setIsLowPerf(true);
+      }
     };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
-  useEffect(() => {
-    if (isMobile) return; // Skip animation entirely on mobile
-    // Mobile: only 1 glow, slower, lower opacity
-    // Desktop: 3 glows, original speed
-    const glows = [
-          {
-            ref: glow1Ref,
-            duration: 25000,
-            baseSize: 500,
-            path: [
-              { x: 20, y: 30 },
-              { x: 75, y: 25 },
-              { x: 20, y: 30 },
-            ],
-          },
-          {
-            ref: glow2Ref,
-            duration: 30000,
-            baseSize: 600,
-            path: [
-              { x: 80, y: 60 },
-              { x: 15, y: 70 },
-              { x: 80, y: 60 },
-            ],
-          },
-          {
-            ref: glow3Ref,
-            duration: 28000,
-            baseSize: 550,
-            path: [
-              { x: 50, y: 90 },
-              { x: 60, y: 15 },
-              { x: 50, y: 90 },
-            ],
-          },
-        ];
+    checkPerformance();
 
-    const animate = (glow, startTime) => {
-      const elapsed = Date.now() - startTime;
-      const progress = (elapsed % glow.duration) / glow.duration;
+    // 計算兩點之間的距離
+    const getDistance = (x1, y1, x2, y2) => {
+      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    };
 
-      // Calculate position along path
-      let x, y, opacity, scale;
-      if (progress < 0.1) {
-        // Fade in
-        opacity = progress / 0.1;
-        x = glow.path[0].x;
-        y = glow.path[0].y;
-        scale = 0.8 + (opacity * 0.4); // 0.8 to 1.2
-      } else if (progress < 0.5) {
-        // Move to second point
-        const t = (progress - 0.1) / 0.4;
-        const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; // easeInOutQuad
-        x = glow.path[0].x + (glow.path[1].x - glow.path[0].x) * eased;
-        y = glow.path[0].y + (glow.path[1].y - glow.path[0].y) * eased;
-        opacity = 0.12;
-        // Scale from 1.2 to 0.8 and back
-        scale = 1.2 - Math.abs(eased - 0.5) * 0.8;
-      } else if (progress < 0.9) {
-        // Move back to start
-        const t = (progress - 0.5) / 0.4;
-        const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-        x = glow.path[1].x + (glow.path[2].x - glow.path[1].x) * eased;
-        y = glow.path[1].y + (glow.path[2].y - glow.path[1].y) * eased;
-        opacity = 0.12;
-        scale = 1.2 - Math.abs(eased - 0.5) * 0.8;
+    // 生成一個新的隨機位置（確保與其他光暈保持距離）
+    const generatePosition = (existingGlows, excludeId) => {
+      const minDistance = 25;
+      const otherGlows = existingGlows.filter(g => g.id !== excludeId);
+
+      let left, top;
+      let attempts = 0;
+      const maxAttempts = 50;
+
+      do {
+        left = 10 + Math.random() * 80;
+        top = 10 + Math.random() * 80;
+        attempts++;
+      } while (
+        attempts < maxAttempts &&
+        !otherGlows.every(glow => getDistance(left, top, glow.left, glow.top) >= minDistance)
+      );
+
+      return { left, top };
+    };
+
+    // 初始化 3 個光暈
+    const initialGlows = [];
+    for (let i = 0; i < 3; i++) {
+      const { left, top } = generatePosition(initialGlows, -1);
+      initialGlows.push({
+        id: i,
+        left,
+        top,
+        size: 300 + Math.random() * 200,
+        maxOpacity: 0.15 + Math.random() * 0.1, // 隨機最大亮度
+        blur: 40 + Math.random() * 30,
+        duration: 6000 + Math.random() * 4000, // 6-10 秒隨機週期
+      });
+    }
+    setGlows(initialGlows);
+
+    // 為每個光暈設置獨立的動畫循環
+    const startAnimation = (index) => {
+      const animateGlow = () => {
+        setGlows(prevGlows => {
+          const newGlows = [...prevGlows];
+          const glow = newGlows[index];
+
+          // 生成新位置和新的隨機參數
+          const { left, top } = generatePosition(newGlows, index);
+          newGlows[index] = {
+            ...glow,
+            left,
+            top,
+            size: 300 + Math.random() * 200,
+            maxOpacity: 0.15 + Math.random() * 0.1,
+            blur: 40 + Math.random() * 30,
+            duration: 6000 + Math.random() * 4000,
+          };
+
+          return newGlows;
+        });
+
+        // 設置下一次循環（在當前週期完成後）
+        const currentDuration = glows[index]?.duration || 8000;
+        animationRefs.current[index] = setTimeout(animateGlow, currentDuration);
+      };
+
+      // 每個光暈有不同的初始延遲，避免同時變化
+      const initialDelay = index * 2000;
+      animationRefs.current[index] = setTimeout(animateGlow, initialDelay + (glows[index]?.duration || 8000));
+    };
+
+    // 啟動所有光暈的動畫
+    if (glows.length === 3) {
+      for (let i = 0; i < 3; i++) {
+        startAnimation(i);
+      }
+    }
+
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setShouldRender(false);
       } else {
-        // Fade out
-        const fadeProgress = (progress - 0.9) / 0.1;
-        opacity = 0.12 * (1 - fadeProgress);
-        x = glow.path[2].x;
-        y = glow.path[2].y;
-        scale = 1.2 - (fadeProgress * 0.4); // 1.2 to 0.8
-      }
-
-      if (glow.ref.current) {
-        glow.ref.current.style.left = `${x}%`;
-        glow.ref.current.style.top = `${y}%`;
-        // Desktop brightness
-        glow.ref.current.style.opacity = opacity * 0.6;
-        glow.ref.current.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        setShouldRender(true);
       }
     };
 
-    const startTime = Date.now();
-    let animationFrame;
-
-    const loop = () => {
-      glows.forEach(glow => animate(glow, startTime));
-      animationFrame = requestAnimationFrame(loop);
-    };
-
-    loop();
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      if (animationFrame) cancelAnimationFrame(animationFrame);
+      window.removeEventListener('resize', handleResize);
+      // 清理所有定時器
+      animationRefs.current.forEach(timer => clearTimeout(timer));
     };
-  }, [isMobile]);
+  }, []);
 
-  if (isMobile) return null; // Do not render glows on mobile
+  if (!shouldRender) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      <div
-        ref={glow1Ref}
-        className={"absolute w-[500px] h-[500px] rounded-full blur-3xl transition-opacity duration-1000"}
-        style={{
-          background:
-            'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-          opacity: 0,
-        }}
-      />
-      <div
-        ref={glow2Ref}
-        className="absolute w-[600px] h-[600px] rounded-full blur-3xl transition-opacity duration-1000"
-        style={{
-          background:
-            'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-          opacity: 0,
-        }}
-      />
-      <div
-        ref={glow3Ref}
-        className="absolute w-[550px] h-[550px] rounded-full blur-3xl transition-opacity duration-1000"
-        style={{
-          background:
-            'radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%)',
-          opacity: 0,
-        }}
-      />
+      {glows.map((glow) => (
+        <div
+          key={glow.id}
+          className="glow-orb-animated"
+          style={{
+            left: `${glow.left}%`,
+            top: `${glow.top}%`,
+            width: `${glow.size}px`,
+            height: `${glow.size}px`,
+            filter: `blur(${isLowPerf ? glow.blur * 0.7 : glow.blur}px)`,
+            '--max-opacity': isLowPerf ? glow.maxOpacity * 0.7 : glow.maxOpacity,
+            '--duration': `${glow.duration}ms`,
+          }}
+        />
+      ))}
     </div>
   );
 }
