@@ -3,12 +3,10 @@
 .env.local
 .env.*.local
 
-# Docker
+# Docker Compose 
 docker-compose.yml
-Dockerfile
-.dockerignore
-*.dockerignore
 docker-compose.*.yml
+!docker-compose.example.yml
 
 # Node modules
 node_modules/
@@ -47,3 +45,4 @@ Thumbs.db
 *.swp
 *.swo
 *~
+.claude
