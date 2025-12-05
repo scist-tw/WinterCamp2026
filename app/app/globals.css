@@ -267,7 +267,7 @@ h1.font-semibold, h2.font-semibold, h3.font-semibold, h4.font-semibold, h5.font-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
-}ㄋ
+}
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hide {
@@ -321,4 +321,3 @@ h1.font-semibold, h2.font-semibold, h3.font-semibold, h4.font-semibold, h5.font-
     transform: translateX(100%);
   }
 }
-
