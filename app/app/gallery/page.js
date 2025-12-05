@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Camera, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -12,7 +12,6 @@ export default function GalleryPage() {
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [renderedCount, setRenderedCount] = useState({});
 
   useEffect(() => {
     fetch("/data/gallery.json")
@@ -38,33 +37,33 @@ export default function GalleryPage() {
       });
   }, []);
 
+  const handlePrevious = useCallback(() => {
+    setCurrentImageIndex((prev) =>
+      prev > 0 ? prev - 1 : galleryImages.length - 1
+    );
+  }, [galleryImages.length]);
+
+  const handleNext = useCallback(() => {
+    setCurrentImageIndex((prev) =>
+      prev < galleryImages.length - 1 ? prev + 1 : 0
+    );
+  }, [galleryImages.length]);
+
   useEffect(() => {
+    if (!lightboxOpen) return;
     const handleKeyDown = (e) => {
-      if (!lightboxOpen) return;
       if (e.key === "Escape") setLightboxOpen(false);
       if (e.key === "ArrowLeft") handlePrevious();
       if (e.key === "ArrowRight") handleNext();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [lightboxOpen, currentImageIndex]);
+  }, [lightboxOpen, handlePrevious, handleNext]);
 
-  const openLightbox = (index) => {
+  const openLightbox = useCallback((index) => {
     setCurrentImageIndex(index);
     setLightboxOpen(true);
-  };
-
-  const handlePrevious = () => {
-    setCurrentImageIndex((prev) =>
-      prev > 0 ? prev - 1 : galleryImages.length - 1
-    );
-  };
-
-  const handleNext = () => {
-    setCurrentImageIndex((prev) =>
-      prev < galleryImages.length - 1 ? prev + 1 : 0
-    );
-  };
+  }, []);
 
   // Memoize sorted years to avoid recalculation
   const sortedYears = useMemo(() => {
@@ -76,70 +75,6 @@ export default function GalleryPage() {
       ),
     ];
   }, [groupedByYear]);
-
-  // Scroll-based progressive rendering
-  useEffect(() => {
-    if (!groupedByYear || Object.keys(groupedByYear).length === 0) return;
-
-    const INITIAL_BATCH = 3; // Start with only 3 images per year
-    const BATCH_SIZE = 2; // Load 2 at a time
-    const BATCH_DELAY = 150; // Slower, more controlled
-
-    // Initialize with small batch
-    const initialCounts = {};
-    sortedYears.forEach((year) => {
-      initialCounts[year] = INITIAL_BATCH;
-    });
-    setRenderedCount(initialCounts);
-
-    // Create intersection observer for each year section
-    const observers = [];
-
-    sortedYears.forEach((year, yearIndex) => {
-      const yearImages = groupedByYear[year];
-      if (!yearImages) return;
-
-      const totalImages = yearImages.length;
-
-      // Find the year section element
-      const yearSection = document.getElementById(`year-${year}`);
-      if (!yearSection) return;
-
-      let currentBatch = INITIAL_BATCH;
-      let isLoading = false;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !isLoading && currentBatch < totalImages) {
-              isLoading = true;
-
-              // Delay based on year index to avoid simultaneous loading
-              setTimeout(() => {
-                setRenderedCount((prev) => ({
-                  ...prev,
-                  [year]: Math.min(currentBatch + BATCH_SIZE, totalImages),
-                }));
-                currentBatch += BATCH_SIZE;
-                isLoading = false;
-              }, yearIndex * 100);
-            }
-          });
-        },
-        {
-          rootMargin: "200px",
-          threshold: 0.1,
-        }
-      );
-
-      observer.observe(yearSection);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((obs) => obs.disconnect());
-    };
-  }, [groupedByYear, sortedYears]);
 
   return (
     <div className="min-h-screen">
@@ -178,7 +113,14 @@ export default function GalleryPage() {
                 if (!yearImages || yearImages.length === 0) return null;
 
                 return (
-                  <div key={year} id={`year-${year}`}>
+                  <div 
+                    key={year} 
+                    id={`year-${year}`}
+                    style={{
+                      contentVisibility: "auto",
+                      containIntrinsicSize: "0 600px",
+                    }}
+                  >
                     {/* Year Section Header */}
                     <div className="mb-8 flex flex-col items-center text-center">
                       <h2 className="text-3xl font-bold tracking-tight text-foreground mb-2">
@@ -189,34 +131,33 @@ export default function GalleryPage() {
 
                     {/* Images Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                      {yearImages.slice(0, renderedCount[year] || 3).map((image, idx) => {
+                      {yearImages.map((image, idx) => {
                         const globalIdx = galleryImages.indexOf(image);
                         return (
                           <Card
-                            key={idx}
+                            key={`${year}-${idx}`}
                             onClick={() => openLightbox(globalIdx)}
-                            className="neon-card rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+                            className="neon-card rounded-2xl overflow-hidden group cursor-pointer will-change-transform"
                             style={{
                               contain: "layout style paint",
-                              contentVisibility: "auto",
                             }}
                           >
-                            <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden" style={{ transform: "translateZ(0)" }}>
+                            <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
                               {/* Lazy loaded image */}
                               <LazyImage
                                 src={image.src}
                                 alt={image.alt}
                                 fill
-                                className="object-cover"
+                                className="object-cover group-hover:scale-105 transition-transform duration-300"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 unoptimized
                               />
 
                               {/* Gradient overlay */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
 
                               {/* Content overlay */}
-                              <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                              <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-200 pointer-events-none">
                                 <div className="inline-block px-2 py-1 bg-[oklch(0.75_0.15_85)] text-black text-xs font-bold rounded mb-2">
                                   {image.year}
                                 </div>
