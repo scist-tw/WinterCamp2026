@@ -1,14 +1,22 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { usePathname } from "next/navigation";
+
+const DISABLE_GLOW_PATHS = ["/gallery"];
 
 export default function AnimatedGlow() {
+  const pathname = usePathname();
   const [isLowPerf, setIsLowPerf] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
   const [glows, setGlows] = useState([]);
   const animationRefs = useRef([]);
 
+  const isDisabledPath = DISABLE_GLOW_PATHS.some(path => pathname?.startsWith(path));
+
   useEffect(() => {
+    if (isDisabledPath) return;
+    
     // Performance detection
     const checkPerformance = () => {
       const isMobile = window.innerWidth < 768;
@@ -134,9 +142,9 @@ export default function AnimatedGlow() {
       // 清理所有定時器
       animationRefs.current.forEach(timer => clearTimeout(timer));
     };
-  }, []);
+  }, [isDisabledPath]);
 
-  if (!shouldRender) return null;
+  if (isDisabledPath || !shouldRender) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -149,7 +157,6 @@ export default function AnimatedGlow() {
             top: `${glow.top}%`,
             width: `${glow.size}px`,
             height: `${glow.size}px`,
-            filter: `blur(${isLowPerf ? glow.blur * 0.7 : glow.blur}px)`,
             '--max-opacity': isLowPerf ? glow.maxOpacity * 0.7 : glow.maxOpacity,
             '--duration': `${glow.duration}ms`,
           }}
