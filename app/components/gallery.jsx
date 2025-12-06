@@ -45,6 +45,7 @@ export default function Gallery() {
             ? galleryImages.map((image, idx) => (
                 <Card
                   key={idx}
+                  noPadding
                   className="neon-card rounded-2xl overflow-hidden group hover:scale-105 transition-transform cursor-default"
                 >
                   <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
@@ -83,6 +84,7 @@ export default function Gallery() {
               Array.from({ length: 6 }).map((_, idx) => (
                 <Card
                   key={idx}
+                  noPadding
                   className="neon-card rounded-2xl overflow-hidden"
                 >
                   <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">

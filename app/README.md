@@ -303,3 +303,33 @@ docker-compose up -d
 ## 授權
 
 © 2026 SCIST x SCAICT. All rights reserved.
+
+## Build-time 圖片處理（static export 支援）
+
+若你使用 `output: 'export'`（靜態導出），Next 的 Image Optimization API 會無法使用。此專案提供一個 build-time 圖片生成腳本，會把原始大圖轉成多尺寸的 WebP / AVIF，放到 `public/gallery/`，前端可以使用 `srcset`/`<picture>` 或保留現有的圖片命名來使用這些靜態檔案。
+
+使用方法：
+
+1. 把原始高解析度圖片放到 `app/public/gallery-src/`（例如 `app/public/gallery-src/photo1.jpg`）。
+2. 安裝相依（在 `app` 資料夾）：
+```powershell
+cd app
+npm install
+```
+3. 產生多尺寸檔案：
+```powershell
+cd app
+npm run gen:images
+```
+4. 產生後會在 `app/public/gallery/` 出現 `photo1-320.webp`, `photo1-640.avif`, ... 以及一個預設 `photo1.webp` 作為 fallback。
+
+前端使用建議（`<picture>` 範例）：
+```jsx
+<picture>
+  <source type="image/avif" srcSet="/gallery/photo1-320.avif 320w, /gallery/photo1-640.avif 640w" sizes="(max-width:768px)100vw, 33vw" />
+  <source type="image/webp" srcSet="/gallery/photo1-320.webp 320w, /gallery/photo1-640.webp 640w" sizes="(max-width:768px)100vw, 33vw" />
+  <img src="/gallery/photo1.webp" alt="..." loading="lazy" decoding="async" style={{width:'100%',height:'auto'}} />
+</picture>
+```
+
+備註：`sharp` 會被加入到 `devDependencies`。如果你的 CI 或主機無法編譯 native 模組，請在本地或支持 native 模組的 runner 上執行 `npm run gen:images`，再把 `public/gallery` 上傳到部署環境。

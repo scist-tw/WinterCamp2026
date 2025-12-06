@@ -3,8 +3,7 @@
 import { useEffect, useState, useRef, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Camera, X, ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
-import LazyImage from "@/components/lazy-image";
+import ResponsiveImage from "@/components/responsive-image";
 
 export default function GalleryPage() {
   const [galleryImages, setGalleryImages] = useState([]);
@@ -81,8 +80,9 @@ export default function GalleryPage() {
   useEffect(() => {
     if (!groupedByYear || Object.keys(groupedByYear).length === 0) return;
 
-    const INITIAL_BATCH = 3; // Start with only 3 images per year
-    const BATCH_SIZE = 2; // Load 2 at a time
+    // Start with a larger initial batch so smaller galleries appear fully
+    const INITIAL_BATCH = 6; // Start with up to 6 images per year
+    const BATCH_SIZE = 2; // Load 2 at a time for larger galleries
     const BATCH_DELAY = 150; // Slower, more controlled
 
     // Initialize with small batch
@@ -194,6 +194,7 @@ export default function GalleryPage() {
                         return (
                           <Card
                             key={idx}
+                            noPadding
                             onClick={() => openLightbox(globalIdx)}
                             className="neon-card rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-transform duration-300"
                             style={{
@@ -202,14 +203,13 @@ export default function GalleryPage() {
                             }}
                           >
                             <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden" style={{ transform: "translateZ(0)" }}>
-                              {/* Lazy loaded image */}
-                              <LazyImage
+                              {/* Responsive static-friendly image */}
+                              <ResponsiveImage
                                 src={image.src}
                                 alt={image.alt}
-                                fill
-                                className="object-cover"
+                                className="w-full h-full"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                unoptimized
+                                objectFit="cover"
                               />
 
                               {/* Gradient overlay */}
@@ -283,15 +283,14 @@ export default function GalleryPage() {
             className="relative w-full h-full flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative max-w-7xl max-h-[90vh] w-full h-full">
-              <Image
+              <div className="relative max-w-7xl max-h-[90vh] w-full h-full">
+              <ResponsiveImage
                 src={galleryImages[currentImageIndex].src}
                 alt={galleryImages[currentImageIndex].alt}
-                fill
-                className="object-contain"
+                className="w-full h-full"
                 sizes="100vw"
                 priority
-                unoptimized
+                objectFit="contain"
               />
             </div>
             {/* Image info */}
