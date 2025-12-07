@@ -4,15 +4,32 @@ import { useState, useEffect, useRef, useCallback, memo } from "react";
 import Image from "next/image";
 import { Camera } from "lucide-react";
 
-// Image load queue to prevent simultaneous decoding
-let loadQueue = [];
-let isProcessing = false;
+let sharedObserver = null;
+const observerCallbacks = new WeakMap();
 
-const processQueue = () => {
-  if (isProcessing || loadQueue.length === 0) return;
-  isProcessing = true;
-  const next = loadQueue.shift();
-  if (next) next();
+const getSharedObserver = () => {
+  if (sharedObserver) return sharedObserver;
+
+  sharedObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const callback = observerCallbacks.get(entry.target);
+          if (callback) {
+            callback();
+            sharedObserver.unobserve(entry.target);
+            observerCallbacks.delete(entry.target);
+          }
+        }
+      });
+    },
+    {
+      rootMargin: "200px",
+      threshold: 0,
+    }
+  );
+
+  return sharedObserver;
 };
 
 const LazyImage = memo(function LazyImage({
@@ -26,55 +43,42 @@ const LazyImage = memo(function LazyImage({
   onLoad,
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(priority);
-  const imgRef = useRef(null);
   const [shouldRender, setShouldRender] = useState(priority);
+  const placeholderRef = useRef(null);
 
   useEffect(() => {
-    if (priority) return; // Skip observer for priority images
+    if (priority || shouldRender) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // Delay rendering slightly to avoid all images rendering at once
-            requestAnimationFrame(() => {
-              setShouldRender(true);
-              setIsInView(true);
-            });
-            observer.disconnect();
-          }
-        });
-      },
-      {
-        rootMargin: "100px",
-        threshold: 0.01,
-      }
-    );
+    const element = placeholderRef.current;
+    if (!element) return;
 
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
-    }
+    const observer = getSharedObserver();
+
+    observerCallbacks.set(element, () => {
+      setShouldRender(true);
+    });
+
+    observer.observe(element);
 
     return () => {
-      observer.disconnect();
+      observer.unobserve(element);
+      observerCallbacks.delete(element);
     };
-  }, [priority]);
+  }, [priority, shouldRender]);
 
   const handleImageLoad = useCallback(() => {
     setIsLoaded(true);
-    isProcessing = false;
-    processQueue();
     onLoad?.();
   }, [onLoad]);
 
   return (
     <>
-      {/* Skeleton screen with shimmer effect */}
+      {/* Skeleton placeholder */}
       {!isLoaded && (
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary/60 to-secondary/30 overflow-hidden">
-          {/* Shimmer animation */}
-          <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div 
+          ref={!shouldRender ? placeholderRef : null}
+          className="absolute inset-0 bg-secondary/40"
+        >
           <div className="absolute inset-0 flex items-center justify-center">
             <Camera className="w-12 h-12 text-[oklch(0.55_0.15_85)]/30" />
           </div>
@@ -82,19 +86,15 @@ const LazyImage = memo(function LazyImage({
       )}
 
       {/* Actual image - only render when in view */}
-      {shouldRender ? (
+      {shouldRender && (
         <Image
-          ref={imgRef}
           src={src}
           alt={alt}
           fill={fill}
           sizes={sizes}
-          className={`${className} transition-opacity duration-300 ${
-            isLoaded ? "opacity-100" : "opacity-0"
-          }`}
+          className={`${className} ${isLoaded ? "opacity-100" : "opacity-0"}`}
           style={{
-            willChange: isLoaded ? "auto" : "opacity",
-            contentVisibility: "auto",
+            transition: "opacity 0.2s ease-out",
           }}
           priority={priority}
           unoptimized={unoptimized}
@@ -102,8 +102,6 @@ const LazyImage = memo(function LazyImage({
           decoding="async"
           onLoad={handleImageLoad}
         />
-      ) : (
-        <div ref={imgRef} className="absolute inset-0" />
       )}
     </>
   );

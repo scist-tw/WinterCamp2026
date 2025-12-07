@@ -1,10 +1,20 @@
 "use client"
 
 import { useEffect } from "react"
+import { usePathname } from "next/navigation"
 import Lenis from "@studio-freight/lenis"
 
+const DISABLE_LENIS_PATHS = ["/gallery"]
+
 export default function SmoothScroll({ children }) {
+  const pathname = usePathname()
+  const shouldDisableLenis = DISABLE_LENIS_PATHS.some(path => pathname?.startsWith(path))
+
   useEffect(() => {
+    if (shouldDisableLenis) {
+      return
+    }
+
     // Delay initialization to improve initial load performance
     const initTimeout = setTimeout(() => {
       // Bind Lenis to the root wrapper we render so it controls the correct scroller.
@@ -64,7 +74,7 @@ export default function SmoothScroll({ children }) {
     }, 100) // Delay 100ms to allow initial paint
 
     return () => clearTimeout(initTimeout)
-  }, [])
+  }, [shouldDisableLenis])
 
   return <div id="__lenis-root">{children}</div>
 }

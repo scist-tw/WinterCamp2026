@@ -279,11 +279,11 @@ h1.font-semibold, h2.font-semibold, h3.font-semibold, h4.font-semibold, h5.font-
 .glow-orb-animated {
   position: absolute;
   border-radius: 50%;
-  /* 使用 GPU 加速 */
   transform: translate(-50%, -50%) translateZ(0);
   backface-visibility: hidden;
-  /* 金色光暈 */
-  background: radial-gradient(circle, oklch(0.75 0.15 85) 0%, transparent 70%);
+  will-change: opacity, transform;
+  contain: strict;
+  background: radial-gradient(circle, oklch(0.75 0.15 85 / 0.8) 0%, oklch(0.75 0.15 85 / 0.3) 30%, transparent 60%);
   /* 淡入淡出動畫，使用 CSS 變數控制最大亮度和週期 */
   animation: fade-in-out var(--duration, 8000ms) ease-in-out infinite;
 }
@@ -321,4 +321,3 @@ h1.font-semibold, h2.font-semibold, h3.font-semibold, h4.font-semibold, h5.font-
     transform: translateX(100%);
   }
 }
-
