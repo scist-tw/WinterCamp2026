@@ -3,8 +3,7 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Camera, X, ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
-import LazyImage from "@/components/lazy-image";
+import ResponsiveImage from "@/components/responsive-image";
 
 export default function GalleryPage() {
   const [galleryImages, setGalleryImages] = useState([]);
@@ -76,6 +75,71 @@ export default function GalleryPage() {
     ];
   }, [groupedByYear]);
 
+  // Scroll-based progressive rendering
+  useEffect(() => {
+    if (!groupedByYear || Object.keys(groupedByYear).length === 0) return;
+
+    // Start with a larger initial batch so smaller galleries appear fully
+    const INITIAL_BATCH = 6; // Start with up to 6 images per year
+    const BATCH_SIZE = 2; // Load 2 at a time for larger galleries
+    const BATCH_DELAY = 150; // Slower, more controlled
+
+    // Initialize with small batch
+    const initialCounts = {};
+    sortedYears.forEach((year) => {
+      initialCounts[year] = INITIAL_BATCH;
+    });
+    setRenderedCount(initialCounts);
+
+    // Create intersection observer for each year section
+    const observers = [];
+
+    sortedYears.forEach((year, yearIndex) => {
+      const yearImages = groupedByYear[year];
+      if (!yearImages) return;
+
+      const totalImages = yearImages.length;
+
+      // Find the year section element
+      const yearSection = document.getElementById(`year-${year}`);
+      if (!yearSection) return;
+
+      let currentBatch = INITIAL_BATCH;
+      let isLoading = false;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !isLoading && currentBatch < totalImages) {
+              isLoading = true;
+
+              // Delay based on year index to avoid simultaneous loading
+              setTimeout(() => {
+                setRenderedCount((prev) => ({
+                  ...prev,
+                  [year]: Math.min(currentBatch + BATCH_SIZE, totalImages),
+                }));
+                currentBatch += BATCH_SIZE;
+                isLoading = false;
+              }, yearIndex * 100);
+            }
+          });
+        },
+        {
+          rootMargin: "200px",
+          threshold: 0.1,
+        }
+      );
+
+      observer.observe(yearSection);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((obs) => obs.disconnect());
+    };
+  }, [groupedByYear, sortedYears]);
+
   return (
     <div className="min-h-screen">
       {/* Main content */}
@@ -135,22 +199,22 @@ export default function GalleryPage() {
                         const globalIdx = galleryImages.indexOf(image);
                         return (
                           <Card
-                            key={`${year}-${idx}`}
+                            key={idx}
+                            noPadding
                             onClick={() => openLightbox(globalIdx)}
                             className="neon-card rounded-2xl overflow-hidden group cursor-pointer will-change-transform"
                             style={{
                               contain: "layout style paint",
                             }}
                           >
-                            <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden">
-                              {/* Lazy loaded image */}
-                              <LazyImage
+                            <div className="relative aspect-[4/3] bg-secondary/50 overflow-hidden" style={{ transform: "translateZ(0)" }}>
+                              {/* Responsive static-friendly image */}
+                              <ResponsiveImage
                                 src={image.src}
                                 alt={image.alt}
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                className="w-full h-full"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                unoptimized
+                                objectFit="cover"
                               />
 
                               {/* Gradient overlay */}
@@ -224,15 +288,14 @@ export default function GalleryPage() {
             className="relative w-full h-full flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative max-w-7xl max-h-[90vh] w-full h-full">
-              <Image
+              <div className="relative max-w-7xl max-h-[90vh] w-full h-full">
+              <ResponsiveImage
                 src={galleryImages[currentImageIndex].src}
                 alt={galleryImages[currentImageIndex].alt}
-                fill
-                className="object-contain"
+                className="w-full h-full"
                 sizes="100vw"
                 priority
-                unoptimized
+                objectFit="contain"
               />
             </div>
             {/* Image info */}
