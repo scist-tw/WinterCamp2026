@@ -1,7 +1,2 @@
-:HL["/_next/static/chunks/f2a6aea4dbfb2e13.css","style"]
-:HL["https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&display=swap","style"]
-:HL["https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap","style"]
-:HL["https://font.emtech.cc/fonts/GenJyuuGothicX","style"]
-:HL["https://font.emtech.cc/css/GenJyuuGothicX","style"]
-:HL["https://font.emtech.cc/css/ChenYuLuoYan","style"]
+:HL["/_next/static/chunks/ca5b99af9afc820b.css","style"]
 0:{"buildId":"winter-camp-2026","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
