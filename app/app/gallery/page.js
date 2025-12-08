@@ -11,6 +11,7 @@ export default function GalleryPage() {
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [renderedCount, setRenderedCount] = useState({});
 
   useEffect(() => {
     fetch("/data/gallery.json")
