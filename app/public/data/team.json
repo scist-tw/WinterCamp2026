@@ -28,14 +28,14 @@
       "name": "KK",
       "role": "行政組",
       "email": "fb7feb0c3dda9e1d23001e940f0c5c667a5901194d5527039f0e3f8e8a80a892",
-      "category": "組長",
+      "category": "組員",
       "link": ""
     },
     {
       "name": "凡凡",
       "role": "行政組",
       "email": "e926f657cb01e6e61ea705ba9298ab0f8b23ef4a1ca11d76ccec5c5be7619524",
-      "category": "組員",
+      "category": "組長",
       "link": "https://gravatar.com/tigerradiant04c26d2639"
     },
     {
@@ -261,6 +261,13 @@
       "email": "5e5faa1632e059c945888331f3d6215b45b03dded682353468ebc49be5dd4920",
       "category": "組長",
       "link": "https://osga.dev"
+    },
+    {
+      "name": "4yü",
+      "role": "課程組",
+      "email": "8be3565ad047f6109e030da1e2e838d4706e6a0576db217733d9f0dcefb7b881",
+      "category": "組員",
+      "link": "https://4yu.dev"
     }
   ]
 }

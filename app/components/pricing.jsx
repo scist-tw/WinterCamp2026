@@ -2,35 +2,35 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, Clock, MapPin, ArrowRight } from "lucide-react";
+import { CalendarDays, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
 
 const plans = [
   {
     name: "早鳥優惠",
     price: "4,300",
-    description: "即日起至 12/14 23:59",
+    description: "即日至 12/14 23:59（含住宿）",
     highlight: true,
   },
   {
     name: "單人報名",
     price: "4,500",
-    description: "一般報名價格",
+    description: "一般報名價格（含住宿）",
   },
   {
     name: "雙人團報",
     price: "4,200",
-    description: "每人價格",
+    description: "每人價格（含住宿）",
   },
   {
     name: "三人團報",
     price: "4,100",
-    description: "每人價格",
+    description: "每人價格（含住宿）",
   },
   {
     name: "四人團報",
     price: "4,000",
-    description: "每人價格",
+    description: "每人價格（含住宿）",
   },
 ];
 
@@ -39,7 +39,9 @@ export default function Pricing() {
     <section id="pricing" className="py-20 lg:py-32 px-6 lg:px-12 text-center relative">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="mb-16">
-          <div className="mb-3 flex justify-center"><span className="section-eyebrow">PRICING // 報名資訊</span></div>
+          <div className="mb-3 flex justify-center">
+            <span className="section-eyebrow">PRICING // 報名資訊</span>
+          </div>
           <h2 className="section-title text-4xl lg:text-5xl font-black mb-6">報名資訊</h2>
           <p className="text-foreground/70 text-xl">
             越早報名越划算！團報更優惠！
@@ -50,7 +52,12 @@ export default function Pricing() {
               className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
             >
               查看完整報名資訊
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </a>
@@ -108,14 +115,26 @@ export default function Pricing() {
                   </div>
                 )}
                 <div className="space-y-4">
-                  <h3 className={`text-xl font-bold ${plan.highlight ? "text-black" : "text-foreground"}`}>
+                  <h3
+                    className={`text-xl font-bold ${
+                      plan.highlight ? "text-black" : "text-foreground"
+                    }`}
+                  >
                     {plan.name}
                   </h3>
                   <div className="flex flex-col items-center">
-                    <div className={`text-xs font-semibold mb-1 ${plan.highlight ? "text-black/70" : "text-foreground/50"}`}>
+                    <div
+                      className={`text-xs font-semibold mb-1 ${
+                        plan.highlight ? "text-black/70" : "text-foreground/50"
+                      }`}
+                    >
                       NTD$
                     </div>
-                    <div className={`text-5xl md:text-6xl font-black tracking-tight ${plan.highlight ? "text-black" : "text-[oklch(0.75_0.15_85)]"}`}>
+                    <div
+                      className={`text-5xl md:text-6xl font-black tracking-tight ${
+                        plan.highlight ? "text-black" : "text-[oklch(0.75_0.15_85)]"
+                      }`}
+                    >
                       {plan.price}
                     </div>
                   </div>
@@ -131,9 +150,13 @@ export default function Pricing() {
             </div>
           ))}
         </div>
+
         <div className="mt-6 text-foreground/70 space-y-2">
           <p className="text-sm">
             * 註：早鳥學員無論人數皆為 NTD$4,300/人
+          </p>
+          <p className="text-sm">
+            * 不住宿方案報名費一律再折 NTD$1,000，報名時可於表單中選擇
           </p>
           <p className="text-sm">
             報名費用已含：場地、住宿（將由營隊安排住宿）、餐飲、保險、衣服等
