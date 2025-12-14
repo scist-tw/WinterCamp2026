@@ -99,7 +99,7 @@ export default function Footer() {
                 報名資訊
               </button>
               <a
-                href="mailto:contact@scist.org"
+                href="mailto:camp@scist.org"
                 className="flex items-center gap-3 hover:text-[oklch(0.75_0.15_85)] transition-colors group w-fit cursor-pointer"
               >
                 <span className="h-px w-6 bg-foreground/20 group-hover:bg-[oklch(0.75_0.15_85)] transition-all"></span>

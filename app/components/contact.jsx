@@ -8,8 +8,8 @@ const scistMethods = [
   {
     icon: Mail,
     title: "Email",
-    value: "scist@scist.org",
-    link: "mailto:scist@scist.org",
+    value: "official@scist.org",
+    link: "mailto:official@scist.org",
   },
   {
     icon: Facebook,
@@ -58,6 +58,12 @@ const scaictMethods = [
   },
 ];
 
+const priorityContact = {
+  icon: Mail,
+  title: "優先聯絡",
+  value: "camp@scist.org",
+  link: "mailto:camp@scist.org",
+};
 export default function Contact() {
   return (
     <section className="py-20 lg:py-32 px-6 lg:px-12">
@@ -69,6 +75,26 @@ export default function Contact() {
             有任何問題歡迎透過以下方式聯絡我們
           </p>
         </div>
+        
+        <div className="mb-8 flex justify-center">
+          <Card
+            className="neon-card rounded-2xl p-6 bg-muted w-full max-w-2xl transition-shadow cursor-pointer"
+            onClick={() => window.open(priorityContact.link, "_blank")}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-[oklch(0.55_0.15_85)]/20 flex items-center justify-center">
+                <priorityContact.icon className="w-6 h-6 text-[oklch(0.55_0.15_85)]" />
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-foreground/70 mb-1">{priorityContact.title}</h4>
+                <p className="text-lg font-extrabold">{priorityContact.value}</p>
+              </div>
+              <div className="hidden sm:block">
+              </div>
+            </div>
+          </Card>
+        </div>
+        <br />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
           {/* SCIST 聯絡方式 */}
