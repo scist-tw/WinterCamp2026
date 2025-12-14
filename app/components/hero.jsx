@@ -111,7 +111,7 @@ export default function Hero() {
               </Button>
             </div>
             <p className="text-base text-foreground/70 font-medium">
-              報名名額有限，歡迎加入一起專注做事的夥伴。
+              報名名額有限，歡迎加入一起創造美好回憶。
             </p>
           </div>
         </div>
