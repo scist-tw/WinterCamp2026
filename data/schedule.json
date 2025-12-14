@@ -2,55 +2,53 @@
   "scheduleData": [
     {
       "day": "第一天",
-      "date": "2/5(四)",
+      "date": "",
       "slots": [
-        { "time": "08:30 - 09:30", "activity": "報到、開訓典禮", "details": "課程介紹、營隊流程說明、破冰小遊戲開始" },
-        { "time": "09:30 - 12:00", "activity": "破冰活動", "details": "自我介紹、猜歌接龍、猜拳接龍、請你跟我這樣做等互動遊戲" },
-        { "time": "12:00 - 13:30", "activity": "午餐休息", "details": "享受豐盛午餐，認識新朋友" },
-        { "time": "13:30 - 16:30", "activity": "課程時間", "details": "介紹 HTML/CSS/JavaScript 三大核心技術，完成第一個網頁" },
-        { "time": "17:30 - 19:00", "activity": "晚餐休息", "details": "享受晚餐，交流今天收穫" },
-        { "time": "19:00 - 21:00", "activity": "黑客松題目公布", "details": "公布黑客松主題與規則，分隊討論初步想法" },
-        { "time": "21:00 -", "activity": "住宿休息", "details": "睡覺 TIME - 儲備能量迎接明天" }
+        { "time": "08:30 - 09:30", "activity": "報到、開訓典禮", "details": "" },
+        { "time": "09:30 - 12:00", "activity": "破冰", "details": "" },
+        { "time": "12:00 - 13:00", "activity": "午餐", "details": "" },
+        { "time": "13:00 - 17:30", "activity": "課程時間", "details": "" },
+        { "time": "17:30 - 18:30", "activity": "晚餐", "details": "" },
+        { "time": "18:30 - 20:00", "activity": "遊戲", "details": "" },
+        { "time": "20:00 -", "activity": "住宿休息", "details": "" }
       ]
     },
     {
       "day": "第二天",
-      "date": "2/6(五)",
+      "date": "",
       "slots": [
-        { "time": "08:00 - 09:00", "activity": "早餐", "details": "享受豐盛早餐，為一整天的課程做準備" },
-        { "time": "09:00 - 12:00", "activity": "課程時間", "details": "介紹 HTML、CSS、JavaScript 核心概念，實作第一個網頁" },
-        { "time": "12:00 - 13:30", "activity": "午餐 & 休息", "details": "享受午餐時光，適當休息恢復體力" },
-        { "time": "13:30 - 17:30", "activity": "課程時間", "details": "學習 React 元件、State 和 Props，完成簡單互動應用" },
-        { "time": "17:30 - 19:00", "activity": "晚餐", "details": "享受晚餐，交流學習心得" },
-        { "time": "19:00 - 20:30", "activity": "開源軟體工作坊", "details": "介紹 Git 與 GitHub 的使用，學習開源貢獻流程" },
-        { "time": "20:30 -", "activity": "住宿休息", "details": "回到宿舍休息，準備明天課程" }
+        { "time": "08:00 - 09:00", "activity": "早餐", "details": "（宿舍吃）" },
+        { "time": "09:00 - 16:00", "activity": "課程時間", "details": "" },
+        { "time": "16:00 - 18:00", "activity": "企業講座", "details": "" },
+        { "time": "18:00 - 19:00", "activity": "晚餐", "details": "" },
+        { "time": "19:00 - 21:00", "activity": "晚會", "details": "" },
+        { "time": "21:00 -", "activity": "住宿休息", "details": "" }
       ]
     },
     {
       "day": "第三天",
-      "date": "2/7(六)",
+      "date": "",
       "slots": [
-        { "time": "08:00 - 09:00", "activity": "早餐", "details": "享受豐盛早餐，為黑客松的最後衝刺做準備" },
-        { "time": "09:00 - 10:30", "activity": "課程時間", "details": "學習如何將應用部署到雲端平台（AWS / Vercel）" },
-        { "time": "10:30 - 13:30", "activity": "社群攤位 & 午餐", "details": "與業界人士交流，了解最新技術趨勢，邊吃邊聊" },
-        { "time": "13:00 - 17:30", "activity": "黑客松開發時間", "details": "集中開發時間，助教全程協助，解決技術問題與優化成果" },
-        { "time": "17:30 - 19:00", "activity": "晚餐", "details": "享受晚餐，為夜間衝刺儲備能量" },
-        { "time": "19:00 - 20:30", "activity": "黑客松衝刺", "details": "教學輔導 / 開發衝刺，完成最後細節調整與 bug 修復" },
-        { "time": "20:30 -", "activity": "住宿休息", "details": "準備明天的成果發表，充分休息" }
+        { "time": "08:00 - 09:00", "activity": "早餐", "details": "（宿舍吃）" },
+        { "time": "09:00 - 11:20", "activity": "課程時間", "details": "" },
+        { "time": "11:30 - 14:30", "activity": "社群攤位＋午餐", "details": "" },
+        { "time": "14:30 - 16:00", "activity": "室內活動", "details": "" },
+        { "time": "16:00 - 20:30", "activity": "黑客松＋晚餐", "details": "" },
+        { "time": "20:30 -", "activity": "住宿休息", "details": "" }
       ]
     },
     {
       "day": "第四天",
-      "date": "2/8(日)",
+      "date": "",
       "slots": [
-        { "time": "08:00 - 09:00", "activity": "早餐", "details": "享受最後一天的早餐，為成果發表做最後準備" },
-        { "time": "09:00 - 12:00", "activity": "最後衝刺", "details": "黑客松作品最後調整與收尾，確保完整演示" },
-        { "time": "12:00 - 13:30", "activity": "午餐休息", "details": "享受午餐，為下午的成果展示做準備" },
-        { "time": "13:30 - 15:30", "activity": "成果發表", "details": "各組依序進行 5-10 分鐘的 Demo 展示與成果說明" },
-        { "time": "15:30 - 16:00", "activity": "評分統計", "details": "評審評分統計，計算最終名次與獲獎者" },
-        { "time": "16:00 - 17:00", "activity": "頒獎典禮", "details": "頒發最佳作品獎、最具創意獎、最佳團隊合作獎等各類獎項" },
-        { "time": "17:00 - 17:30", "activity": "閉幕", "details": "大合照紀念、心得分享、結訓式與結業證書頒發" },
-        { "time": "17:30 -", "activity": "賦歸", "details": "GO HOME - 帶著滿滿收穫與回憶回家" }
+        { "time": "08:00 - 09:00", "activity": "早餐", "details": "（宿舍吃；+帶行李到 92171）" },
+        { "time": "09:00 - 12:00", "activity": "黑客松衝刺", "details": "（+簡報說明）" },
+        { "time": "12:00 - 13:30", "activity": "午餐", "details": "" },
+        { "time": "13:30 - 15:00", "activity": "經驗分享", "details": "" },
+        { "time": "15:00 - 16:30", "activity": "成果發表", "details": "" },
+        { "time": "16:30 - 17:00", "activity": "休息&評分時間", "details": "" },
+        { "time": "17:00 - 19:00", "activity": "頒獎&閉幕", "details": "" },
+        { "time": "19:00 -", "activity": "賦歸", "details": "" }
       ]
     }
   ]
