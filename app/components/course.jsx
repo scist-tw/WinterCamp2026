@@ -7,21 +7,21 @@ import { BookOpen, Globe, Cpu, Users, Calendar } from "lucide-react";
 const courses = [
   {
     icon: Cpu,
-    title: "LLM 基礎與應用架構",
-    description: "從基礎概念到實際應用，學習如何串接多模型 API，建立智能應用系統。",
-    topics: ["LLM 基礎", "多模型 API", "應用架構"],
+    title: "AI 實作與應用",
+    description: "從 AI 基礎概念到實際 API 應用，學習 LoRA、RAG 等實務技術，將 AI 功能整合進你的應用中。",
+    topics: ["AI API", "LoRA", "RAG"],
   },
   {
     icon: Globe,
-    title: "多平台 UI 概述",
-    description: "掌握不同平台的介面設計與實作，從 Web 到 Discord Bot 都能輕鬆上手。",
-    topics: ["Web UI", "Discord Bot", "API 設計"],
+    title: "多平台 UI 開發",
+    description: "學習網頁、Discord Bot、Telegram Bot 等多平台介面開發，不侷限成品形式，讓你的 AI 應用觸及各種平台。",
+    topics: ["網頁開發", "Discord Bot", "Telegram Bot"],
   },
   {
     icon: BookOpen,
-    title: "雲端網路維運",
-    description: "學習如何將專案部署到雲端，建立穩定可靠的維運機制。",
-    topics: ["雲端部署", "網路配置", "維運管理"],
+    title: "雲端部署與維運",
+    description: "將你的 AI 應用服務部署到雲端伺服器，學習網路維運技能，讓專案真正上線運作。",
+    topics: ["雲端部署", "伺服器維運", "服務架設"],
   },
 ];
 
