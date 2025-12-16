@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer className="bg-card/50 backdrop-blur-sm text-foreground pt-16 pb-8 px-6 lg:px-12 border-t border-[oklch(0.75_0.15_85)]/20">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* 主辦單位 */}
           <div className="flex flex-col items-start gap-6">
             <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)]">
@@ -66,6 +66,39 @@ export default function Footer() {
                     SCAICT
                   </span>
                   中部高中電資社團聯合會議
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 協辦單位 */}
+          <div className="flex flex-col items-start gap-6">
+            <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)]">
+              協辦單位
+            </h3>
+            <div className="flex gap-6">
+              {/* NCKUEE */}
+              <div className="flex flex-col gap-3 items-center">
+                <a
+                  href="https://www.ee.ncku.edu.tw/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative h-24 w-40 rounded-xl bg-muted/30 flex items-center justify-center border border-foreground/10 overflow-hidden transition-all hover:border-[oklch(0.75_0.15_85)]/40 hover:bg-muted/50"
+                >
+                  <Image
+                    src="/assets/images/nckuee.png"
+                    alt="NCKUEE"
+                    width={110}
+                    height={80}
+                    className="object-contain opacity-90 group-hover:opacity-100 transition-opacity"
+                    unoptimized
+                  />
+                </a>
+                <div className="text-xs text-foreground/60 text-center">
+                  <span className="font-bold block text-foreground/90 mb-1">
+                    NCKUEE
+                  </span>
+                  國立成功大學電機工程學系
                 </div>
               </div>
             </div>
