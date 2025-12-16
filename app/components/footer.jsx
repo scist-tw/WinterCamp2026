@@ -12,13 +12,15 @@ export default function Footer() {
   return (
     <footer className="bg-card/50 backdrop-blur-sm text-foreground pt-16 pb-8 px-6 lg:px-12 border-t border-[oklch(0.75_0.15_85)]/20">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* 主辦單位 */}
-          <div className="flex flex-col items-start gap-6">
-            <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)]">
-              主辦單位
-            </h3>
-            <div className="flex gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
+          {/* 主辦單位與協辦單位 */}
+          <div className="flex flex-col items-start gap-8 md:col-span-2 lg:col-span-1">
+            {/* 主辦單位 */}
+            <div className="w-full">
+              <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)] mb-6">
+                主辦單位
+              </h3>
+              <div className="flex flex-wrap gap-6">
               {/* SCIST */}
               <div className="flex flex-col gap-3 items-center">
                 <a
@@ -68,15 +70,15 @@ export default function Footer() {
                   中部高中電資社團聯合會議
                 </div>
               </div>
+              </div>
             </div>
-          </div>
 
-          {/* 協辦單位 */}
-          <div className="flex flex-col items-start gap-6">
-            <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)]">
-              協辦單位
-            </h3>
-            <div className="flex gap-6">
+            {/* 協辦單位 */}
+            <div className="w-full">
+              <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)] mb-6">
+                協辦單位
+              </h3>
+              <div className="flex flex-wrap gap-6">
               {/* NCKUEE */}
               <div className="flex flex-col gap-3 items-center">
                 <a
@@ -100,6 +102,7 @@ export default function Footer() {
                   </span>
                   國立成功大學電機工程學系
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -146,13 +149,17 @@ export default function Footer() {
             <h3 className="text-lg font-bold tracking-wider text-[oklch(0.75_0.15_85)] text-left">
               關於活動
             </h3>
-            <p className="text-foreground/70 text-sm leading-relaxed text-left">
-              今年，SCIST 與 SCAICT
-              首度攜手合作，聯合策劃寒訓活動。以「做一個自己的
-              ChatGPT」為主題，透過程式設計、人工智慧和實作，激發高中生技術熱情，學習
-              LLM
-              核心原理，實際打造專屬的智慧助理。強調跨領域協作與問題解決能力的培養，讓參與者能在團隊合作中磨練領導與溝通技巧，為未來技術發展奠定扎實基礎。
-            </p>
+            <div className="text-foreground/70 text-sm leading-relaxed text-left space-y-4">
+              <p>
+                今年，SCIST 與 SCAICT 首度攜手合作，聯合策劃寒訓活動。課程以「做一個自己的 ChatGPT」作為切入點，引導學員理解大型語言模型（LLM）的基礎概念，並進一步學習如何將 AI 實際整合進應用系統中，完成可運作、可部署的智慧服務。
+              </p>
+              <p>
+                課程內容涵蓋程式設計、人工智慧與實作導向開發，包含 AI API 的應用、RAG 與 LoRA 等實務概念，以及前端介面與聊天機器人（如 Discord Bot 等）的設計，並教學如何將服務部署至雲端環境，使專案真正上線運作，而非僅停留在本地端展示。
+              </p>
+              <p>
+                此外，課程透過專題實作與黑客松形式，強調跨領域協作與問題解決能力的培養，讓學員在團隊合作中實際分工整合 UI、AI 與雲端技術，磨練溝通、協調與專案執行能力，為未來參與競賽、專題研究與技術發展奠定扎實基礎。
+              </p>
+            </div>
           </div>
         </div>
 
