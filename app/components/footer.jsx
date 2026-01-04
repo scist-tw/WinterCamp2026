@@ -153,11 +153,7 @@ export default function Footer() {
             <div className="text-foreground/70 text-sm leading-relaxed text-justify space-y-3">
               <p>
                 SCIST 與 SCAICT 首度合作策劃寒訓，以「做一個自己的 ChatGPT」為主題，引導學員從 LLM 基礎概念到實際整合 AI 應用系統，完成可部署的智慧服務。
-              </p>
-              <p>
                 課程涵蓋 AI API、RAG、LoRA 等實務技術，以及前端介面與 Discord Bot 設計，並教學雲端部署，使專案真正上線運作。
-              </p>
-              <p>
                 透過專題實作與黑客松，培養跨領域協作能力，讓學員實際整合 UI、AI 與雲端技術，為未來競賽與技術發展奠定基礎。
               </p>
             </div>
