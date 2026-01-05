@@ -76,7 +76,7 @@ export default function Pricing() {
                 <Clock className="w-5 h-5 text-[oklch(0.75_0.15_85)]" />
                 <p className="text-sm font-bold text-[oklch(0.75_0.15_85)]">報名日期</p>
               </div>
-              <p className="text-lg font-semibold">即日起至 2026/1/4(日) 23:59</p>
+              <p className="text-lg font-semibold">即日起至 2026/1/11(日) 23:59</p>
             </div>
             <div className="neon-card rounded-2xl p-6 bg-card">
               <div className="flex items-center justify-center gap-2 mb-3">
