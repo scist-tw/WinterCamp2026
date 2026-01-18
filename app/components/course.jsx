@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { BookOpen, Globe, Cpu, Users, Calendar } from "lucide-react";
+import ScheduleGrid from "@/components/schedule-grid";
+import { BookOpen, Globe, Cpu, Users } from "lucide-react";
 
 const courses = [
   {
@@ -26,24 +26,6 @@ const courses = [
 ];
 
 export default function Course() {
-  const [scheduleData, setScheduleData] = useState([]);
-  const [leftColWidth, setLeftColWidth] = useState("150px");
-
-  useEffect(() => {
-    fetch("/data/schedule.json")
-      .then((res) => res.json())
-      .then((data) => setScheduleData(data.scheduleData));
-  }, []);
-
-  useEffect(() => {
-    const update = () => {
-      setLeftColWidth(window.innerWidth >= 768 ? "150px" : "80px");
-    };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-
   return (
     <section id="course" className="py-20 lg:py-32 px-6 lg:px-12 relative">
       <div className="max-w-7xl mx-auto relative z-10">
@@ -141,57 +123,7 @@ export default function Course() {
           </div>
 
           <div className="max-w-6xl mx-auto">
-            <div className="flex gap-4">
-              {/* Fixed time column */}
-              <div className="flex-shrink-0" style={{ width: leftColWidth }}>
-                <div className="mb-4 h-[48px]"></div>
-                {scheduleData[0]?.slots.map((slot, slotIdx) => (
-                  <div
-                    key={slotIdx}
-                    className="text-sm font-semibold text-white py-2 px-2 md:py-4 md:px-4 mb-4 flex items-center justify-center text-center h-12 md:h-20"
-                  >
-                    {slot.time}
-                  </div>
-                ))}
-              </div>
-
-              {/* Days container - scrollable on mobile, full width on desktop */}
-              <div className="flex-1 overflow-x-auto lg:overflow-x-visible scrollbar-hide relative">
-                {/* Left fade overlay - only on mobile */}
-                <div className="lg:hidden absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-[hsl(var(--background))] via-[hsl(var(--background))]/70 via-[hsl(var(--background))]/40 to-transparent pointer-events-none z-10"></div>
-                {/* Right fade overlay - only on mobile */}
-                <div className="lg:hidden absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-[hsl(var(--background))] via-[hsl(var(--background))]/70 via-[hsl(var(--background))]/40 to-transparent pointer-events-none z-10"></div>
-
-                <div className="min-w-max lg:min-w-0 lg:w-full">
-                {/* Day headers */}
-                <div className="flex gap-4 mb-4">
-                  {scheduleData.map((day, idx) => (
-                    <div key={idx} className="text-center flex-1 lg:flex-1" style={{ minWidth: '200px' }}>
-                      <div className="font-bold text-lg">{day.day}</div>
-                      <div className="text-sm text-foreground/60">{day.date}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Schedule rows */}
-                {scheduleData[0]?.slots.map((_, slotIdx) => (
-                  <div key={slotIdx} className="flex gap-4 mb-4">
-                    {scheduleData.map((day, dayIdx) => (
-                      <Card
-                        key={dayIdx}
-                        className="neon-card rounded-2xl p-2 md:p-4 bg-card h-12 md:h-20 flex items-center justify-center text-center transition-shadow flex-1"
-                        style={{ minWidth: '200px' }}
-                      >
-                        <p className="text-xs md:text-sm font-semibold text-foreground">
-                          {day.slots[slotIdx]?.activity || "-"}
-                        </p>
-                      </Card>
-                    ))}
-                  </div>
-                ))}
-              </div>
-              </div>
-            </div>
+            <ScheduleGrid />
           </div>
         </div>
       </div>
