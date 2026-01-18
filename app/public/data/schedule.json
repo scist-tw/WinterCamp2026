@@ -1,54 +1,54 @@
 {
-  "scheduleData": [
+  "startTime": "08:00",
+  "endTime": "21:00",
+  "pxPerMin": 1.5,
+  "days": [
     {
-      "day": "第一天",
+      "day": "Day 1",
       "date": "",
-      "slots": [
-        { "time": "08:30 - 09:30", "activity": "報到、開訓典禮", "details": "" },
-        { "time": "09:30 - 12:00", "activity": "破冰", "details": "" },
-        { "time": "12:00 - 13:00", "activity": "午餐", "details": "" },
-        { "time": "13:00 - 17:30", "activity": "課程時間", "details": "" },
-        { "time": "17:30 - 18:30", "activity": "晚餐", "details": "" },
-        { "time": "18:30 - 20:00", "activity": "遊戲", "details": "" },
-        { "time": "20:00 -", "activity": "住宿休息", "details": "" }
+      "events": [
+        { "title": "報到、開訓典禮", "start": "10:00", "end": "11:00" },
+        { "title": "破冰&午餐", "start": "11:00", "end": "13:00" },
+        { "title": "課程", "start": "13:00", "end": "17:30" },
+        { "title": "晚餐", "start": "17:30", "end": "18:30" },
+        { "title": "遊戲", "start": "18:30", "end": "20:00" }
       ]
     },
     {
-      "day": "第二天",
+      "day": "Day 2",
       "date": "",
-      "slots": [
-        { "time": "08:00 - 09:00", "activity": "早餐", "details": "（宿舍吃）" },
-        { "time": "09:00 - 16:00", "activity": "課程時間", "details": "" },
-        { "time": "16:00 - 18:00", "activity": "企業講座", "details": "" },
-        { "time": "18:00 - 19:00", "activity": "晚餐", "details": "" },
-        { "time": "19:00 - 21:00", "activity": "晚會", "details": "" },
-        { "time": "21:00 -", "activity": "住宿休息", "details": "" }
+      "events": [
+        { "title": "早餐", "start": "08:00", "end": "09:00" },
+        { "title": "課程", "start": "09:00", "end": "12:00" },
+        { "title": "午餐", "start": "12:00", "end": "13:00" },
+        { "title": "企業講座", "start": "13:00", "end": "15:00" },
+        { "title": "課程", "start": "15:00", "end": "18:00" },
+        { "title": "晚餐", "start": "18:00", "end": "19:00" },
+        { "title": "晚會", "start": "19:00", "end": "21:00" }
       ]
     },
     {
-      "day": "第三天",
+      "day": "Day 3",
       "date": "",
-      "slots": [
-        { "time": "08:00 - 09:00", "activity": "早餐", "details": "（宿舍吃）" },
-        { "time": "09:00 - 11:20", "activity": "課程時間", "details": "" },
-        { "time": "11:30 - 14:30", "activity": "社群攤位＋午餐", "details": "" },
-        { "time": "14:30 - 16:00", "activity": "室內活動", "details": "" },
-        { "time": "16:00 - 20:30", "activity": "黑客松＋晚餐", "details": "" },
-        { "time": "20:30 -", "activity": "住宿休息", "details": "" }
+      "events": [
+        { "title": "早餐", "start": "08:00", "end": "09:00" },
+        { "title": "課程", "start": "09:00", "end": "11:30" },
+        { "title": "社群攤位＋午餐", "start": "11:30", "end": "14:30" },
+        { "title": "室內活動", "start": "14:30", "end": "16:00" },
+        { "title": "黑客松＋晚餐", "start": "16:00", "end": "20:00" }
       ]
     },
     {
-      "day": "第四天",
+      "day": "Day 4",
       "date": "",
-      "slots": [
-        { "time": "08:00 - 09:00", "activity": "早餐", "details": "（宿舍吃；+帶行李到 92171）" },
-        { "time": "09:00 - 12:00", "activity": "黑客松衝刺", "details": "（+簡報說明）" },
-        { "time": "12:00 - 13:30", "activity": "午餐", "details": "" },
-        { "time": "13:30 - 15:00", "activity": "經驗分享", "details": "" },
-        { "time": "15:00 - 16:30", "activity": "成果發表", "details": "" },
-        { "time": "16:30 - 17:00", "activity": "休息&評分時間", "details": "" },
-        { "time": "17:00 - 19:00", "activity": "頒獎&閉幕", "details": "" },
-        { "time": "19:00 -", "activity": "賦歸", "details": "" }
+      "events": [
+        { "title": "早餐(+帶行李到92171)", "start": "08:00", "end": "09:00" },
+        { "title": "黑客松衝刺(+簡報說明)", "start": "09:00", "end": "12:00" },
+        { "title": "午餐", "start": "12:00", "end": "13:30" },
+        { "title": "經驗分享", "start": "13:30", "end": "15:00" },
+        { "title": "成果發表", "start": "15:00", "end": "17:00" },
+        { "title": "頒獎&閉幕", "start": "17:00", "end": "19:00" },
+        { "title": "賦歸", "start": "19:00", "end": "20:00" }
       ]
     }
   ]
