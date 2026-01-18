@@ -13,9 +13,9 @@ const courses = [
   },
   {
     icon: Globe,
-    title: "多平台 UI 開發",
-    description: "學習網頁、Discord Bot、Telegram Bot 等多平台介面開發，不侷限成品形式，讓你的 AI 應用觸及各種平台。",
-    topics: ["網頁開發", "Discord Bot", "Telegram Bot"],
+    title: "UI 開發",
+    description: "學習 Discord Bot 介面開發，不侷限成品形式，讓你的 AI 應用觸及各種平台。",
+    topics: ["網頁開發", "Discord Bot"],
   },
   {
     icon: BookOpen,
@@ -61,7 +61,7 @@ export default function Course() {
               href="/course"
               className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
             >
-              查看完整課程內容
+              查看完整課程表
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -104,7 +104,7 @@ export default function Course() {
           })}
         </div>
 
-        <div className="relative group mb-20">
+        <div className="relative group mb-50">
           <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.65_0.13_85)] rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
           <Card className="relative border-2 border-[oklch(0.75_0.15_85)]/30 rounded-3xl p-8 lg:p-12 bg-linear-to-br from-card via-card to-muted">
             <div className="flex flex-col lg:flex-row items-start gap-6">

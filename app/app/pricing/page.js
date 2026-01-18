@@ -241,24 +241,6 @@ export default function PricingPage() {
               </div>
             )}
           </div>
-
-          {/* CTA */}
-          <Card className="neon-card rounded-2xl p-8 lg:p-12 text-center bg-linear-to-br from-[oklch(0.75_0.15_85)]/5 to-background">
-            <h2 className="text-2xl lg:text-3xl font-bold mb-3">
-              立即報名參加
-            </h2>
-            <p className="text-foreground/70 mb-6">
-              名額有限，把握機會！
-            </p>
-            <button
-              onClick={() =>
-                window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")
-              }
-              className="inline-block bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] text-black rounded-full px-10 py-3 font-bold transition-all transform hover:scale-105"
-            >
-              前往報名表單
-            </button>
-          </Card>
         </div>
       </section>
     </div>

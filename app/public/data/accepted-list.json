@@ -1,0 +1,499 @@
+{
+  "acceptedList": {
+    "single": [
+      {
+        "id": 1,
+        "name": "林O軒",
+        "status": "已錄取"
+      },
+      {
+        "id": 2,
+        "name": "林O豪",
+        "status": "已錄取"
+      },
+      {
+        "id": 3,
+        "name": "黃O寓",
+        "status": "已錄取"
+      },
+      {
+        "id": 4,
+        "name": "高O程",
+        "status": "已錄取"
+      },
+      {
+        "id": 5,
+        "name": "曾O安",
+        "status": "已錄取"
+      },
+      {
+        "id": 6,
+        "name": "康O瑞",
+        "status": "已錄取"
+      },
+      {
+        "id": 7,
+        "name": "彭O詮",
+        "status": "已錄取"
+      },
+      {
+        "id": 8,
+        "name": "林O宸",
+        "status": "已錄取"
+      },
+      {
+        "id": 9,
+        "name": "金O涵",
+        "status": "已錄取"
+      },
+      {
+        "id": 10,
+        "name": "黃O鈞",
+        "status": "已錄取"
+      },
+      {
+        "id": 11,
+        "name": "吳O芫",
+        "status": "已錄取"
+      },
+      {
+        "id": 12,
+        "name": "洪O婷",
+        "status": "已錄取"
+      },
+      {
+        "id": 13,
+        "name": "陳O文",
+        "status": "已錄取"
+      },
+      {
+        "id": 14,
+        "name": "唐O翔",
+        "status": "已錄取"
+      },
+      {
+        "id": 15,
+        "name": "林O霆",
+        "status": "已錄取"
+      },
+      {
+        "id": 16,
+        "name": "盧O聿",
+        "status": "已錄取"
+      },
+      {
+        "id": 17,
+        "name": "蘇O芸",
+        "status": "已錄取"
+      },
+      {
+        "id": 18,
+        "name": "凌O建",
+        "status": "已錄取"
+      },
+      {
+        "id": 19,
+        "name": "洪O智",
+        "status": "已錄取"
+      },
+      {
+        "id": 20,
+        "name": "黃O睿",
+        "status": "已錄取"
+      },
+      {
+        "id": 21,
+        "name": "陳O成",
+        "status": "已錄取"
+      },
+      {
+        "id": 22,
+        "name": "張O開",
+        "status": "已錄取"
+      }
+    ],
+    "pair": [
+      {
+        "code": "AA0011",
+        "members": [
+          {
+            "id": 1,
+            "name": "高O輗",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "沈O睿",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "AF123456",
+        "members": [
+          {
+            "id": 1,
+            "name": "許O安",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "蕭O軒",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "AI114514",
+        "members": [
+          {
+            "id": 1,
+            "name": "劉O恩",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "劉O樂",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "BC630923",
+        "members": [
+          {
+            "id": 1,
+            "name": "黃O源",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "王O程",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "DL123456",
+        "members": [
+          {
+            "id": 1,
+            "name": "劉O彦",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "吳O熹",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "LF112358",
+        "members": [
+          {
+            "id": 1,
+            "name": "王O勛",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "林O威",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "PC980626",
+        "members": [
+          {
+            "id": 1,
+            "name": "吳O甄",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "邵O宸",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "RH157910",
+        "members": [
+          {
+            "id": 1,
+            "name": "陳O柔",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "蔡O希",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "SF007516",
+        "members": [
+          {
+            "id": 1,
+            "name": "吳O愷",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "范O紳",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "SS282931",
+        "members": [
+          {
+            "id": 1,
+            "name": "許O恩",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "楊O宸",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      }
+    ],
+    "trio": [
+      {
+        "code": "AA000000",
+        "members": [
+          {
+            "id": 1,
+            "name": "王O丰",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "呂O愷",
+            "role": "隊員"
+          },
+          {
+            "id": 3,
+            "name": "莊O玄",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "CC990109",
+        "members": [
+          {
+            "id": 1,
+            "name": "林O宸",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "李O屹",
+            "role": "隊員"
+          },
+          {
+            "id": 3,
+            "name": "陳O融",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      }
+    ],
+    "quad": [
+      {
+        "code": "CH115115",
+        "members": [
+          {
+            "id": 1,
+            "name": "林O柔",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "傅O綾",
+            "role": "隊員"
+          },
+          {
+            "id": 3,
+            "name": "陳O溱",
+            "role": "隊員"
+          },
+          {
+            "id": 4,
+            "name": "李O樂",
+            "role": "隊員"
+          },
+          {
+            "id": 5,
+            "name": "楊O萱",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "DC297401",
+        "members": [
+          {
+            "id": 1,
+            "name": "徐O薇",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "楊O涵",
+            "role": "隊員"
+          },
+          {
+            "id": 3,
+            "name": "羅O鋐",
+            "role": "隊員"
+          },
+          {
+            "id": 4,
+            "name": "賴O家",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "FF778899",
+        "members": [
+          {
+            "id": 1,
+            "name": "孫O棋",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "林O軒",
+            "role": "隊員"
+          },
+          {
+            "id": 3,
+            "name": "施O騰",
+            "role": "隊員"
+          },
+          {
+            "id": 4,
+            "name": "陳O欽",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "TC456289",
+        "members": [
+          {
+            "id": 1,
+            "name": "張O瑋",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "尤O聿",
+            "role": "隊員"
+          },
+          {
+            "id": 3,
+            "name": "陳O斌",
+            "role": "隊員"
+          },
+          {
+            "id": 4,
+            "name": "尹O翔",
+            "role": "隊員"
+          },
+          {
+            "id": 5,
+            "name": "劉O安",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      },
+      {
+        "code": "ZZ012334",
+        "members": [
+          {
+            "id": 1,
+            "name": "閻O農",
+            "role": "隊長"
+          },
+          {
+            "id": 2,
+            "name": "林O妍",
+            "role": "隊員"
+          },
+          {
+            "id": 3,
+            "name": "許O程",
+            "role": "隊員"
+          },
+          {
+            "id": 4,
+            "name": "劉O宏",
+            "role": "隊員"
+          },
+          {
+            "id": 5,
+            "name": "吳O哲",
+            "role": "隊員"
+          },
+          {
+            "id": 6,
+            "name": "莊O益",
+            "role": "隊員"
+          },
+          {
+            "id": 7,
+            "name": "張O昊",
+            "role": "隊員"
+          },
+          {
+            "id": 8,
+            "name": "鄭O宇",
+            "role": "隊員"
+          }
+        ],
+        "status": "已錄取"
+      }
+    ]
+  },
+  "rejectedList": {
+    "single": [
+      {
+        "id": 1,
+        "name": "柯O瑋",
+        "status": "未錄取"
+      }
+    ]
+  },
+  "meta": {
+    "totalAccepted": 74,
+    "announcementDate": "2026-01-25",
+    "eventDate": "2026-02-05",
+    "note": "錄取名單將依序公布"
+  }
+}

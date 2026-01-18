@@ -1,7 +1,7 @@
 import Hero from "@/components/hero";
 import Intro from "@/components/intro";
 import Course from "@/components/course";
-import Pricing from "@/components/pricing";
+import AcceptedList from "@/components/accepted-list";
 import Gallery from "@/components/gallery";
 import Team from "@/components/team";
 import Partners from "@/components/partners";
@@ -17,7 +17,7 @@ export default function Home() {
         <Hero />
         <Intro />
         <Course />
-        <Pricing />
+        <AcceptedList />
         <Gallery />
         <Team />
         <Partners />

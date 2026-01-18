@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const FONTS = [
   "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;900&display=swap",
@@ -29,12 +30,19 @@ const FUN_FACTS = [
 ];
 
 export default function LoadingScreen() {
+  const pathname = usePathname();
   const [isLoading, setIsLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [progress, setProgress] = useState(0);
   const [funFact, setFunFact] = useState("");
 
   useEffect(() => {
+    // 只在首頁顯示載入動畫
+    if (pathname !== "/") {
+      setIsLoading(false);
+      return;
+    }
+
     setFunFact(FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)]);
     
     let fontsLoaded = 0;
@@ -77,7 +85,7 @@ export default function LoadingScreen() {
       clearTimeout(minTime);
       clearTimeout(maxTime);
     };
-  }, []);
+  }, [pathname]);
 
   if (!isLoading) return null;
 

@@ -40,21 +40,24 @@ export default function Hero() {
           <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">
             SCIST x SCAICT 2026 聯合寒訓
           </h1>
-          <br />
-          <div className="flex items-center justify-center">
-            <Image
-              src="/assets/images/banner.webp"
-              alt="閃電四連編"
-              width={461}
-              height={239}
-              priority
-              fetchPriority="high"
-              sizes="(max-width: 768px) 100vw, 461px"
-              className="w-full max-w-lg h-auto"
-            />
+          <div className="text-sm lg:text-base text-foreground/70 font-medium">
+              2026 年 2 月 5 日 &nbsp;-&nbsp; 2 月 8 日
           </div>
           <br />
-          <div className="flex justify-center">
+          <div className="flex items-center justify-center w-full px-4">
+            <div className="w-full max-w-2xl aspect-video relative">
+              <Image
+                src="/assets/images/banner.webp"
+                alt="閃電四連編"
+                fill
+                priority
+                fetchPriority="high"
+                sizes="1024px"
+                className="object-contain w-full h-full"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-3">
             <div className="inline-flex items-center gap-2 bg-muted text-foreground/80 rounded-lg px-3 py-2">
               <MapPin className="w-4 h-4" />
               <span className="text-lg">國立成功大學電機工程學系</span>
@@ -96,26 +99,9 @@ export default function Hero() {
               </div>
             </div>
           </div>
-
-          <div className="flex flex-col items-center gap-6">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-              <Button
-                size="lg"
-                className="relative bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.8_0.18_85)] hover:from-[oklch(0.8_0.18_85)] hover:to-[oklch(0.75_0.15_85)] rounded-full px-12 py-8 text-xl font-black text-black cursor-pointer transition-all transform hover:scale-105 shadow-2xl"
-                onClick={() =>
-                  window.open("https://forms.gle/vKVbDr45aDBkoM3i6", "_blank")
-                }
-              >
-                立即報名營隊
-              </Button>
-            </div>
-            <p className="text-base text-foreground/70 font-medium">
-              報名名額有限，歡迎加入一起創造美好回憶。
-            </p>
-          </div>
         </div>
       </div>
+      <br />
     </section>
   );
 }
