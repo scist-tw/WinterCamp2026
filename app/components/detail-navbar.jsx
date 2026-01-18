@@ -51,8 +51,8 @@ export default function DetailNavbar({ currentPage }) {
     <nav
       className={`fixed top-0 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/50 backdrop-blur-2xl border border-[oklch(0.75_0.15_85)]/30 shadow-2xl shadow-[oklch(0.75_0.15_85)]/10 rounded-full w-[96%] lg:w-[90%] mt-4"
-          : "bg-background/60 backdrop-blur-xl border border-[oklch(0.75_0.15_85)]/20 w-full rounded-b-3xl"
+          ? "bg-background/50 backdrop-blur-2xl border border-[oklch(0.75_0.15_85)]/30 shadow-2xl shadow-[oklch(0.75_0.15_85)]/10 rounded-2xl w-[96%] lg:w-[90%] mt-4"
+          : "bg-background/60 backdrop-blur-xl border border-[oklch(0.75_0.15_85)]/20 w-full rounded-b-2xl"
       }`}
     >
       <div className="max-w-full mx-auto px-8 lg:px-24 py-3 lg:py-4">
@@ -107,8 +107,8 @@ export default function DetailNavbar({ currentPage }) {
           onClick={closeMenu}
           style={{ animation: isClosing ? "fadeOut 200ms ease-in forwards" : "fadeIn 200ms ease-out" }}
         />
-        <div ref={menuRef} className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl" style={{ animation: isClosing ? "mobileMenuOut 200ms ease-in forwards" : "mobileMenuIn 200ms ease-out" }}>
-          <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
+        <div ref={menuRef} className="md:hidden border-t border-[oklch(0.75_0.15_85)]/20" style={{ animation: isClosing ? "mobileMenuOut 200ms ease-in forwards" : "mobileMenuIn 200ms ease-out" }}>
+          <div className="w-full px-4 py-6 flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link
                 key={link.key}
