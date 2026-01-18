@@ -1,2 +1,2 @@
-:HL["/_next/static/chunks/f40e9ee0baf08140.css","style"]
+:HL["/_next/static/chunks/905cb8f7d45935fe.css","style"]
 0:{"buildId":"winter-camp-2026","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"list","paramType":null,"paramKey":"list","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
