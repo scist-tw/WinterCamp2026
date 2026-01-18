@@ -1,2 +1,2 @@
-:HL["/_next/static/chunks/40d686f1b581708b.css","style"]
+:HL["/_next/static/chunks/17d12483c5d424ab.css","style"]
 0:{"buildId":"winter-camp-2026","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
