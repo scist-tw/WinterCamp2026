@@ -187,7 +187,7 @@ export default function Navbar() {
           <div
             id="mobile-menu"
             ref={menuRef}
-            className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl"
+            className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl rounded-b-2xl"
             style={{ animation: isClosing ? "mobileMenuOut 200ms ease-in forwards" : "mobileMenuIn 200ms ease-out" }}
           >
           <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">

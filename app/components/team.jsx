@@ -107,7 +107,9 @@ export default function Team() {
             籌備團隊
           </h2>
           <p className="text-foreground/70 text-base lg:text-lg max-w-2xl mx-auto mb-4">
-            由 SCIST x SCAICT 攜手打造，致力於提供最優質的學習體驗
+            由 SCIST x SCAICT 攜手打造
+            <br />
+            致力於提供最優質的學習體驗
           </p>
           <Link
             href="/team"

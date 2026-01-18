@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import ScheduleGrid from "@/components/schedule-grid";
-import { BookOpen, Globe, Cpu, Users } from "lucide-react";
+import { BookOpen, Globe, Cpu, Users, ArrowRight } from "lucide-react";
 
 const courses = [
   {
@@ -35,19 +36,17 @@ export default function Course() {
           </div>
           <h2 className="section-title text-4xl lg:text-5xl font-black">課程內容</h2>
           <p className="text-foreground/70 text-lg max-w-3xl mx-auto mt-4 leading-relaxed">
-            從 LLM 基礎到多平台應用，再到雲端部署維運，<br />
+            LLM 基礎到多平台應用，再到雲端部署維運，
             四天三夜帶你完整掌握現代 AI 應用開發流程
           </p>
           <div className="mt-6">
-            <a
-              href="/course"
-              className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
-            >
-              查看完整課程表
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </a>
+          <Link
+            href="/course"
+            className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
+          >
+            查看詳細資訊
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
           </div>
         </div>
 
