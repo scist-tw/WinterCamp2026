@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
 2:I[47257,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"ClientPageRoot"]
-3:I[98956,["/_next/static/chunks/77098247da2093fe.js","/_next/static/chunks/6291dc959ac325d7.js","/_next/static/chunks/cb40203c31680c3b.js","/_next/static/chunks/024653a9b6b016d0.js"],"default"]
+3:I[98956,["/_next/static/chunks/77098247da2093fe.js","/_next/static/chunks/6291dc959ac325d7.js","/_next/static/chunks/a96d6f50eb3f4622.js","/_next/static/chunks/024653a9b6b016d0.js"],"default"]
 6:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
 0:{"buildId":"winter-camp-2026","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/024653a9b6b016d0.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
