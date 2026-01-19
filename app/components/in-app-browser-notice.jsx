@@ -34,7 +34,7 @@ export default function InAppBrowserNotice() {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-end sm:items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-sm">
       <div className="relative w-full max-w-lg rounded-3xl border border-primary/35 bg-card/95 p-5 sm:p-6 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.9)]">
         <button
           type="button"
