@@ -31,10 +31,15 @@ const FUN_FACTS = [
 
 export default function LoadingScreen() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [progress, setProgress] = useState(0);
   const [funFact, setFunFact] = useState("");
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // 只在首頁顯示載入動畫
@@ -87,7 +92,7 @@ export default function LoadingScreen() {
     };
   }, [pathname]);
 
-  if (!isLoading) return null;
+  if (!mounted || !isLoading) return null;
 
   return (
     <div

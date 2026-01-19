@@ -199,11 +199,9 @@ export default function ScheduleGrid() {
                   if (lastEnd >= endMinutes) {
                     return null;
                   }
-                  const gap = 10;
                   const top = (lastEnd - startMinutes) * pxPerMin;
-                  const height = (endMinutes - lastEnd) * pxPerMin;
-                  const adjustedHeight = Math.max(height - gap, 24);
-                  const adjustedTop = top + gap / 2;
+                  const adjustedHeight = Math.max(columnHeight - top, 24);
+                  const adjustedTop = top;
 
                   return (
                     <div
