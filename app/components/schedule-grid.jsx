@@ -81,7 +81,7 @@ export default function ScheduleGrid() {
       const pixelPerMinute = Number(schedule.pxPerMin) || 1;
 
       const slots = [];
-      for (let t = startMinutesValue; t <= endMinutesValue; t += 60) {
+      for (let t = startMinutesValue; t < endMinutesValue; t += 60) {
         slots.push(t);
       }
 
