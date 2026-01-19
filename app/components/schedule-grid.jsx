@@ -191,26 +191,6 @@ export default function ScheduleGrid() {
                     </div>
                   );
                 })}
-                {(() => {
-                  if (!day.events.length) {
-                    return null;
-                  }
-                  const lastEnd = toMinutes(day.events[day.events.length - 1].end);
-                  if (lastEnd >= endMinutes) {
-                    return null;
-                  }
-                  const top = (lastEnd - startMinutes) * pxPerMin;
-                  const adjustedHeight = Math.max(columnHeight - top, 24);
-                  const adjustedTop = top;
-
-                  return (
-                    <div
-                      aria-hidden="true"
-                      className="absolute left-2 right-2 rounded-lg border border-transparent bg-transparent"
-                      style={{ top: `${adjustedTop}px`, height: `${adjustedHeight}px` }}
-                    />
-                  );
-                })()}
               </div>
             ))}
           </div>
