@@ -105,7 +105,7 @@ export default function DetailNavbar({ currentPage }) {
           onClick={closeMenu}
           style={{ animation: isClosing ? "fadeOut 200ms ease-in forwards" : "fadeIn 200ms ease-out" }}
         />
-        <div ref={menuRef} className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl" style={{ animation: isClosing ? "mobileMenuOut 200ms ease-in forwards" : "mobileMenuIn 200ms ease-out" }}>
+        <div ref={menuRef} className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl rounded-b-2xl" style={{ animation: isClosing ? "mobileMenuOut 200ms ease-in forwards" : "mobileMenuIn 200ms ease-out" }}>
           <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
             {navLinks.map((link) => (
               <Link

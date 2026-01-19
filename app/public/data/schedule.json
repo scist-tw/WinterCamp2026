@@ -1,7 +1,7 @@
 {
   "startTime": "08:00",
-  "endTime": "21:00",
-  "pxPerMin": 1.5,
+  "endTime": "20:59",
+  "pxPerMin": 1,
   "days": [
     {
       "day": "Day 1",
@@ -42,7 +42,7 @@
       "day": "Day 4",
       "date": "",
       "events": [
-        { "title": "早餐(+帶行李到92171)", "start": "08:00", "end": "09:00" },
+        { "title": "早餐", "start": "08:00", "end": "09:00" },
         { "title": "黑客松衝刺(+簡報說明)", "start": "09:00", "end": "12:00" },
         { "title": "午餐", "start": "12:00", "end": "13:30" },
         { "title": "經驗分享", "start": "13:30", "end": "15:00" },

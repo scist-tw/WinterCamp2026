@@ -187,12 +187,12 @@ export default function Navbar() {
           <div
             id="mobile-menu"
             ref={menuRef}
-            className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl"
+            className="relative z-50 md:hidden border-t border-[oklch(0.75_0.15_85)]/20 bg-card/95 backdrop-blur-xl rounded-b-2xl"
             style={{ animation: isClosing ? "mobileMenuOut 200ms ease-in forwards" : "mobileMenuIn 200ms ease-out" }}
           >
           <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
             <button onClick={() => scrollToSection("course")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">課程內容</button>
-            <button onClick={() => scrollToSection("pricing")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">報名資訊</button>
+            <button onClick={() => scrollToSection("pricing")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">錄取名單</button>
             <button onClick={() => scrollToSection("gallery")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">過往紀錄</button>
             <button onClick={() => scrollToSection("team")} className="text-left text-foreground/80 hover:text-[oklch(0.75_0.15_85)] font-semibold transition-colors w-full py-2 px-4 rounded-lg hover:bg-background">工作人員</button>
           </div>
