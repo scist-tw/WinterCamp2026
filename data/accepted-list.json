@@ -481,15 +481,6 @@
       }
     ]
   },
-  "rejectedList": {
-    "single": [
-      {
-        "id": 1,
-        "name": "柯O瑋",
-        "status": "未錄取"
-      }
-    ]
-  },
   "meta": {
     "totalAccepted": 74,
     "announcementDate": "2026-01-25",
