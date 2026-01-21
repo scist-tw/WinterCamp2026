@@ -9,7 +9,17 @@
       "events": [
         { "title": "報到、開訓典禮", "start": "10:00", "end": "11:00" },
         { "title": "破冰&午餐", "start": "11:00", "end": "13:00" },
-        { "title": "課程", "start": "13:00", "end": "17:30" },
+        {
+          "title": "課程",
+          "start": "13:00",
+          "end": "17:30",
+          "location": "啟端館1F階梯教室",
+          "description": "",
+          "link": "",
+          "speaker": "",
+          "speakerBio": "",
+          "speakerAvatar": ""
+        },
         { "title": "晚餐", "start": "17:30", "end": "18:30" },
         { "title": "遊戲", "start": "18:30", "end": "20:00" }
       ]
@@ -21,7 +31,17 @@
         { "title": "早餐", "start": "08:00", "end": "09:00" },
         { "title": "課程", "start": "09:00", "end": "12:00" },
         { "title": "午餐", "start": "12:00", "end": "13:00" },
-        { "title": "企業講座", "start": "13:00", "end": "15:00" },
+        {
+          "title": "企業講座",
+          "start": "13:00",
+          "end": "15:00",
+          "location": "",
+          "description": "邀請業界工程師分享實務經驗、團隊合作與職涯發展建議。",
+          "speaker": "",
+          "speakerBio": "",
+          "link": "",
+          "speakerAvatar": ""
+        },
         { "title": "課程", "start": "15:00", "end": "18:00" },
         { "title": "晚餐", "start": "18:00", "end": "19:00" },
         { "title": "晚會", "start": "19:00", "end": "21:00" }
@@ -33,9 +53,9 @@
       "events": [
         { "title": "早餐", "start": "08:00", "end": "09:00" },
         { "title": "課程", "start": "09:00", "end": "11:30" },
-        { "title": "社群攤位＋午餐", "start": "11:30", "end": "14:30" },
+        { "title": "社群攤位&午餐", "start": "11:30", "end": "14:30" },
         { "title": "室內活動", "start": "14:30", "end": "16:00" },
-        { "title": "黑客松＋晚餐", "start": "16:00", "end": "20:00" }
+        { "title": "黑客松&晚餐", "start": "16:00", "end": "20:00" }
       ]
     },
     {
@@ -43,10 +63,30 @@
       "date": "",
       "events": [
         { "title": "早餐", "start": "08:00", "end": "09:00" },
-        { "title": "黑客松衝刺(+簡報說明)", "start": "09:00", "end": "12:00" },
+        { "title": "黑客松衝刺", "start": "09:00", "end": "12:00" },
         { "title": "午餐", "start": "12:00", "end": "13:30" },
-        { "title": "經驗分享", "start": "13:30", "end": "15:00" },
-        { "title": "成果發表", "start": "15:00", "end": "17:00" },
+        {
+          "title": "經驗分享",
+          "start": "13:30",
+          "end": "15:00",
+          "location": "",
+          "description": "歷屆學長姐與參賽團隊分享參賽過程與專題心得。",
+          "speaker": "Alumni Panel",
+          "speakerBio": "",
+          "link": "",
+          "speakerAvatar": ""
+        },
+        {
+          "title": "成果發表",
+          "start": "15:00",
+          "end": "17:00",
+          "location": "",
+          "description": "黑客松成果展示與團隊簡報時段",
+          "link": "",
+          "speaker": "",
+          "speakerBio": "",
+          "speakerAvatar": ""
+        },
         { "title": "頒獎&閉幕", "start": "17:00", "end": "19:00" },
         { "title": "賦歸", "start": "19:00", "end": "20:00" }
       ]

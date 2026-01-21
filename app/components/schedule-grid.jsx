@@ -60,14 +60,36 @@ const getDayMeta = (label) => {
   };
 };
 
+const hasEventDetails = (event) => {
+  return (
+    event &&
+    (event.description || event.speaker || event.link || event.speakerBio || event.speakerAvatar)
+  );
+};
+
 export default function ScheduleGrid() {
   const [schedule, setSchedule] = useState(DEFAULT_SCHEDULE);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetch("/data/schedule.json")
       .then((res) => res.json())
       .then((data) => setSchedule({ ...DEFAULT_SCHEDULE, ...data }));
   }, []);
+
+  useEffect(() => {
+    if (!selectedEvent) return;
+    setIsModalOpen(true);
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setIsModalOpen(false);
+        setTimeout(() => setSelectedEvent(null), 300);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selectedEvent]);
 
   const { startMinutes, endMinutes, pxPerMin, hourSlots, columnHeight, hourSlotHeight } =
     useMemo(() => {
@@ -95,7 +117,8 @@ export default function ScheduleGrid() {
   }
 
   return (
-    <div className="flex gap-0 overflow-hidden">
+    <>
+      <div className="flex gap-0 overflow-hidden">
       {/* Fixed TIME column */}
       <div className="flex flex-col bg-card/80 border-r border-border/60 flex-shrink-0 rounded-l-2xl overflow-hidden">
         <div className="bg-muted/70 border-b border-border/60 flex items-center justify-center text-xs font-semibold tracking-[0.3em] text-foreground/60" style={{ height: "120px", width: "88px" }}>
@@ -119,8 +142,8 @@ export default function ScheduleGrid() {
             <div
               className="relative grid rounded-r-2xl bg-card/95 border border-border/60 shadow-lg overflow-hidden"
               style={{
-                gridTemplateColumns: `repeat(${schedule.days.length}, minmax(0, 1fr))`,
-              }}
+                  gridTemplateColumns: 'repeat(' + schedule.days.length + ', minmax(0, 1fr))',
+                }}
             >
               {schedule.days.map((day) => {
                 const meta = getDayMeta(day.day);
@@ -171,19 +194,29 @@ export default function ScheduleGrid() {
                     const adjustedHeight = Math.max(height - gap, 24);
                     const adjustedTop = top + gap / 2;
 
-                    return (
-                      <div
-                        key={`${event.title}-${event.start}`}
-                        className={`absolute left-2 right-2 rounded-lg px-3 py-2.5 border shadow-sm backdrop-blur-sm ${style.cardClass}`}
-                        style={{ top: `${adjustedTop}px`, height: `${adjustedHeight}px` }}
-                      >
-                        <div className="flex flex-col items-center justify-center gap-2 text-center h-full">
-                          <div className="text-base font-semibold text-foreground leading-tight">
-                            {event.title}
+                        const isClickable = hasEventDetails(event);
+                        return (
+                          <div
+                            key={event.title + '-' + event.start}
+                            role={isClickable ? 'button' : 'presentation'}
+                            tabIndex={isClickable ? 0 : -1}
+                            onClick={() => isClickable && setSelectedEvent({ ...event, day: day.day })}
+                            onKeyDown={(e) => { if (isClickable && e.key === 'Enter') setSelectedEvent({ ...event, day: day.day }); }}
+                            className={'absolute left-2 right-2 rounded-lg px-3 py-2.5 border shadow-sm backdrop-blur-sm ' + (isClickable ? 'cursor-pointer hover:opacity-70 hover:shadow-lg transition-all duration-200 ' : 'cursor-default opacity-85 ') + style.cardClass}
+                            style={{ top: `${adjustedTop}px`, height: `${adjustedHeight}px` }}
+                          >
+                            <div className="flex flex-col items-center justify-center text-center h-full relative">
+                              <span className="text-base font-semibold text-foreground leading-tight">
+                                {event.title}
+                              </span>
+                              {isClickable && (
+                                <svg className="w-4 h-4 absolute bottom-1 right-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                    );
+                        );
                   })}
                   {(() => {
                     if (!day.events.length) {
@@ -213,6 +246,132 @@ export default function ScheduleGrid() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+
+      {/* Modal for event details */}
+      {selectedEvent ? (
+        <div
+          aria-modal="true"
+          role="dialog"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={() => {
+            setIsModalOpen(false);
+            setTimeout(() => setSelectedEvent(null), 300);
+          }}
+        >
+          <div className={'absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ' + (isModalOpen ? 'opacity-100' : 'opacity-0')} />
+          <div
+            className={'relative rounded-3xl p-8 lg:p-12 max-h-[calc((85vh-2rem))] w-[calc((100vw-2rem))] lg:max-h-[calc((90vh-20rem))] overflow-y-auto cursor-auto z-10 transition-all duration-300 bg-linear-to-br from-card via-card to-muted border border-[oklch(0.75_0.15_85)]/20 neon-card ' + (isModalOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95')}
+            style={{ maxWidth: 800 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between mb-8">
+              <div>
+                <div className="text-3xl lg:text-4xl font-black text-[oklch(0.75_0.15_85)] mb-4">{selectedEvent.title}</div>
+                {selectedEvent.subtitle ? (
+                  <div className="text-lg lg:text-xl text-foreground/70 mb-4">{selectedEvent.subtitle}</div>
+                ) : null}
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2 text-sm text-foreground/50">
+                    <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M6 2a1 1 0 000 2h8a1 1 0 100-2H6zM4 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 1a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                    </svg>
+                    <span>{selectedEvent.day}</span>
+                    {selectedEvent.start && selectedEvent.end && (
+                      <span className="text-foreground/40">•</span>
+                    )}
+                    {selectedEvent.start && selectedEvent.end && (
+                      <span>{selectedEvent.start} - {selectedEvent.end}</span>
+                    )}
+                  </div>
+                  {selectedEvent.location && (
+                    <div className="flex items-center gap-2 text-sm text-foreground/50 mt-1">
+                      <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                      </svg>
+                      <span>{selectedEvent.location}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <button
+                aria-label="Close"
+                className="text-foreground/60 hover:text-foreground hover:opacity-100 transition-all flex-shrink-0"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setTimeout(() => setSelectedEvent(null), 300);
+                }}
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <div className="border-t border-[oklch(0.75_0.15_85)]/20 mb-8" />
+
+            {selectedEvent.description && (
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <svg className="w-5 h-5 text-[oklch(0.75_0.15_85)] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                    <path fillRule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2h12a1 1 0 100-2 2 2 0 00-2 2v10a2 2 0 002 2 1 1 0 100 2h-4.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-1.414-1.414l2.414-2.414A1 1 0 0013.414 18H9a2 2 0 01-2-2 1 1 0 100 2 2 2 0 002 2h4.586a1 1 0 00.707-.293l2.414-2.414a1 1 0 001.414 1.414l-2.414 2.414A1 1 0 0013.414 20H9a2 2 0 01-2-2V5z" clipRule="evenodd" />
+                  </svg>
+                  <h3 className="text-xl font-black text-foreground">課程介紹</h3>
+                </div>
+                <p className="text-foreground/75 leading-relaxed text-base ml-8">
+                  {selectedEvent.description}
+                </p>
+              </div>
+            )}
+
+            {selectedEvent.link && (
+              <div className="mb-8">
+                <a
+                  href={selectedEvent.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[oklch(0.75_0.15_85)]/10 border border-[oklch(0.75_0.15_85)]/30 text-[oklch(0.75_0.15_85)] hover:bg-[oklch(0.75_0.15_85)]/20 transition-all font-semibold group ml-8"
+                >
+                  查看課程資料
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M11 3a1 1 0 100 2h3.586L9.293 9.293a1 1 0 001.414 1.414L16 6.414V10a1 1 0 100 2h-7a1 1 0 01-1-1V4a1 1 0 011-1z" />
+                    <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                  </svg>
+                </a>
+              </div>
+            )}
+
+            {(selectedEvent.speaker || selectedEvent.speakerBio || selectedEvent.speakerAvatar) && (
+              <>
+                <div className="border-t border-[oklch(0.75_0.15_85)]/20 mb-8" />
+                <div className="flex items-start gap-6">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-4">
+                      <svg className="w-5 h-5 text-[oklch(0.75_0.15_85)] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v2h8v-2zM16 15v2h2v-2zM2 8a2 2 0 11-4 0 2 2 0 014 0zM6 15v2H4v-2z" />
+                      </svg>
+                      <h3 className="text-xl font-black text-foreground">講者介紹{selectedEvent.speaker ? ` - ${selectedEvent.speaker}` : ''}</h3>
+                    </div>
+                    <p className="text-foreground/75 leading-relaxed text-base ml-8">
+                      {selectedEvent.speakerBio || '講者資訊暫無。'}
+                    </p>
+                  </div>
+                  {selectedEvent.speakerAvatar && (
+                    <div className="flex-shrink-0">
+                      <img
+                        src={selectedEvent.speakerAvatar}
+                        alt={selectedEvent.speaker || '講者'}
+                        className="w-24 h-24 lg:w-32 lg:h-32 rounded-2xl object-cover border-2 border-[oklch(0.75_0.15_85)]/30"
+                      />
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
