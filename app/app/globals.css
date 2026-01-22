@@ -208,6 +208,17 @@ html {
   filter: drop-shadow(0 0 8px oklch(0.75 0.15 85 / 0.6));
 }
 
+.modal-scroll {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  overscroll-behavior: contain;
+}
+.modal-scroll::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 /* Strongly prefer GenJyuuGothicX for headings (中文) */
 .section-title {
   font-family: 'emfont-GenJyuuGothicX', 'GenJyuuGothicX', 'emfont-GenJyuuGothic', 'GenJyuuGothic', 'GenSen Rounded', 'Noto Sans TC', system-ui, -apple-system, sans-serif !important;

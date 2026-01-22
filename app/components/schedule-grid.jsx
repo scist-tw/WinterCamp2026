@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const DEFAULT_SCHEDULE = {
   startTime: "08:00",
@@ -71,6 +72,7 @@ export default function ScheduleGrid() {
   const [schedule, setSchedule] = useState(DEFAULT_SCHEDULE);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     fetch("/data/schedule.json")
@@ -89,6 +91,43 @@ export default function ScheduleGrid() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+  }, [selectedEvent]);
+
+  useEffect(() => {
+    if (!selectedEvent) return undefined;
+    const root = document.documentElement;
+    const scrollY = window.scrollY || root.scrollTop || 0;
+
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+    root.style.overflow = "hidden";
+
+    const preventScroll = (event) => {
+      if (modalRef.current && modalRef.current.contains(event.target)) return;
+      event.preventDefault();
+    };
+
+    document.addEventListener("wheel", preventScroll, { passive: false });
+    document.addEventListener("touchmove", preventScroll, { passive: false });
+
+    return () => {
+      document.removeEventListener("wheel", preventScroll);
+      document.removeEventListener("touchmove", preventScroll);
+
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
+      root.style.overflow = "";
+
+      window.scrollTo(0, scrollY);
+    };
   }, [selectedEvent]);
 
   const { startMinutes, endMinutes, pxPerMin, hourSlots, columnHeight, hourSlotHeight } =
@@ -249,64 +288,82 @@ export default function ScheduleGrid() {
       </div>
 
       {/* Modal for event details */}
-      {selectedEvent ? (
-        <div
-          aria-modal="true"
-          role="dialog"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          onClick={() => {
-            setIsModalOpen(false);
-            setTimeout(() => setSelectedEvent(null), 300);
-          }}
-        >
-          <div className={'absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ' + (isModalOpen ? 'opacity-100' : 'opacity-0')} />
-          <div
-            className={'relative rounded-3xl p-8 lg:p-12 max-h-[calc((85vh-2rem))] w-[calc((100vw-2rem))] lg:max-h-[calc((90vh-20rem))] overflow-y-auto cursor-auto z-10 transition-all duration-300 bg-linear-to-br from-card via-card to-muted border border-[oklch(0.75_0.15_85)]/20 neon-card ' + (isModalOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95')}
-            style={{ maxWidth: 800 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-start justify-between mb-8">
-              <div>
-                <div className="text-3xl lg:text-4xl font-black text-[oklch(0.75_0.15_85)] mb-4">{selectedEvent.title}</div>
-                {selectedEvent.subtitle ? (
-                  <div className="text-lg lg:text-xl text-foreground/70 mb-4">{selectedEvent.subtitle}</div>
-                ) : null}
-                <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2 text-sm text-foreground/50">
-                    <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M6 2a1 1 0 000 2h8a1 1 0 100-2H6zM4 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 1a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
-                    </svg>
-                    <span>{selectedEvent.day}</span>
-                    {selectedEvent.start && selectedEvent.end && (
-                      <span className="text-foreground/40">•</span>
-                    )}
-                    {selectedEvent.start && selectedEvent.end && (
-                      <span>{selectedEvent.start} - {selectedEvent.end}</span>
-                    )}
-                  </div>
-                  {selectedEvent.location && (
-                    <div className="flex items-center gap-2 text-sm text-foreground/50 mt-1">
-                      <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                      </svg>
-                      <span>{selectedEvent.location}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <button
-                aria-label="Close"
-                className="text-foreground/60 hover:text-foreground hover:opacity-100 transition-all flex-shrink-0"
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setTimeout(() => setSelectedEvent(null), 300);
-                }}
+      {selectedEvent && typeof document !== "undefined"
+        ? createPortal(
+            <div
+              aria-modal="true"
+              role="dialog"
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+              onClick={() => {
+                setIsModalOpen(false);
+                setTimeout(() => setSelectedEvent(null), 300);
+              }}
+            >
+              <div
+                className={
+                  "absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 " +
+                  (isModalOpen ? "opacity-100" : "opacity-0")
+                }
+              />
+              <div
+                ref={modalRef}
+                className={
+                  "relative rounded-3xl p-8 lg:p-12 max-h-[calc((85vh-2rem))] w-[calc((100vw-2rem))] lg:max-h-[calc((90vh-20rem))] overflow-y-auto cursor-auto z-10 transition-all duration-300 bg-linear-to-br from-card via-card to-muted border border-[oklch(0.75_0.15_85)]/20 neon-card modal-scroll touch-pan-y " +
+                  (isModalOpen ? "opacity-100 scale-100" : "opacity-0 scale-95")
+                }
+                style={{ maxWidth: 800 }}
+                onWheel={(e) => e.stopPropagation()}
+                onTouchMove={(e) => e.stopPropagation()}
+                onClick={(e) => e.stopPropagation()}
               >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </button>
-            </div>
+                <div className="flex items-start justify-between mb-8">
+                  <div>
+                    <div className="text-3xl lg:text-4xl font-black text-[oklch(0.75_0.15_85)] mb-4">
+                      {selectedEvent.title}
+                    </div>
+                    {selectedEvent.subtitle ? (
+                      <div className="text-lg lg:text-xl text-foreground/70 mb-4">
+                        {selectedEvent.subtitle}
+                      </div>
+                    ) : null}
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2 text-sm text-foreground/50">
+                        <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6 2a1 1 0 000 2h8a1 1 0 100-2H6zM4 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 1a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                        </svg>
+                        <span>{selectedEvent.day}</span>
+                        {selectedEvent.start && selectedEvent.end && (
+                          <span className="text-foreground/40">•</span>
+                        )}
+                        {selectedEvent.start && selectedEvent.end && (
+                          <span>
+                            {selectedEvent.start} - {selectedEvent.end}
+                          </span>
+                        )}
+                      </div>
+                      {selectedEvent.location && (
+                        <div className="flex items-center gap-2 text-sm text-foreground/50 mt-1">
+                          <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                          </svg>
+                          <span>{selectedEvent.location}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    aria-label="Close"
+                    className="text-foreground/60 hover:text-foreground hover:opacity-100 transition-all flex-shrink-0"
+                    onClick={() => {
+                      setIsModalOpen(false);
+                      setTimeout(() => setSelectedEvent(null), 300);
+                    }}
+                  >
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
 
             <div className="border-t border-[oklch(0.75_0.15_85)]/20 mb-8" />
 
@@ -369,9 +426,11 @@ export default function ScheduleGrid() {
                 </div>
               </>
             )}
-          </div>
-        </div>
-      ) : null}
+              </div>
+            </div>,
+            document.body
+          )
+        : null}
     </>
   );
 }
