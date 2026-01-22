@@ -91,42 +91,44 @@ export default function CoursePage() {
                 key={instructor.name}
                 className="neon-card rounded-3xl border border-[oklch(0.75_0.15_85)]/20 bg-linear-to-br from-card via-card to-muted p-8 lg:p-12"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8 items-start">
-                  <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-                    <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-[oklch(0.75_0.15_85)]/40 shadow-lg">
-                      <Image
-                        src={instructor.gravatar}
-                        alt={instructor.name}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
-                    <div className="mt-6">
-                      <div className="text-2xl font-black text-[oklch(0.75_0.15_85)]">
-                        {instructor.name}
+                {instructor.name === "4yü" ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-[220px_280px_1fr] gap-8 items-start">
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:row-span-2">
+                      <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-[oklch(0.75_0.15_85)]/40 shadow-lg">
+                        <Image
+                          src={instructor.gravatar}
+                          alt={instructor.name}
+                          fill
+                          className="object-cover"
+                          unoptimized
+                        />
                       </div>
-                      <div className="text-foreground/60 text-sm mt-1">
-                        {instructor.handle}
+                      <div className="mt-6">
+                        <div className="text-2xl font-black text-[oklch(0.75_0.15_85)]">
+                          {instructor.name}
+                        </div>
+                        <div className="text-foreground/60 text-sm mt-1">
+                          {instructor.handle}
+                        </div>
                       </div>
+                      <a
+                        href={instructor.portfolio}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] transition-colors"
+                      >
+                        個人作品集
+                        <span className="text-xs">↗</span>
+                      </a>
                     </div>
-                    <a
-                      href={instructor.portfolio}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] transition-colors"
-                    >
-                      個人作品集
-                      <span className="text-xs">↗</span>
-                    </a>
-                  </div>
 
-                  <div className="space-y-8 text-foreground/80">
-                    <p className="text-base lg:text-lg leading-relaxed">
-                      {instructor.name} {instructor.bio}
-                    </p>
+                    <div className="space-y-8 text-foreground/80 lg:col-span-2">
+                      <p className="text-base lg:text-lg leading-relaxed">
+                        {instructor.name} {instructor.bio}
+                      </p>
+                    </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-8 text-foreground/80 lg:col-start-2">
                       <div>
                         <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] mb-3">
                           背景與經歷
@@ -137,20 +139,7 @@ export default function CoursePage() {
                           ))}
                         </ul>
                       </div>
-                      <div>
-                        <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] mb-3">
-                          教學與社群經驗
-                        </div>
-                        <ul className="space-y-2 text-sm lg:text-base">
-                          {instructor.community.map((item) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div className="border-t border-[oklch(0.75_0.15_85)]/20 pt-6 space-y-6">
-                      <div>
+                      <div className="border-t border-[oklch(0.75_0.15_85)]/20 pt-6">
                         <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] mb-3">
                           本次課程負責內容
                         </div>
@@ -167,10 +156,102 @@ export default function CoursePage() {
                           ))}
                         </ul>
                       </div>
+                    </div>
 
+                    <div className="space-y-8 text-foreground/80 lg:col-start-3">
+                      <div>
+                        <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] mb-3">
+                          教學與社群經驗
+                        </div>
+                        <ul className="space-y-2 text-sm lg:text-base">
+                          {instructor.community.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8 items-start">
+                    <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+                      <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-[oklch(0.75_0.15_85)]/40 shadow-lg">
+                        <Image
+                          src={instructor.gravatar}
+                          alt={instructor.name}
+                          fill
+                          className="object-cover"
+                          unoptimized
+                        />
+                      </div>
+                      <div className="mt-6">
+                        <div className="text-2xl font-black text-[oklch(0.75_0.15_85)]">
+                          {instructor.name}
+                        </div>
+                        <div className="text-foreground/60 text-sm mt-1">
+                          {instructor.handle}
+                        </div>
+                      </div>
+                      <a
+                        href={instructor.portfolio}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] transition-colors"
+                      >
+                        個人作品集
+                        <span className="text-xs">↗</span>
+                      </a>
+                    </div>
+
+                    <div className="space-y-8 text-foreground/80">
+                      <p className="text-base lg:text-lg leading-relaxed">
+                        {instructor.name} {instructor.bio}
+                      </p>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] mb-3">
+                            背景與經歷
+                          </div>
+                          <ul className="space-y-2 text-sm lg:text-base">
+                            {instructor.experience.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] mb-3">
+                            教學與社群經驗
+                          </div>
+                          <ul className="space-y-2 text-sm lg:text-base">
+                            {instructor.community.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-[oklch(0.75_0.15_85)]/20 pt-6">
+                        <div>
+                          <div className="text-sm font-bold text-[oklch(0.75_0.15_85)] mb-3">
+                            本次課程負責內容
+                          </div>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {instructor.topics.map((topic) => (
+                              <span key={topic} className="pill">
+                                {topic}
+                              </span>
+                            ))}
+                          </div>
+                          <ul className="space-y-2 text-sm lg:text-base">
+                            {instructor.highlights.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
