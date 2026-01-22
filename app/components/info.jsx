@@ -22,11 +22,10 @@ const infoItems = [
 ];
 
 const notices = [
-  "報名時間依系統紀錄的提交表單時間為準",
-  "正式參加資格將另外以電子郵件通知",
-  "團報折扣以錄取人數計算非報名人數",
-  "活動期間學員需自備筆電",
-  "本次活動採有主辦方全程安排住宿",
+  "兩週以前全額退費",
+  "兩週內退 70%",
+  "一週內退 40%",
+  "三天內不退費"
 ];
 
 export default function Info() {
@@ -65,7 +64,7 @@ export default function Info() {
         <Card className="neon-card rounded-2xl p-6 lg:p-8">
           <div className="flex items-start gap-3 mb-4">
             <AlertCircle className="w-6 h-6 text-[oklch(0.55_0.15_85)] shrink-0 mt-1" />
-            <h3 className="text-xl lg:text-2xl font-bold">注意事項</h3>
+            <h3 className="text-xl lg:text-2xl font-bold">退費規則</h3>
           </div>
           <ul className="space-y-3">
             {notices.map((notice, idx) => (
