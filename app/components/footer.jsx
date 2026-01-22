@@ -133,7 +133,7 @@ export default function Footer() {
                 className="flex items-center gap-2 hover:text-[oklch(0.75_0.15_85)] transition-colors group w-fit cursor-pointer text-sm"
               >
                 <span className="h-px w-4 bg-foreground/20 group-hover:bg-[oklch(0.75_0.15_85)] transition-all"></span>
-                報名資訊
+                錄取名單
               </button>
               <a
                 href="mailto:camp@scist.org"
