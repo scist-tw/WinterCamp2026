@@ -73,7 +73,7 @@ export default function Schedule() {
                           : "cursor-default"
                       }`}
                       onClick={() => {
-                        console.log("Card clicked:", slot.activity, hasDetail);
+                        // console.log("Card clicked:", slot.activity, hasDetail);
                         openModal(slot, dayIdx, slotIdx);
                       }}
                     >
