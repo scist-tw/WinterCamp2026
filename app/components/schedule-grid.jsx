@@ -96,15 +96,27 @@ export default function ScheduleGrid() {
   useEffect(() => {
     if (!selectedEvent) return undefined;
     const root = document.documentElement;
-    const scrollY = window.scrollY || root.scrollTop || 0;
+    const lenis = typeof window !== "undefined" ? window.__lenis : null;
+    const scrollY =
+      (lenis && typeof lenis.scroll === "number" ? lenis.scroll : null) ??
+      window.scrollY ||
+      root.scrollTop ||
+      0;
 
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevBodyPaddingRight = document.body.style.paddingRight;
+    const prevRootOverflow = root.style.overflow;
+    const scrollbarWidth = window.innerWidth - root.clientWidth;
+
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
     document.body.style.overflow = "hidden";
     root.style.overflow = "hidden";
+    if (lenis && typeof lenis.stop === "function") {
+      lenis.stop();
+    }
 
     const preventScroll = (event) => {
       if (modalRef.current && modalRef.current.contains(event.target)) return;
@@ -118,15 +130,19 @@ export default function ScheduleGrid() {
       document.removeEventListener("wheel", preventScroll);
       document.removeEventListener("touchmove", preventScroll);
 
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.width = "";
-      document.body.style.overflow = "";
-      root.style.overflow = "";
+      document.body.style.overflow = prevBodyOverflow;
+      document.body.style.paddingRight = prevBodyPaddingRight;
+      root.style.overflow = prevRootOverflow;
 
-      window.scrollTo(0, scrollY);
+      if (lenis && typeof lenis.start === "function") {
+        lenis.start();
+      }
+
+      if (lenis && typeof lenis.scrollTo === "function") {
+        lenis.scrollTo(scrollY, { immediate: true });
+      } else {
+        window.scrollTo(0, scrollY);
+      }
     };
   }, [selectedEvent]);
 
