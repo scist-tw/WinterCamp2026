@@ -74,6 +74,7 @@ export default function ScheduleGrid() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
   const [scrollHintOpacity, setScrollHintOpacity] = useState(1);
+  const [canScrollModal, setCanScrollModal] = useState(false);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -104,6 +105,7 @@ export default function ScheduleGrid() {
       const overflow = modalEl.scrollHeight - modalEl.clientHeight;
       const canScroll = overflow > 64;
       const atTop = modalEl.scrollTop <= 2;
+      setCanScrollModal(canScroll);
       setShowScrollHint(canScroll);
       setScrollHintOpacity(canScroll && atTop ? 1 : 0);
     };
@@ -116,6 +118,7 @@ export default function ScheduleGrid() {
     });
     const onScroll = () => {
       if (modalEl.scrollHeight - modalEl.clientHeight <= 64) {
+        setCanScrollModal(false);
         setShowScrollHint(false);
         setScrollHintOpacity(0);
         return;
@@ -373,7 +376,9 @@ export default function ScheduleGrid() {
               >
                 <div
                   ref={modalRef}
-                  className="modal-scroll max-h-[calc((85vh-2rem))] lg:max-h-[calc((90vh-20rem))] overflow-y-auto p-8 lg:p-12"
+                  className={`modal-scroll max-h-[calc((85vh-2rem))] lg:max-h-[calc((90vh-20rem))] p-8 lg:p-12 ${
+                    canScrollModal ? "overflow-y-auto" : "overflow-y-hidden"
+                  }`}
                   style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
                   onWheel={(e) => e.stopPropagation()}
                   onTouchMove={(e) => e.stopPropagation()}
