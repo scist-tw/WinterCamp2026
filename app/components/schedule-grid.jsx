@@ -153,13 +153,7 @@ export default function ScheduleGrid() {
       lenisScroll !== undefined ? lenisScroll : window.scrollY || root.scrollTop || 0;
 
     const prevBodyOverflow = document.body.style.overflow;
-    const prevBodyPaddingRight = document.body.style.paddingRight;
     const prevRootOverflow = root.style.overflow;
-    const scrollbarWidth = window.innerWidth - root.clientWidth;
-
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
-    }
 
     document.body.style.overflow = "hidden";
     root.style.overflow = "hidden";
@@ -180,7 +174,6 @@ export default function ScheduleGrid() {
       document.removeEventListener("touchmove", preventScroll);
 
       document.body.style.overflow = prevBodyOverflow;
-      document.body.style.paddingRight = prevBodyPaddingRight;
       root.style.overflow = prevRootOverflow;
 
       if (lenis && typeof lenis.start === "function") {
@@ -371,17 +364,21 @@ export default function ScheduleGrid() {
                 }
               />
               <div
-                ref={modalRef}
                 className={
-                  "relative rounded-3xl p-8 lg:p-12 max-h-[calc((85vh-2rem))] w-[calc((100vw-2rem))] lg:max-h-[calc((90vh-20rem))] overflow-y-auto cursor-auto z-10 transition-all duration-300 bg-linear-to-br from-card via-card to-muted border border-[oklch(0.75_0.15_85)]/20 neon-card modal-scroll touch-pan-y " +
+                  "relative rounded-3xl max-h-[calc((85vh-2rem))] w-[calc((100vw-2rem))] lg:max-h-[calc((90vh-20rem))] cursor-auto z-10 transition-all duration-300 bg-linear-to-br from-card via-card to-muted border border-[oklch(0.75_0.15_85)]/20 neon-card touch-pan-y " +
                   (isModalOpen ? "opacity-100 scale-100" : "opacity-0 scale-95")
                 }
                 style={{ maxWidth: 800 }}
-                onWheel={(e) => e.stopPropagation()}
-                onTouchMove={(e) => e.stopPropagation()}
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="flex items-start justify-between mb-8">
+                <div
+                  ref={modalRef}
+                  className="modal-scroll max-h-[calc((85vh-2rem))] lg:max-h-[calc((90vh-20rem))] overflow-y-auto p-8 lg:p-12"
+                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                  onWheel={(e) => e.stopPropagation()}
+                  onTouchMove={(e) => e.stopPropagation()}
+                >
+                  <div className="flex items-start justify-between mb-8">
                   <div>
                     <div className="text-3xl lg:text-4xl font-black text-[oklch(0.75_0.15_85)] mb-4">
                       {selectedEvent.title}
@@ -429,31 +426,6 @@ export default function ScheduleGrid() {
                     </svg>
                   </button>
                 </div>
-
-                {showScrollHint && (
-                  <div
-                    className="pointer-events-none absolute inset-x-0 bottom-0 pb-5 flex justify-center"
-                    style={{ opacity: scrollHintOpacity }}
-                    aria-hidden="true"
-                  >
-                    <div className="relative flex flex-col items-center gap-1 text-[oklch(0.75_0.15_85)]/75">
-                      <div className="absolute inset-x-[-24px] -bottom-3 h-20 scroll-hint-fade" />
-                      <div className="text-[10px] tracking-[0.35em] font-semibold uppercase scroll-hint-float">
-                        向下滑動
-                      </div>
-                      <div className="scroll-hint-float scroll-hint-delay">
-                        <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M6 7l4 5 4-5H6z" />
-                        </svg>
-                      </div>
-                      <div className="scroll-hint-chevron scroll-hint-delay-2">
-                        <svg className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M7 8.5l3 3 3-3H7z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
             <div className="border-t border-[oklch(0.75_0.15_85)]/20 mb-8" />
 
@@ -516,39 +488,60 @@ export default function ScheduleGrid() {
                 </div>
               </>
             )}
+                </div>
+                {showScrollHint && (
+                  <div
+                    className="pointer-events-none absolute bottom-6 right-6 z-20"
+                    style={{ opacity: scrollHintOpacity }}
+                    aria-hidden="true"
+                  >
+                    <div className="scroll-hint-chip">
+                      <span className="scroll-hint-text">向下滑動看更多</span>
+                      <span className="scroll-hint-chevron">
+                        <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M6 7l4 5 4-5H6z" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>,
             document.body
           )
         : null}
       <style jsx>{`
-        .scroll-hint-fade {
-          background: linear-gradient(
-            to top,
-            oklch(0.12 0 0 / 0.65),
-            oklch(0.12 0 0 / 0.15),
-            transparent
-          );
-          filter: blur(1px);
-          mask-image: linear-gradient(to top, black, transparent);
+        .scroll-hint-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 8px 12px;
+          border-radius: 999px;
+          background: oklch(0.16 0 0 / 0.9);
+          border: 1px solid oklch(0.75 0.15 85 / 0.35);
+          color: oklch(0.92 0.08 85);
+          box-shadow: 0 6px 18px -8px oklch(0 0 0 / 0.6);
         }
-        .scroll-hint-float {
-          animation: scrollHintFloat 2.4s ease-in-out infinite;
+        .scroll-hint-text {
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          font-weight: 700;
         }
         .scroll-hint-chevron {
-          opacity: 0.65;
-          animation: scrollHintFloat 2.4s ease-in-out infinite;
+          display: inline-flex;
+          align-items: center;
+          animation: scrollHintPulse 1.8s ease-in-out infinite;
         }
-        .scroll-hint-delay {
-          animation-delay: 0.2s;
+        @keyframes scrollHintPulse {
+          0% { transform: translateY(0); opacity: 0.8; }
+          50% { transform: translateY(4px); opacity: 0.5; }
+          100% { transform: translateY(0); opacity: 0.8; }
         }
-        .scroll-hint-delay-2 {
-          animation-delay: 0.5s;
-        }
-        @keyframes scrollHintFloat {
-          0% { transform: translateY(0); opacity: 0.7; }
-          50% { transform: translateY(6px); opacity: 0.4; }
-          100% { transform: translateY(0); opacity: 0.7; }
+        :global(.modal-scroll::-webkit-scrollbar) {
+          width: 0;
+          height: 0;
+          display: none;
         }
       `}</style>
     </>
