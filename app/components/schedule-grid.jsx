@@ -102,7 +102,7 @@ export default function ScheduleGrid() {
 
     const updateHint = () => {
       const overflow = modalEl.scrollHeight - modalEl.clientHeight;
-      const canScroll = overflow > 8;
+      const canScroll = overflow > 64;
       const atTop = modalEl.scrollTop <= 2;
       setShowScrollHint(canScroll);
       setScrollHintOpacity(canScroll && atTop ? 1 : 0);
@@ -115,7 +115,7 @@ export default function ScheduleGrid() {
       rafId2 = requestAnimationFrame(updateHint);
     });
     const onScroll = () => {
-      if (modalEl.scrollHeight - modalEl.clientHeight <= 8) {
+      if (modalEl.scrollHeight - modalEl.clientHeight <= 64) {
         setShowScrollHint(false);
         setScrollHintOpacity(0);
         return;
