@@ -368,7 +368,7 @@ export default function ScheduleGrid() {
               />
               <div
                 className={
-                  "relative rounded-3xl max-h-[calc((85vh-2rem))] w-[calc((100vw-2rem))] lg:max-h-[calc((90vh-20rem))] cursor-auto z-10 transition-all duration-300 bg-linear-to-br from-card via-card to-muted border border-[oklch(0.75_0.15_85)]/20 neon-card touch-pan-y " +
+                  "relative rounded-3xl max-h-[calc((85vh-2rem))] w-[calc((100vw-2rem))] lg:max-h-[calc((90vh-20rem))] z-10 transition-all duration-300 bg-linear-to-br from-card via-card to-muted border border-[oklch(0.75_0.15_85)]/20 neon-card touch-pan-y " +
                   (isModalOpen ? "opacity-100 scale-100" : "opacity-0 scale-95")
                 }
                 style={{ maxWidth: 800 }}
@@ -420,7 +420,7 @@ export default function ScheduleGrid() {
                   </div>
                   <button
                     aria-label="Close"
-                    className="text-foreground/60 hover:text-foreground hover:opacity-100 transition-all flex-shrink-0"
+                    className="cursor-pointer text-foreground/60 hover:text-foreground hover:opacity-100 transition-all flex-shrink-0"
                     onClick={() => {
                       setIsModalOpen(false);
                       setTimeout(() => setSelectedEvent(null), 300);
