@@ -72,6 +72,8 @@ export default function ScheduleGrid() {
   const [schedule, setSchedule] = useState(DEFAULT_SCHEDULE);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+  const [scrollHintOpacity, setScrollHintOpacity] = useState(1);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -92,6 +94,54 @@ export default function ScheduleGrid() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [selectedEvent]);
+
+  useEffect(() => {
+    if (!selectedEvent) return;
+    const modalEl = modalRef.current;
+    if (!modalEl) return;
+
+    const updateHint = () => {
+      const overflow = modalEl.scrollHeight - modalEl.clientHeight;
+      const canScroll = overflow > 8;
+      const atTop = modalEl.scrollTop <= 2;
+      setShowScrollHint(canScroll);
+      setScrollHintOpacity(canScroll && atTop ? 1 : 0);
+    };
+
+    let rafId = 0;
+    let rafId2 = 0;
+    rafId = requestAnimationFrame(() => {
+      updateHint();
+      rafId2 = requestAnimationFrame(updateHint);
+    });
+    const onScroll = () => {
+      if (modalEl.scrollHeight - modalEl.clientHeight <= 8) {
+        setShowScrollHint(false);
+        setScrollHintOpacity(0);
+        return;
+      }
+      const scrollTop = modalEl.scrollTop;
+      const nextOpacity = Math.max(0, Math.min(1, 1 - scrollTop / 120));
+      setScrollHintOpacity(nextOpacity);
+    };
+
+    modalEl.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", updateHint);
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => updateHint())
+        : null;
+    if (resizeObserver) {
+      resizeObserver.observe(modalEl);
+    }
+    return () => {
+      modalEl.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", updateHint);
+      if (resizeObserver) resizeObserver.disconnect();
+      if (rafId) cancelAnimationFrame(rafId);
+      if (rafId2) cancelAnimationFrame(rafId2);
+    };
+  }, [selectedEvent, isModalOpen]);
 
   useEffect(() => {
     if (!selectedEvent) return undefined;
@@ -380,6 +430,31 @@ export default function ScheduleGrid() {
                   </button>
                 </div>
 
+                {showScrollHint && (
+                  <div
+                    className="pointer-events-none absolute inset-x-0 bottom-0 pb-5 flex justify-center"
+                    style={{ opacity: scrollHintOpacity }}
+                    aria-hidden="true"
+                  >
+                    <div className="relative flex flex-col items-center gap-1 text-[oklch(0.75_0.15_85)]/75">
+                      <div className="absolute inset-x-[-24px] -bottom-3 h-20 scroll-hint-fade" />
+                      <div className="text-[10px] tracking-[0.35em] font-semibold uppercase scroll-hint-float">
+                        向下滑動
+                      </div>
+                      <div className="scroll-hint-float scroll-hint-delay">
+                        <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M6 7l4 5 4-5H6z" />
+                        </svg>
+                      </div>
+                      <div className="scroll-hint-chevron scroll-hint-delay-2">
+                        <svg className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M7 8.5l3 3 3-3H7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
             <div className="border-t border-[oklch(0.75_0.15_85)]/20 mb-8" />
 
             {selectedEvent.description && (
@@ -446,6 +521,36 @@ export default function ScheduleGrid() {
             document.body
           )
         : null}
+      <style jsx>{`
+        .scroll-hint-fade {
+          background: linear-gradient(
+            to top,
+            oklch(0.12 0 0 / 0.65),
+            oklch(0.12 0 0 / 0.15),
+            transparent
+          );
+          filter: blur(1px);
+          mask-image: linear-gradient(to top, black, transparent);
+        }
+        .scroll-hint-float {
+          animation: scrollHintFloat 2.4s ease-in-out infinite;
+        }
+        .scroll-hint-chevron {
+          opacity: 0.65;
+          animation: scrollHintFloat 2.4s ease-in-out infinite;
+        }
+        .scroll-hint-delay {
+          animation-delay: 0.2s;
+        }
+        .scroll-hint-delay-2 {
+          animation-delay: 0.5s;
+        }
+        @keyframes scrollHintFloat {
+          0% { transform: translateY(0); opacity: 0.7; }
+          50% { transform: translateY(6px); opacity: 0.4; }
+          100% { transform: translateY(0); opacity: 0.7; }
+        }
+      `}</style>
     </>
   );
 }
