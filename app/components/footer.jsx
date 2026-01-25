@@ -166,9 +166,9 @@ export default function Footer() {
         {/* Copyright */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-foreground/50">
           <p>
-            Copyright &copy; 2025-2026 SCIST x SCAICT | All rights reserved.
+            Copyright &copy; 2025-2026 SCIST x SCAICT | All Rights Reserved.
           </p>
-          <p>Crafted by SCIST x SCAICT 2026 Winter Camp Organizing Team</p>
+          <p>Made by the SCIST x SCAICT 2026 Winter Camp Development Team</p>
         </div>
       </div>
     </footer>
