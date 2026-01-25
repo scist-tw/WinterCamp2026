@@ -16,9 +16,9 @@
           "location": "啟端館1F階梯教室",
           "description": "介紹人工智慧與機器學習的核心概念，包括資料前處理、監督/非監督學習、深度學習基礎與常見應用；搭配實務案例與示範，幫助學員建立 AI 入門所需的概念與實作思維。",
           "link": "",
-          "speaker": "OsGa",
-          "speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
-          "speakerAvatar": "/assets/images/osga.webp"
+          "speaker": "4yu",
+          "speakerBio": "資深競程與教學工作者，APCS 滿級分、CPE 專家級。擔任過 SCIST S5 總召及演算法助教，並於 SCIST 2024 寒訓任副召、2025擔任講師；同時參與 SITCON 2026 行銷組，對課程設計與學生教學有豐富經驗與實務心得。",
+          "speakerAvatar": "/assets/images/4yu.webp"
         },
         {
           "title": "Python Basic",
@@ -27,9 +27,9 @@
           "location": "啟端館1F階梯教室",
           "description": "從零開始掌握 Python 基本語法、資料型態、流程控制與函式，並透過小練習實作常見題型，為後續演算法與資料分析課程建立穩固基礎。",
           "link": "",
-          "speaker": "4yu",
-          "speakerBio": "資深競程與教學工作者，APCS 滿級分、CPE 專家級。擔任過 SCIST S5 總召及演算法助教，並於 SCIST 2024 寒訓任副召、2025擔任講師；同時參與 SITCON 2026 行銷組，對課程設計與學生教學有豐富經驗與實務心得。",
-          "speakerAvatar": "/assets/images/4yu.webp"
+          "speaker": "OsGa",
+          "speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
+          "speakerAvatar": "/assets/images/osga.webp"
         },
         {
           "title": "GitHub 實務",
