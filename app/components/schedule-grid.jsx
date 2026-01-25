@@ -97,11 +97,10 @@ export default function ScheduleGrid() {
     if (!selectedEvent) return undefined;
     const root = document.documentElement;
     const lenis = typeof window !== "undefined" ? window.__lenis : null;
+    const lenisScroll =
+      lenis && typeof lenis.scroll === "number" ? lenis.scroll : undefined;
     const scrollY =
-      (lenis && typeof lenis.scroll === "number" ? lenis.scroll : null) ??
-      window.scrollY ||
-      root.scrollTop ||
-      0;
+      lenisScroll !== undefined ? lenisScroll : window.scrollY || root.scrollTop || 0;
 
     const prevBodyOverflow = document.body.style.overflow;
     const prevBodyPaddingRight = document.body.style.paddingRight;
