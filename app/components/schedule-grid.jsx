@@ -376,10 +376,15 @@ export default function ScheduleGrid() {
               >
                 <div
                   ref={modalRef}
-                  className={`modal-scroll max-h-[calc((85vh-2rem))] lg:max-h-[calc((90vh-20rem))] p-8 lg:p-12 ${
-                    canScrollModal ? "overflow-y-auto" : "overflow-y-hidden"
-                  }`}
-                  style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                  className={
+                    "modal-scroll max-h-[calc((85vh-2rem))] lg:max-h-[calc((90vh-20rem))] p-8 lg:p-12 overflow-y-auto"
+                  }
+                  style={{
+                    scrollbarWidth: "none",
+                    msOverflowStyle: "none",
+                    WebkitOverflowScrolling: "touch",
+                    touchAction: "pan-y",
+                  }}
                   onWheel={(e) => e.stopPropagation()}
                   onTouchMove={(e) => e.stopPropagation()}
                 >
