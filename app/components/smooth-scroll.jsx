@@ -15,10 +15,20 @@ export default function SmoothScroll({ children }) {
       return
     }
 
+    // Detect mobile/touch device - disable Lenis on mobile
+    const isTouchDevice = typeof navigator !== "undefined" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    if (isTouchDevice) {
+      // Ensure native scrolling is enabled on mobile
+      if (document.documentElement.style.scrollBehavior !== 'smooth') {
+        document.documentElement.style.scrollBehavior = 'smooth'
+      }
+      return
+    }
+
     // Delay initialization to improve initial load performance
     const initTimeout = setTimeout(() => {
       // Bind Lenis to the root wrapper we render so it controls the correct scroller.
-      const rootEl = document.getElementById("__lenis-root") || document.scrollingElement || document.documentElement
+      const rootEl = document.getElementById("__lenis-root") || document.documentElement
 
       // Disable native CSS smooth scrolling while Lenis is active to avoid double-smoothing.
       const prevScrollBehavior = document.documentElement.style.scrollBehavior
@@ -77,10 +87,7 @@ export default function SmoothScroll({ children }) {
   }, [shouldDisableLenis])
 
   return (
-    <div
-      id="__lenis-root"
-      style={{ height: '100dvh', overflow: 'auto', WebkitOverflowScrolling: 'touch' }}
-    >
+    <div id="__lenis-root" style={{ width: '100%', minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
       {children}
     </div>
   )
