@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
-2:I[47257,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"ClientPageRoot"]
-3:I[98956,["/_next/static/chunks/6291dc959ac325d7.js","/_next/static/chunks/4c56a8ecb748df31.js","/_next/static/chunks/024653a9b6b016d0.js"],"default"]
-6:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/247eb132b7f7b574.js"],"OutletBoundary"]
+2:I[36064,["/_next/static/chunks/b296557f5fbf63fb.js","/_next/static/chunks/51966f8379d3e515.js"],"ClientPageRoot"]
+3:I[43761,["/_next/static/chunks/503a17bf82515a3a.js","/_next/static/chunks/1a9d6533f04eecfd.js","/_next/static/chunks/1b0e935e6d54943b.js"],"default"]
+6:I[36222,["/_next/static/chunks/b296557f5fbf63fb.js","/_next/static/chunks/51966f8379d3e515.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"buildId":"winter-camp-2026","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/024653a9b6b016d0.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"winter-camp-2026","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/1b0e935e6d54943b.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
