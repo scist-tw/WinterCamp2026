@@ -52,7 +52,47 @@ export default function Hero() {
   };
 
   const handleBannerClick = () => {
-    if (flagShown) return;
+    if (flagShown) {
+      const flagText = "Flag{w3b5!t3_M30w}";
+
+      // 先嘗試現代 clipboard API，失敗則使用傳統 textarea+execCommand 的 fallback
+      (async () => {
+        try {
+          if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(flagText);
+            addMessage("已複製 flag！");
+            return;
+          }
+        } catch (e) {
+          // 若現代 API 有錯，繼續走 fallback
+        }
+
+        // 傳統 fallback
+        if (typeof document !== "undefined") {
+          try {
+            const ta = document.createElement("textarea");
+            ta.value = flagText;
+            // 避免畫面跳動
+            ta.style.position = "fixed";
+            ta.style.left = "-9999px";
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand("copy");
+            document.body.removeChild(ta);
+            if (ok) addMessage("已複製 flag！");
+            else addMessage("複製失敗");
+            return;
+          } catch (e) {
+            addMessage("複製失敗");
+            return;
+          }
+        }
+
+        addMessage("複製不支援");
+      })();
+
+      return;
+    }
 
     setClickCount((prev) => {
       const next = prev + 1;
