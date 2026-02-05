@@ -1,221 +1,221 @@
 {
-	"startTime": "08:00",
-	"endTime": "20:59",
-	"pxPerMin": 1,
-	"days": [
-		{
-			"day": "Day 1",
-			"date": "02/05",
-			"events": [
-				{
-					"title": "報到、開訓典禮",
-					"start": "10:00",
-					"end": "11:00"
-				},
-				{
-					"title": "破冰&午餐",
-					"start": "11:00",
-					"end": "13:00"
-				},
-				{
-					"title": "AI 概論",
-					"start": "13:00",
-					"end": "16:00",
-					"location": "啟端館1F階梯教室",
-					"description": "介紹人工智慧與機器學習的核心概念，包括資料前處理、監督/非監督學習、深度學習基礎與常見應用；搭配實務案例與示範，幫助學員建立 AI 入門所需的概念與實作思維。",
-					"link": "",
-					"speaker": "4yu",
-					"speakerBio": "資深競程與教學工作者，APCS 滿級分、CPE 專家級。擔任過 SCIST S5 總召及演算法助教，並於 SCIST 2024 寒訓任副召、2025擔任講師；同時參與 SITCON 2026 行銷組，對課程設計與學生教學有豐富經驗與實務心得。",
-					"speakerAvatar": "/assets/images/4yu.webp"
-				},
-				{
-					"title": "Python Basic",
-					"start": "16:00",
-					"end": "17:00",
-					"location": "啟端館1F階梯教室",
-					"description": "從零開始掌握 Python 基本語法、資料型態、流程控制與函式，並透過小練習實作常見題型，為後續演算法與資料分析課程建立穩固基礎。",
-					"link": "",
-					"speaker": "OsGa",
-					"speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗；同時擔任 SITCON 2026 開​發​組副​組​長。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
-					"speakerAvatar": "/assets/images/osga.webp"
-				},
-				{
-					"title": "GitHub 實務",
-					"start": "17:00",
-					"end": "18:30",
-					"location": "啟端館1F階梯教室",
-					"description": "介紹團隊合作與 GitHub 使用方式，包括分支管理、合併請求、程式碼審查等實務技巧，幫助學員建立良好的開源協作習慣。",
-					"link": "",
-					"speaker": "OsGa",
-					"speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗；同時擔任 SITCON 2026 開​發​組副​組​長。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
-					"speakerAvatar": "/assets/images/osga.webp"
-				},
-				{
-					"title": "晚餐",
-					"start": "18:30",
-					"end": "19:30"
-				},
-				{
-					"title": "遊戲",
-					"start": "19:30",
-					"end": "20:30"
-				}
-			]
-		},
-		{
-			"day": "Day 2",
-			"date": "02/06",
-			"events": [
-				{
-					"title": "早餐",
-					"start": "08:00",
-					"end": "09:00"
-				},
-				{
-					"title": "Discord Bot",
-					"start": "09:00",
-					"end": "12:00",
-					"location": "啟端館1F階梯教室",
-					"description": "介紹如何使用 Python 開發 Discord 機器人，涵蓋機器人架構、事件處理與常見功能實作，讓學員能夠打造屬於自己的互動式 Discord Bot。",
-					"link": "",
-					"speaker": "OsGa",
-					"speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗；同時擔任 SITCON 2026 開​發​組副​組​長。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
-					"speakerAvatar": "/assets/images/osga.webp"
-				},
-				{
-					"title": "午餐",
-					"start": "12:00",
-					"end": "13:00"
-				},
-				{
-					"title": "企業講座",
-					"start": "13:00",
-					"end": "15:30",
-					"location": "繁城講堂",
-					"description": "邀請業界工程師分享實務經驗、團隊合作與職涯發展建議。",
-					"speaker": "",
-					"speakerBio": "",
-					"link": "",
-					"speakerAvatar": ""
-				},
-				{
-					"title": "AI 實作",
-					"start": "15:30",
-					"end": "18:00",
-					"location": "啟端館1F階梯教室",
-					"description": "結合前述 AI 概論內容，帶領學員實作簡單的機器學習模型，從資料準備、模型訓練到評估，讓學員能夠親手體驗 AI 專案的完整流程。",
-					"link": "",
-					"speaker": "4yu",
-					"speakerBio": "資深競程與教學工作者，APCS 滿級分、CPE 專家級。擔任過 SCIST S5 總召及演算法助教，並於 SCIST 2024 寒訓任副召、2025擔任講師；同時參與 SITCON 2026 行銷組，對課程設計與學生教學有豐富經驗與實務心得。",
-					"speakerAvatar": "/assets/images/4yu.webp"
-				},
-				{
-					"title": "晚餐",
-					"start": "18:00",
-					"end": "19:00"
-				},
-				{
-					"title": "晚會",
-					"start": "19:00",
-					"end": "21:00"
-				}
-			]
-		},
-		{
-			"day": "Day 3",
-			"date": "02/07",
-			"events": [
-				{
-					"title": "早餐",
-					"start": "08:00",
-					"end": "09:00"
-				},
-				{
-					"title": "RAG + LoRA",
-					"start": "09:00",
-					"end": "11:30",
-					"location": "啟端館1F階梯教室",
-					"description": "介紹檢索增強生成（RAG）與低秩適應（LoRA）技術，說明其在提升大型語言模型效能與應用中的重要性，並透過實例展示如何運用這些技術來解決實際問題。",
-					"link": "",
-					"speaker": "4yu",
-					"speakerBio": "資深競程與教學工作者，APCS 滿級分、CPE 專家級。擔任過 SCIST S5 總召及演算法助教，並於 SCIST 2024 寒訓任副召、2025擔任講師；同時參與 SITCON 2026 行銷組，對課程設計與學生教學有豐富經驗與實務心得。",
-					"speakerAvatar": "/assets/images/4yu.webp"
-				},
-				{
-					"title": "社群攤位&午餐",
-					"start": "11:30",
-					"end": "15:00"
-				},
-				{
-					"title": "Deploy",
-					"start": "15:00",
-					"end": "17:00",
-					"location": "啟端館1F階梯教室",
-					"description": "介紹應用程式部署的基本概念與實務方法，涵蓋雲端服務、容器化技術與持續整合/持續部署（CI/CD）流程，幫助學員了解如何將應用程式順利上線並維護運行。",
-					"link": "",
-					"speaker": "OsGa",
-					"speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗；同時擔任 SITCON 2026 開​發​組副​組​長。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
-					"speakerAvatar": "/assets/images/osga.webp"
-				},
-				{
-					"title": "黑客松&晚餐",
-					"start": "17:00",
-					"end": "20:00"
-				}
-			]
-		},
-		{
-			"day": "Day 4",
-			"date": "02/08",
-			"events": [
-				{
-					"title": "早餐",
-					"start": "08:00",
-					"end": "09:00"
-				},
-				{
-					"title": "黑客松衝刺",
-					"start": "09:00",
-					"end": "12:00"
-				},
-				{
-					"title": "午餐",
-					"start": "12:00",
-					"end": "13:30"
-				},
-				{
-					"title": "經驗分享",
-					"start": "13:30",
-					"end": "15:00",
-					"location": "",
-					"description": "歷屆學長姐與參賽團隊分享參賽過程與專題心得。",
-					"speaker": "Alumni Panel",
-					"speakerBio": "",
-					"link": "",
-					"speakerAvatar": ""
-				},
-				{
-					"title": "成果發表",
-					"start": "15:00",
-					"end": "17:00",
-					"location": "",
-					"description": "黑客松成果展示與團隊簡報時段",
-					"link": "",
-					"speaker": "",
-					"speakerBio": "",
-					"speakerAvatar": ""
-				},
-				{
-					"title": "頒獎&閉幕",
-					"start": "17:00",
-					"end": "19:00"
-				},
-				{
-					"title": "賦歸",
-					"start": "19:00",
-					"end": "20:00"
-				}
-			]
-		}
-	]
+  "startTime": "08:00",
+  "endTime": "20:59",
+  "pxPerMin": 1,
+  "days": [
+    {
+      "day": "Day 1",
+      "date": "",
+      "events": [
+        {
+          "title": "報到、開訓典禮",
+          "start": "10:00",
+          "end": "11:00"
+        },
+        {
+          "title": "破冰&午餐",
+          "start": "11:00",
+          "end": "13:00"
+        },
+        {
+          "title": "AI 理論全攻略",
+          "start": "13:00",
+          "end": "16:00",
+          "location": "啟端館1F階梯教室",
+          "description": "本課程預設受眾為零基礎且對 AI 技術有興趣的同學，整體內容涵蓋經典機器學習模型、重要深度學習架構與現今技術應用，主要分為四大部分：基礎、加深、加廣、延伸，循序漸進著重講解原理，提供一個系統性的學習架構，讓學員對各式名詞有初步認知，為後續實作打好基礎。",
+          "link": "",
+          "speaker": "4yu",
+          "speakerBio": "4yü 專注於演算法與 AI / ML，長期深耕學生資訊社群，具備紮實的競賽實力與大量實務教學經驗，擅長將抽象理論轉化為可實作、可理解的專案流程。",
+          "speakerAvatar": "/assets/images/4yu.webp"
+        },
+        {
+          "title": "一小時一命速通 Python",
+          "start": "16:00",
+          "end": "17:00",
+          "location": "啟端館1F階梯教室",
+          "description": "從零開始複習 Python 基本語法到製作自己的 Package，並透過小練習實作常見題型，為後續開發建立穩固基礎。",
+          "link": "",
+          "speaker": "OsGa",
+          "speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
+          "speakerAvatar": "/assets/images/osga.webp"
+        },
+        {
+          "title": "專案協作與溝通技巧",
+          "start": "17:00",
+          "end": "18:30",
+          "location": "啟端館1F階梯教室",
+          "description": "帶你快速認識團隊開發常用的協作工具與流程，並練習實務上好用的溝通方式：怎麼把需求說清楚、怎麼同步進度、怎麼做 code review、遇到問題怎麼提問與回報，讓你在專案合作時更順、更不容易踩雷。",
+          "link": "",
+          "speaker": "OsGa",
+          "speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
+          "speakerAvatar": "/assets/images/osga.webp"
+        },
+        {
+          "title": "晚餐",
+          "start": "18:30",
+          "end": "19:30"
+        },
+        {
+          "title": "遊戲",
+          "start": "19:30",
+          "end": "20:30"
+        }
+      ]
+    },
+    {
+      "day": "Day 2",
+      "date": "",
+      "events": [
+        {
+          "title": "早餐",
+          "start": "08:00",
+          "end": "09:00"
+        },
+        {
+          "title": "生成式 AI 應用實作",
+          "start": "09:00",
+          "end": "12:00",
+          "location": "啟端館1F階梯教室",
+          "description": "本課程將帶領學員從將 LLM 接起來開始，以 Discord Bot 作為互動介面，結合 OpenRouter API，示範如何在真實應用情境中呼叫、管理並彈性切換多種大型語言模型；並進一步使用 Ollama 作為本地 LLM 執行環境，實際設計系統提示詞（System Prompt）與上下文工程（Context Engineering），深入理解模型推論參數對生成結果的影響，學員將能建構一個具備基本對話能力與高度擴充性的生成式 AI 應用。",
+          "link": "",
+          "speaker": "4yu",
+          "speakerBio": "4yü 專注於演算法與 AI / ML，長期深耕學生資訊社群，具備紮實的競賽實力與大量實務教學經驗，擅長將抽象理論轉化為可實作、可理解的專案流程。",
+          "speakerAvatar": "/assets/images/4yu.webp"
+        },
+        {
+          "title": "午餐",
+          "start": "12:00",
+          "end": "13:00"
+        },
+        {
+          "title": "企業講座",
+          "start": "13:00",
+          "end": "15:00",
+          "location": "繁城講堂",
+          "description": "邀請業界工程師分享實務經驗、團隊合作與職涯發展建議。",
+          "speaker": "",
+          "speakerBio": "",
+          "link": "",
+          "speakerAvatar": ""
+        },
+        {
+          "title": "AI 實作",
+          "start": "15:00",
+          "end": "18:00",
+          "location": "啟端館1F階梯教室",
+          "description": "結合前述 AI 概論內容，帶領學員實作簡單的機器學習模型，從資料準備、模型訓練到評估，讓學員能夠親手體驗 AI 專案的完整流程。",
+          "link": "",
+          "speaker": "4yu",
+          "speakerBio": "資深競程與教學工作者，APCS 滿級分、CPE 專家級。擔任過 SCIST S5 總召及演算法助教，並於 SCIST 2024 寒訓任副召、2025擔任講師；同時參與 SITCON 2026 行銷組，對課程設計與學生教學有豐富經驗與實務心得。",
+          "speakerAvatar": "/assets/images/4yu.webp"
+        },
+        {
+          "title": "晚餐",
+          "start": "18:00",
+          "end": "19:00"
+        },
+        {
+          "title": "晚會",
+          "start": "19:00",
+          "end": "21:00"
+        }
+      ]
+    },
+    {
+      "day": "Day 3",
+      "date": "",
+      "events": [
+        {
+          "title": "早餐",
+          "start": "08:00",
+          "end": "09:00"
+        },
+        {
+          "title": "LLM 進階實作：RAG",
+          "start": "09:00",
+          "end": "11:30",
+          "location": "啟端館1F階梯教室",
+          "description": "本課程將聚焦於「RAG 檢索增強生成」，讓大型語言模型具備查資料能力，透過介紹 Embedding 的核心概念，建立可被語言模型即時查詢的知識庫，學員將學習如何設計檢索流程，並將取回的文件內容動態組裝成結構化 Prompt，有效降低模型幻覺並提升回覆準確性，建構出一個結合本地 LLM、向量資料庫與知識檢索機制的進階生成式 AI 應用，具備實際落地於客服、文件問答與內部知識系統的能力。",
+          "link": "",
+          "speaker": "4yu",
+          "speakerBio": "4yü 專注於演算法與 AI / ML，長期深耕學生資訊社群，具備紮實的競賽實力與大量實務教學經驗，擅長將抽象理論轉化為可實作、可理解的專案流程。",
+          "speakerAvatar": "/assets/images/4yu.webp"
+        },
+        {
+          "title": "社群攤位&午餐",
+          "start": "11:30",
+          "end": "14:30"
+        },
+        {
+          "title": "服務部署與系統操作",
+          "start": "14:30",
+          "end": "16:30",
+          "location": "啟端館1F階梯教室",
+          "description": "介紹服務部署的基本流程，熟悉常用 Linux 指令與系統概念，並用 Docker 打包與啟動服務，讓專案能在環境中穩定跑起來。",
+          "link": "",
+          "speaker": "OsGa",
+          "speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
+          "speakerAvatar": "/assets/images/osga.webp"
+        },
+        {
+          "title": "黑客松&晚餐",
+          "start": "16:30",
+          "end": "20:00"
+        }
+      ]
+    },
+    {
+      "day": "Day 4",
+      "date": "",
+      "events": [
+        {
+          "title": "早餐",
+          "start": "08:00",
+          "end": "09:00"
+        },
+        {
+          "title": "黑客松衝刺",
+          "start": "09:00",
+          "end": "12:00"
+        },
+        {
+          "title": "午餐",
+          "start": "12:00",
+          "end": "13:30"
+        },
+        {
+          "title": "經驗分享",
+          "start": "13:30",
+          "end": "15:00",
+          "location": "",
+          "description": "歷屆學長姐與參賽團隊分享參賽過程與專題心得。",
+          "speaker": "Alumni Panel",
+          "speakerBio": "",
+          "link": "",
+          "speakerAvatar": ""
+        },
+        {
+          "title": "成果發表",
+          "start": "15:00",
+          "end": "17:00",
+          "location": "",
+          "description": "黑客松成果展示與團隊簡報時段",
+          "link": "",
+          "speaker": "",
+          "speakerBio": "",
+          "speakerAvatar": ""
+        },
+        {
+          "title": "頒獎&閉幕",
+          "start": "17:00",
+          "end": "19:00"
+        },
+        {
+          "title": "賦歸",
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ]
+    }
+  ]
 }
