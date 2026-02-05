@@ -72,15 +72,15 @@
           "end": "09:00"
         },
         {
-          "title": "生成式 AI 應用實作",
+          "title": "Discord Bot",
           "start": "09:00",
           "end": "12:00",
           "location": "啟端館1F階梯教室",
-          "description": "本課程將帶領學員從將 LLM 接起來開始，以 Discord Bot 作為互動介面，結合 OpenRouter API，示範如何在真實應用情境中呼叫、管理並彈性切換多種大型語言模型；並進一步使用 Ollama 作為本地 LLM 執行環境，實際設計系統提示詞（System Prompt）與上下文工程（Context Engineering），深入理解模型推論參數對生成結果的影響，學員將能建構一個具備基本對話能力與高度擴充性的生成式 AI 應用。",
+          "description": "介紹如何使用 Python 開發 Discord 機器人，涵蓋機器人架構、事件處理與常見功能實作，讓學員能夠打造屬於自己的互動式 Discord Bot。",
           "link": "",
-          "speaker": "4yu",
-          "speakerBio": "4yü 專注於演算法與 AI / ML，長期深耕學生資訊社群，具備紮實的競賽實力與大量實務教學經驗，擅長將抽象理論轉化為可實作、可理解的專案流程。",
-          "speakerAvatar": "/assets/images/4yu.webp"
+          "speaker": "OsGa",
+          "speakerBio": "雲科大網管小組系統組組長，在 SCIST 2024 寒訓中負責活動組、2025擔任講師，擁有百小時以上公開分享經驗。活躍於各社群，長期負責活動規劃、開發與出題，熟悉活動執行與技術內容傳播。",
+          "speakerAvatar": "/assets/images/osga.webp"
         },
         {
           "title": "午餐",
@@ -99,14 +99,14 @@
           "speakerAvatar": ""
         },
         {
-          "title": "AI 實作",
+          "title": "生成式 AI 應用實作",
           "start": "15:00",
           "end": "18:00",
           "location": "啟端館1F階梯教室",
-          "description": "結合前述 AI 概論內容，帶領學員實作簡單的機器學習模型，從資料準備、模型訓練到評估，讓學員能夠親手體驗 AI 專案的完整流程。",
+          "description": "本課程將帶領學員從將 LLM 接起來開始，以 Discord Bot 作為互動介面，結合 OpenRouter API，示範如何在真實應用情境中呼叫、管理並彈性切換多種大型語言模型；並進一步使用 Ollama 作為本地 LLM 執行環境，實際設計系統提示詞（System Prompt）與上下文工程（Context Engineering），深入理解模型推論參數對生成結果的影響，學員將能建構一個具備基本對話能力與高度擴充性的生成式 AI 應用。",
           "link": "",
           "speaker": "4yu",
-          "speakerBio": "資深競程與教學工作者，APCS 滿級分、CPE 專家級。擔任過 SCIST S5 總召及演算法助教，並於 SCIST 2024 寒訓任副召、2025擔任講師；同時參與 SITCON 2026 行銷組，對課程設計與學生教學有豐富經驗與實務心得。",
+          "speakerBio": "4yü 專注於演算法與 AI / ML，長期深耕學生資訊社群，具備紮實的競賽實力與大量實務教學經驗，擅長將抽象理論轉化為可實作、可理解的專案流程。",
           "speakerAvatar": "/assets/images/4yu.webp"
         },
         {

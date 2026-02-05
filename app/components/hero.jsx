@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
+
+const CAMP_END_TIME = "2026-02-08T20:00:00+08:00";
 
 export default function Hero() {
   const [days, setDays] = useState(0);
@@ -17,19 +18,24 @@ export default function Hero() {
   const idRef = useRef(1);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      const targetDate = new Date("2026-02-05").getTime();
-      const now = new Date().getTime();
-      const distance = targetDate - now;
+    const targetDate = new Date(CAMP_END_TIME).getTime();
 
-      if (distance > 0) {
-        setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
-        setHours(
-          Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-        );
-        setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-        setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
-      }
+    const updateCountdown = () => {
+      const now = Date.now();
+      const distance = Math.max(targetDate - now, 0);
+
+      setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
+      setHours(
+        Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+      setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
+    };
+
+    updateCountdown();
+
+    const timer = setInterval(() => {
+      updateCountdown();
     }, 1000);
 
     return () => clearInterval(timer);
@@ -168,6 +174,9 @@ export default function Hero() {
             </div>
           </div>
           <div className="relative">
+            <div className="text-sm lg:text-base text-foreground/70 font-medium mb-3">
+              距離寒訓結束還有
+            </div>
             <div className="grid grid-cols-4 gap-4 lg:gap-6 p-8 bg-linear-to-br from-card to-muted border border-[oklch(0.75_0.15_85)]/20 rounded-3xl">
               <div className="flex flex-col items-center justify-center">
                 <div className="text-4xl lg:text-6xl font-black text-[oklch(0.75_0.15_85)]">
