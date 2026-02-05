@@ -42,10 +42,10 @@ export default function Course() {
           <div className="mt-6">
           <Link
             href="/course"
-            className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] hover:text-[oklch(0.8_0.18_85)] font-semibold transition-colors group"
+            className="inline-flex items-center gap-2 text-[oklch(0.75_0.15_85)] font-semibold transition-colors"
           >
             查看詳細資訊
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-5 h-5 transition-transform" />
           </Link>
           </div>
         </div>
@@ -54,14 +54,14 @@ export default function Course() {
           {courses.map((course, idx) => {
             const Icon = course.icon;
             return (
-              <div key={idx} className="group relative">
-                <Card className="neon-card relative rounded-3xl p-8 transition-all transform group-hover:-translate-y-2 h-full">
+              <div key={idx} className="relative">
+                <Card className="neon-card relative rounded-3xl p-8 transition-all transform h-full">
                   <div className="flex flex-col h-full">
-                    <div className="w-20 h-20 rounded-2xl bg-[oklch(0.75_0.15_85)]/10 flex items-center justify-center group-hover:scale-110 transition-transform mb-6">
+                    <div className="w-20 h-20 rounded-2xl bg-[oklch(0.75_0.15_85)]/10 flex items-center justify-center transition-transform mb-6">
                       <Icon className="w-10 h-10 text-[oklch(0.75_0.15_85)]" />
                     </div>
                     <div className="flex-1 flex flex-col">
-                      <h3 className="text-2xl font-black mb-3 text-foreground group-hover:text-[oklch(0.75_0.15_85)] transition-colors">
+                      <h3 className="text-2xl font-black mb-3 text-foreground transition-colors">
                         {course.title}
                       </h3>
                       <p className="text-foreground/70 text-base mb-6 leading-relaxed flex-1">
@@ -85,8 +85,8 @@ export default function Course() {
           })}
         </div>
 
-        <div className="relative group mb-50">
-          <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.65_0.13_85)] rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity"></div>
+        <div className="relative mb-50">
+          <div className="absolute inset-0 bg-linear-to-r from-[oklch(0.75_0.15_85)] to-[oklch(0.65_0.13_85)] rounded-3xl blur-2xl opacity-20 transition-opacity"></div>
           <Card className="relative border-2 border-[oklch(0.75_0.15_85)]/30 rounded-3xl p-8 lg:p-12 bg-linear-to-br from-card via-card to-muted">
             <div className="flex flex-col lg:flex-row items-start gap-6">
               <div className="w-16 h-16 rounded-2xl bg-linear-to-br from-[oklch(0.75_0.15_85)]/20 to-[oklch(0.65_0.13_85)]/10 flex items-center justify-center shrink-0">

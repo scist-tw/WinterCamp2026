@@ -15,6 +15,16 @@ export default function SmoothScroll({ children }) {
       return
     }
 
+    // Detect mobile/touch device - disable Lenis on mobile
+    const isTouchDevice = typeof navigator !== "undefined" && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    if (isTouchDevice) {
+      // Ensure native scrolling is enabled on mobile
+      if (document.documentElement.style.scrollBehavior !== 'smooth') {
+        document.documentElement.style.scrollBehavior = 'smooth'
+      }
+      return
+    }
+
     // Delay initialization to improve initial load performance
     const initTimeout = setTimeout(() => {
       // Bind Lenis to the root wrapper we render so it controls the correct scroller.
@@ -76,5 +86,9 @@ export default function SmoothScroll({ children }) {
     return () => clearTimeout(initTimeout)
   }, [shouldDisableLenis])
 
-  return <div id="__lenis-root">{children}</div>
+  return (
+    <div id="__lenis-root" style={{ width: '100%', minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
+      {children}
+    </div>
+  )
 }

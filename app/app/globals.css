@@ -1,11 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-html,
+html {
+  height: 100%;
+}
+
 body {
-  overscroll-behavior: none !important;
   overflow-x: hidden !important;
-  max-width: 100vw;
+  min-height: 100%;
+  overscroll-behavior: auto;
 }
 
 /* Smooth scrolling and reserve space for fixed navbar when navigating anchors */

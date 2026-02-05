@@ -21,10 +21,23 @@ const infoItems = [
   },
 ];
 
-const notices = [
-  "1/22 23:59 前全額退費",
-  "1/23 00:00 到 1/30 23:59 退扣除住宿費用之 70%",
-  "1/30 00:00 起不退費"
+const refundPolicies = [
+  {
+    period: "1/22 23:59 前",
+    title: "全額退費",
+    detail: "於此時段內取消可獲得全額退費（含活動費與住宿費）。"
+  },
+  {
+    period: "1/23 00:00 - 1/30 23:59",
+    title: "部分退費（扣除住宿後退還 70%）",
+    detail:
+      "於此期間申請退費，先扣除實際住宿費，再將剩餘款項退還 70%。範例：若總付款為 NT$4,000，住宿費為 NT$1,000 → 剩餘 NT$3,000，退還 70% × 3,000 = NT$2,100。"
+  },
+  {
+    period: "1/30 00:00 起",
+    title: "不退費",
+    detail: "活動開始後不接受退費申請。"
+  }
 ];
 
 export default function Info() {
@@ -66,13 +79,16 @@ export default function Info() {
             <h3 className="text-xl lg:text-2xl font-bold">退費規則</h3>
           </div>
           <ul className="space-y-3">
-            {notices.map((notice, idx) => (
-              <li
-                key={idx}
-                className="flex items-start gap-3 text-foreground/70"
-              >
+            {refundPolicies.map((p, idx) => (
+              <li key={idx} className="flex items-start gap-3 text-foreground/70">
                 <span className="w-1.5 h-1.5 rounded-full bg-[oklch(0.55_0.15_85)] shrink-0 mt-2"></span>
-                <span>{notice}</span>
+                <div>
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-semibold">{p.period}</span>
+                    <span className="text-sm text-foreground/80">{p.title}</span>
+                  </div>
+                  <p className="text-sm mt-1">{p.detail}</p>
+                </div>
               </li>
             ))}
           </ul>
