@@ -90,7 +90,7 @@
         {
           "title": "企業講座",
           "start": "13:00",
-          "end": "15:00",
+          "end": "15:30",
           "location": "繁城講堂",
           "description": "邀請業界工程師分享實務經驗、團隊合作與職涯發展建議。",
           "speaker": "",
@@ -100,7 +100,7 @@
         },
         {
           "title": "生成式 AI 應用實作",
-          "start": "15:00",
+          "start": "15:30",
           "end": "18:00",
           "location": "啟端館1F階梯教室",
           "description": "本課程將帶領學員從將 LLM 接起來開始，以 Discord Bot 作為互動介面，結合 OpenRouter API，示範如何在真實應用情境中呼叫、管理並彈性切換多種大型語言模型；並進一步使用 Ollama 作為本地 LLM 執行環境，實際設計系統提示詞（System Prompt）與上下文工程（Context Engineering），深入理解模型推論參數對生成結果的影響，學員將能建構一個具備基本對話能力與高度擴充性的生成式 AI 應用。",
