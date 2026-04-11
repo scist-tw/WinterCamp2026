@@ -1,45 +1,15 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
 
-const CAMP_END_TIME = "2026-02-08T20:00:00+08:00";
-
 export default function Hero() {
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [clickCount, setClickCount] = useState(0);
+  const [, setClickCount] = useState(0);
   const [messages, setMessages] = useState([]);
   const [shaking, setShaking] = useState(false);
   const [flagShown, setFlagShown] = useState(false);
   const idRef = useRef(1);
-
-  useEffect(() => {
-    const targetDate = new Date(CAMP_END_TIME).getTime();
-
-    const updateCountdown = () => {
-      const now = Date.now();
-      const distance = Math.max(targetDate - now, 0);
-
-      setDays(Math.floor(distance / (1000 * 60 * 60 * 24)));
-      setHours(
-        Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-      );
-      setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-      setSeconds(Math.floor((distance % (1000 * 60)) / 1000));
-    };
-
-    updateCountdown();
-
-    const timer = setInterval(() => {
-      updateCountdown();
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   const addMessage = (text, persist = false) => {
     const id = idRef.current++;
@@ -175,40 +145,10 @@ export default function Hero() {
           </div>
           <div className="relative">
             <div className="text-sm lg:text-base text-foreground/70 font-medium mb-3">
-              距離寒訓結束還有
             </div>
-            <div className="grid grid-cols-4 gap-4 lg:gap-6 p-8 bg-linear-to-br from-card to-muted border border-[oklch(0.75_0.15_85)]/20 rounded-3xl">
-              <div className="flex flex-col items-center justify-center">
-                <div className="text-4xl lg:text-6xl font-black text-[oklch(0.75_0.15_85)]">
-                  {days}
-                </div>
-                <div className="text-sm text-foreground/70 mt-2 font-medium">
-                  天
-                </div>
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <div className="text-4xl lg:text-6xl font-black text-[oklch(0.75_0.15_85)]">
-                  {hours}
-                </div>
-                <div className="text-sm text-foreground/70 mt-2 font-medium">
-                  時
-                </div>
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <div className="text-4xl lg:text-6xl font-black text-[oklch(0.75_0.15_85)]">
-                  {minutes}
-                </div>
-                <div className="text-sm text-foreground/70 mt-2 font-medium">
-                  分
-                </div>
-              </div>
-              <div className="flex flex-col items-center justify-center">
-                <div className="text-4xl lg:text-6xl font-black text-[oklch(0.75_0.15_85)]">
-                  {seconds}
-                </div>
-                <div className="text-sm text-foreground/70 mt-2 font-medium">
-                  秒
-                </div>
+            <div className="p-8 bg-linear-to-br from-card to-muted border border-[oklch(0.75_0.15_85)]/20 rounded-3xl">
+              <div className="text-3xl lg:text-5xl font-black text-[oklch(0.75_0.15_85)] text-center">
+                寒訓完美結束!!!!
               </div>
             </div>
           </div>
